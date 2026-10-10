@@ -129,6 +129,19 @@
       "paid": null,
       "createdAt": 1791659698187,
       "updatedAt": 1791659698187
+    },
+    {
+      "id": "ea953ad9-154b-4a3e-98f1-ecaa563f3a29",
+      "name": "Pegla TEFAL SV8151",
+      "type": "Pegla",
+      "desc": "parma",
+      "cat": "",
+      "source": "https://www.elipso.hr/mali-kucanski/parne-postaje/TEFAL-SV8151/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
+      "price": 135,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791659788231,
+      "updatedAt": 1791659788231
     }
   ],
   "deleted": {
