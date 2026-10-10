@@ -1,0 +1,52 @@
+{
+  "items": [
+    {
+      "id": "6d7056b3-60ac-48ed-8c94-62aa568956af",
+      "name": "Cozze rotirajuća plinska pizza pećnica 17\" (90437) Classic Black",
+      "type": "Plinska Pizza Pećnica",
+      "desc": "rotirajuca 17inch",
+      "cat": "vrt",
+      "source": "https://www.mall.hr/pecnice-za-pizzu/cozze-rotirajuca-plinska-pizza-pecnica-17-90437-classic-black",
+      "price": 370,
+      "bought": true,
+      "paid": 449.73,
+      "createdAt": 1791647489118,
+      "updatedAt": 1791647761579
+    },
+    {
+      "id": "943d5288-17fc-4e5e-9a6c-987ca41ac388",
+      "name": "Prijenosni zvučnik Sonos - Play, Wi-Fi, crni",
+      "type": "Zvučnik",
+      "desc": "Bezicni, uskladenost preko wifi, bluetooth, baterija",
+      "cat": "stan",
+      "source": "https://www.ozone.hr/product/prijenosni-zvu-nik-sonos-play-wi-fi-crni/?utm_source=pazaruvaj&utm_medium=cpc&utm_content=Games&utm_campaign=pazaruvaj-games",
+      "price": 363.54,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791647683981,
+      "updatedAt": 1791647683981
+    },
+    {
+      "id": "f989d9e5-f9c5-4f93-968b-1151c5758e17",
+      "name": "Prijenosni zvučnik Sonos - Play, Wi-Fi, crni",
+      "type": "Zvučnik",
+      "desc": "Bezicni, uskladenost preko wifi, bluetooth, baterija",
+      "cat": "stan",
+      "source": "https://www.ozone.hr/product/prijenosni-zvu-nik-sonos-play-wi-fi-crni/?utm_source=pazaruvaj&utm_medium=cpc&utm_content=Games&utm_campaign=pazaruvaj-games",
+      "price": 363.54,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791647690170,
+      "updatedAt": 1791647706092
+    }
+  ],
+  "deleted": {
+    "pocetni-1": 1791647423340,
+    "pocetni-2": 1791647425295,
+    "pocetni-3": 1791647426855,
+    "pocetni-4": 1791647428207,
+    "pocetni-5": 1791647429865,
+    "pocetni-6": 1791647431481,
+    "pocetni-7": 1791647434632
+  }
+}
