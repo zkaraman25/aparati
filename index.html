@@ -63,14 +63,18 @@ svg.ico{width:18px; height:18px; flex:none; fill:none; stroke:currentColor; stro
 .content.enter > *{animation:viewIn .36s var(--ease) both}
 @keyframes viewIn{from{opacity:0; transform:translateY(10px)}}
 .charts{display:grid; gap:16px; align-content:start}
-.pagefoot{padding:4px 16px 20px; text-align:center}
-.linkbtn{display:inline-flex; align-items:center; gap:8px; border:0; background:transparent; color:var(--muted); font-size:.8125rem; padding:8px 10px; border-radius:8px; transition:color .15s, background .15s}
-.linkbtn:hover{color:var(--ink); background:rgba(127,127,140,.1)}
-.status-dot{width:7px; height:7px; border-radius:50%; background:var(--muted); flex:none}
-.linkbtn[data-state="local"] .status-dot{display:none}
-.linkbtn[data-state="ok"] .status-dot{background:#1FA35C}
-.linkbtn[data-state="busy"] .status-dot{background:var(--accent); animation:pulse 1s ease-in-out infinite}
-.linkbtn[data-state="error"] .status-dot,.linkbtn[data-state="offline"] .status-dot{background:var(--danger)}
+.acct{max-width:46vw}
+@media (max-width:479px){ .head .logo{display:none} .acct{max-width:36vw} .head #addBtn{padding:8px 11px} .head #addBtn .add-short{display:none} }
+.acct #statusText{overflow:hidden; text-overflow:ellipsis}
+.status-dot{width:8px; height:8px; border-radius:50%; background:var(--muted); flex:none}
+.acct[data-state="local"] .status-dot{display:none}
+.acct[data-state="ok"] .status-dot{background:#1FA35C}
+.acct[data-state="busy"] .status-dot{background:var(--accent); animation:pulse 1s ease-in-out infinite}
+.acct[data-state="error"] .status-dot,.acct[data-state="offline"] .status-dot{background:var(--danger)}
+.dlg a{color:var(--accent-text); font-weight:550; text-underline-offset:3px}
+.adv{margin-top:14px}
+.adv summary{cursor:pointer; font-size:.8125rem; color:var(--muted); width:max-content; padding:4px 0}
+.hint.warn{color:var(--danger)}
 @keyframes pulse{50%{opacity:.35}}
 
 .btn{
@@ -264,7 +268,10 @@ input.cell.num{text-align:right; font-variant-numeric:tabular-nums}
 @keyframes pop{40%{transform:scale(1.22)}}
 .sheet tbody tr.flash > td{animation:flash 1.6s ease-out}
 @keyframes flash{0%,35%{background:var(--accent-soft)}}
-.sheet tbody tr.fresh{animation:rowIn .3s var(--ease) both}
+.sheet tbody tr.fresh{animation:rowIn .34s var(--ease) both}
+#rows{transition:opacity .13s ease}
+#rows.leaving{opacity:0}
+#listTitle{transition:opacity .15s}
 @keyframes rowIn{from{opacity:0; transform:translateY(6px)}}
 .empty{padding:24px 16px; text-align:center; color:var(--muted)}
 .totals{display:flex; flex-wrap:wrap; align-items:stretch; gap:10px 0; padding:12px 12px 12px 16px; background:var(--surface-2); border-top:2px solid var(--line-2)}
@@ -432,7 +439,8 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
 <div class="app">
   <header class="head">
     <div class="brand"><span class="logo" data-ico="washer"></span><h1>Aparati za stan</h1></div>
-    <button class="btn btn-primary" type="button" id="addBtn"><span data-ico="plus"></span><span class="add-short">Dodaj</span><span class="add-long">Dodaj proizvod</span></button>
+    <button class="btn acct" id="statusBtn" type="button" data-state="local"><span class="status-dot" aria-hidden="true"></span><span id="statusText">Prijava</span></button>
+    <button class="btn btn-primary" type="button" id="addBtn" aria-label="Dodaj proizvod"><span data-ico="plus"></span><span class="add-short">Dodaj</span><span class="add-long">Dodaj proizvod</span></button>
   </header>
 
   <main class="content">
@@ -498,9 +506,6 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
     </section>
   </main>
 
-  <footer class="pagefoot">
-    <button class="linkbtn" id="statusBtn" type="button" data-state="local"><span class="status-dot" aria-hidden="true"></span><span id="statusText">Podaci i sigurnosna kopija</span></button>
-  </footer>
 </div>
 
 <nav class="tabs" aria-label="Prikaz">
@@ -562,30 +567,68 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
   </div>
 </dialog>
 
-<!-- Postavke: sinkronizacija i sigurnosna kopija -->
+<!-- Prijava, račun i sigurnosna kopija -->
 <dialog id="setDlg" aria-labelledby="setTitle">
   <div class="dlg" id="setForm">
-    <h2 id="setTitle">Podaci i sinkronizacija</h2>
-    <p>Popis se uvijek sprema na ovom uređaju. Ako ga želiš vidjeti i uređivati s bilo kojeg uređaja, poveži GitHub repozitorij. Podaci se tada spremaju u datoteku <code>data.json</code> na zasebnoj grani, pa izmjene ne pokreću ponovnu objavu stranice.</p>
-    <label class="field"><span>Repozitorij</span>
-      <input type="text" id="sRepo" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="korisnik/repozitorij">
-    </label>
-    <div class="field-row">
-      <label class="field"><span>Grana za podatke</span>
-        <input type="text" id="sBranch" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <h2 id="setTitle">Prijava</h2>
+
+    <div id="loginView">
+      <p>Prijavi se korisničkim imenom i lozinkom i vidiš isti popis na svakom uređaju.</p>
+      <label class="field"><span>Korisničko ime</span>
+        <input type="text" id="lUser" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="30">
       </label>
-      <label class="field"><span>Datoteka</span>
-        <input type="text" id="sPath" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <label class="field"><span>Lozinka</span>
+        <input type="password" id="lPass" autocomplete="current-password" maxlength="100">
       </label>
+      <p class="err" id="setErr" role="alert"></p>
+      <div class="stackbtns">
+        <button class="btn btn-primary" type="button" id="connectBtn">Prijavi se</button>
+        <button class="btn" type="button" id="toCreate">Nemam račun</button>
+      </div>
     </div>
-    <label class="field"><span>Pristupni token</span>
-      <input type="password" id="sToken" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
-    </label>
-    <p class="hint">Fine-grained token ograničen samo na ovaj repozitorij, s dozvolom Contents: Read and write. Token ostaje u ovom pregledniku i ne sprema se u repozitorij.</p>
-    <p class="err" id="setErr" role="alert"></p>
-    <div class="stackbtns">
-      <button class="btn btn-primary" type="button" id="connectBtn">Poveži i sinkroniziraj</button>
-      <button class="btn btn-danger" type="button" id="disconnectBtn" hidden>Odspoji ovaj uređaj</button>
+
+    <div id="createView" hidden>
+      <p>Račun se radi jednom, na jednom uređaju. Nakon toga se svugdje prijavljuješ samo imenom i lozinkom.</p>
+      <label class="field"><span>Korisničko ime</span>
+        <input type="text" id="cUser" autocomplete="username" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="30">
+      </label>
+      <label class="field"><span>Lozinka</span>
+        <input type="password" id="cPass" autocomplete="new-password" maxlength="100">
+      </label>
+      <p class="hint" id="passHint">Lozinka čuva pristup popisu. Što je dulja, to ju je teže pogoditi.</p>
+      <label class="field"><span>GitHub token</span>
+        <input type="password" id="sToken" autocomplete="off" spellcheck="false" placeholder="github_pat_…">
+      </label>
+      <p class="hint">Token daje računu pravo da sprema popis. <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener noreferrer">Napravi ga na GitHubu</a>: odaberi samo repozitorij ove stranice i pod Contents stavi „Read and write”. Treba ti samo sada.</p>
+      <details class="adv" id="advBox">
+        <summary>Napredno: gdje se spremaju podaci</summary>
+        <label class="field"><span>Repozitorij</span>
+          <input type="text" id="sRepo" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="korisnik/repozitorij">
+        </label>
+        <div class="field-row">
+          <label class="field"><span>Grana za podatke</span>
+            <input type="text" id="sBranch" autocomplete="off" autocapitalize="off" spellcheck="false">
+          </label>
+          <label class="field"><span>Datoteka</span>
+            <input type="text" id="sPath" autocomplete="off" autocapitalize="off" spellcheck="false">
+          </label>
+        </div>
+      </details>
+      <p class="err" id="createErr" role="alert"></p>
+      <div class="stackbtns">
+        <button class="btn btn-primary" type="button" id="createBtn">Napravi račun</button>
+        <button class="btn" type="button" id="toLogin">Već imam račun</button>
+      </div>
+    </div>
+
+    <div id="acctView" hidden>
+      <p id="acctWho"></p>
+      <p class="hint" id="acctSync"></p>
+      <p class="err" id="acctErr" role="alert"></p>
+      <div class="stackbtns">
+        <button class="btn" type="button" id="syncBtn">Sinkroniziraj sada</button>
+        <button class="btn btn-danger" type="button" id="disconnectBtn">Odjava</button>
+      </div>
     </div>
 
     <h3>Sigurnosna kopija</h3>
@@ -1101,8 +1144,7 @@ function renderColumns(animate) {
   const dPaid = h('dd', { class: 'num' }), dTodo = h('dd', { class: 'num' }), dSum = h('dd', { class: 'num' });
   const dBtn = h('button', { class: 'btn btn-small', type: 'button' }, 'Pokaži u popisu');
   dBtn.addEventListener('click', () => {
-    filter = 'all'; catFilter = colSel == null ? '' : (colSel === '' ? '-' : colSel);
-    renderList();
+    switchList(() => { filter = 'all'; catFilter = colSel == null ? '' : (colSel === '' ? '-' : colSel); });
     if (matchMedia('(max-width:999px)').matches) setView('list');
     else $('#listCard').scrollIntoView({ block: 'start', behavior: reduced ? 'auto' : 'smooth' });
   });
@@ -1294,6 +1336,33 @@ function rowEl(it) {
   return tr;
 }
 
+/* Promjena filtra: stari redovi izblijede, novi uđu jedan za drugim, a visina popisa klizne na novu */
+let swapTimer = null, growTimer = null;
+function switchList(change) {
+  const wrap = $('.sheet-wrap'), body = $('#rows');
+  if (reduced || !wrap.offsetHeight) { change(); renderList(); return; }
+  const before = wrap.offsetHeight;
+  change();
+  renderListMeta();
+  body.classList.add('leaving');
+  clearTimeout(swapTimer);
+  swapTimer = setTimeout(() => {
+    clearTimeout(growTimer);
+    wrap.style.transition = ''; wrap.style.height = '';
+    renderList();
+    body.classList.remove('leaving');
+    [...body.children].forEach((tr, i) => { tr.classList.add('fresh'); tr.style.animationDelay = Math.min(i, 14) * 26 + 'ms'; });
+    const after = wrap.offsetHeight;
+    if (after !== before) {
+      wrap.style.overflowY = 'hidden';
+      wrap.style.height = before + 'px';
+      void wrap.offsetHeight;
+      wrap.style.transition = 'height .32s cubic-bezier(.2,.8,.2,1)';
+      wrap.style.height = after + 'px';
+      growTimer = setTimeout(() => { wrap.style.transition = ''; wrap.style.height = ''; wrap.style.overflowY = ''; }, 360);
+    }
+  }, 130);
+}
 function renderList() {
   const list = state.items.filter(matches);
   const openRow = document.querySelector('#rows tr.open');
@@ -1313,7 +1382,7 @@ function renderListMeta() {
   for (const it of state.items) counts[it.cat] = (counts[it.cat] || 0) + 1;
   const entries = [{ key: '', label: 'Sve', ico: 'all', n: state.items.length }, ...CATS.map((c) => ({ key: c.key, label: c.label, ico: c.key, n: counts[c.key] || 0 })), { key: '-', label: 'Bez kategorije', ico: 'all', n: counts[''] || 0 }];
   $('#catChips').replaceChildren(...entries.filter((e) => e.key === '' || e.n > 0 || e.key === catFilter).map((e) =>
-    h('button', { type: 'button', 'aria-pressed': String(catFilter === e.key), onclick: () => { catFilter = e.key; renderList(); } },
+    h('button', { type: 'button', 'aria-pressed': String(catFilter === e.key), onclick: () => switchList(() => { catFilter = e.key; }) },
       icon(e.ico), h('span', null, e.label), h('span', { class: 'count' }, String(e.n)))));
 
   const tc = totals(inCat);
@@ -1347,8 +1416,7 @@ function renderListMeta() {
 $('#filters').addEventListener('click', (e) => {
   const b = e.target.closest('button[data-filter]');
   if (!b) return;
-  filter = b.dataset.filter;
-  renderList();
+  switchList(() => { filter = b.dataset.filter; });
 });
 function flashRow(id) {
   const tr = document.querySelector('#rows tr[data-id="' + CSS.escape(id) + '"]');
@@ -1518,7 +1586,7 @@ for (const d of document.querySelectorAll('dialog')) d.addEventListener('click',
 
 /* ---------- Sinkronizacija preko GitHuba ---------- */
 const API = 'https://api.github.com';
-let sync = { repo: '', branch: 'data', path: 'data.json', token: '', ready: false, lastSync: 0 };
+let sync = { repo: '', branch: 'data', path: 'data.json', token: '', user: '', ready: false, lastSync: 0 };
 try { Object.assign(sync, JSON.parse(localStorage.getItem(LS_SYNC) || '{}')); } catch (e) { /* krećemo bez postavki */ }
 const saveSync = () => { try { localStorage.setItem(LS_SYNC, JSON.stringify(sync)); } catch (e) { /* nije bitno */ } };
 const connected = () => Boolean(sync.token && sync.repo);
@@ -1617,71 +1685,202 @@ async function syncNow() {
 function setStatus(kind, message) {
   const btn = $('#statusBtn');
   btn.dataset.state = kind;
-  const time = sync.lastSync ? new Date(sync.lastSync).toLocaleTimeString('hr-HR', { hour: '2-digit', minute: '2-digit' }) : '';
   const text = {
-    local: 'Podaci i sigurnosna kopija',
+    local: 'Prijava',
     busy: 'Sinkroniziram…',
-    ok: 'Sinkronizirano' + (time ? ' u ' + time : ''),
-    error: 'Sinkronizacija nije uspjela',
-    offline: 'Nema veze, izmjene čekaju',
+    ok: sync.user || 'Prijavljen',
+    error: 'Greška prijave',
+    offline: 'Nema veze',
   }[kind];
   $('#statusText').textContent = text;
-  btn.setAttribute('aria-label', text + '. Podaci i sinkronizacija');
-  btn.title = message || 'Podaci i sinkronizacija';
+  btn.setAttribute('aria-label', kind === 'local' ? 'Prijava' : text + '. Račun i podaci');
+  btn.title = message || (kind === 'local' ? 'Prijavi se da popis vidiš na svim uređajima' : 'Račun i podaci');
   btn.dataset.message = message || '';
+  if ($('#setDlg').open) drawAccount();
 }
 addEventListener('online', () => scheduleSync(500));
 document.addEventListener('visibilitychange', () => {
   if (document.visibilityState === 'visible' && connected() && Date.now() - sync.lastSync > 20000) scheduleSync(0);
 });
 
-/* ---------- Dijalog: postavke ---------- */
+/* ---------- Prijava i račun ---------- */
 function guessRepo() {
   const m = location.hostname.match(/^([\w-]+)\.github\.io$/i);
   if (!m) return '';
   const first = location.pathname.split('/').filter(Boolean)[0];
   return m[1] + '/' + (first && !/\.html?$/i.test(first) ? first : m[1] + '.github.io');
 }
+/* Račun: GitHub token se zaključa lozinkom i tako zaključan spremi u repozitorij.
+   Na drugom uređaju ime i lozinka ga otključaju, pa token nikad ne treba prepisivati. */
+const ACC_PATH = 'racun.json';
+const PBKDF2_ROUNDS = 600000;
+const toB64 = (buf) => { let bin = ''; for (const b of new Uint8Array(buf)) bin += String.fromCharCode(b); return btoa(bin); };
+const fromB64 = (str) => Uint8Array.from(atob(str), (ch) => ch.charCodeAt(0));
+async function passKey(password, salt, rounds) {
+  const base = await crypto.subtle.importKey('raw', new TextEncoder().encode(password), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({ name: 'PBKDF2', salt, iterations: rounds, hash: 'SHA-256' }, base, { name: 'AES-GCM', length: 256 }, false, ['encrypt', 'decrypt']);
+}
+async function lockToken(token, password, user) {
+  const salt = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const key = await passKey(password, salt, PBKDF2_ROUNDS);
+  const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv, additionalData: new TextEncoder().encode(user) }, key, new TextEncoder().encode(token));
+  return { salt: toB64(salt), iv: toB64(iv), ct: toB64(ct), rounds: PBKDF2_ROUNDS };
+}
+async function unlockToken(rec, password, user) {
+  const key = await passKey(password, fromB64(rec.salt), Number(rec.rounds) || PBKDF2_ROUNDS);
+  const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: fromB64(rec.iv), additionalData: new TextEncoder().encode(user) }, key, fromB64(rec.ct));
+  return new TextDecoder().decode(plain);
+}
+async function readAccounts(repo, branch, token) {
+  const headers = { Accept: 'application/vnd.github+json' };
+  if (token) headers.Authorization = 'Bearer ' + token;
+  const r = await fetch(API + '/repos/' + repo + '/contents/' + ACC_PATH + '?ref=' + encodeURIComponent(branch), { headers, cache: 'no-store' });
+  if (r.status === 404) return { users: {}, sha: null, missing: true };
+  if (r.status === 403 || r.status === 429) throw new SyncError('GitHub trenutno ne dopušta čitanje (previše pokušaja). Pričekaj nekoliko minuta.');
+  if (!r.ok) throw new SyncError('Čitanje računa nije uspjelo (greška ' + r.status + ').');
+  const j = await r.json();
+  let users = {};
+  try { const d = JSON.parse(b64decode(j.content || '')); if (d && d.users && typeof d.users === 'object') users = d.users; } catch (e) { /* oštećena datoteka: kao da računa nema */ }
+  return { users, sha: j.sha, missing: false };
+}
+const userKey = (name) => name.trim().toLowerCase();
+const cryptoReady = () => typeof crypto !== 'undefined' && crypto.subtle;
+
+const clock = (ts) => new Date(ts).toLocaleTimeString('hr-HR', { hour: '2-digit', minute: '2-digit' });
+let acctMode = 'login';
+function drawAccount() {
+  const on = connected();
+  $('#setTitle').textContent = on ? 'Račun' : acctMode === 'create' ? 'Novi račun' : 'Prijava';
+  $('#loginView').hidden = on || acctMode !== 'login';
+  $('#createView').hidden = on || acctMode !== 'create';
+  $('#acctView').hidden = !on;
+  if (!on) return;
+  const state = $('#statusBtn').dataset.state;
+  $('#acctWho').textContent = 'Prijavljen si' + (sync.user ? ' kao ' + sync.user : '') + '. Popis je isti na svakom uređaju na kojem se prijaviš.';
+  $('#acctSync').textContent = state === 'busy' ? 'Sinkroniziram…' : sync.lastSync ? 'Zadnja sinkronizacija u ' + clock(sync.lastSync) + '.' : '';
+  $('#acctErr').textContent = state === 'error' || state === 'offline' ? $('#statusBtn').dataset.message : '';
+}
 function openSettings() {
+  acctMode = 'login';
   $('#sRepo').value = sync.repo || guessRepo();
   $('#sBranch').value = sync.branch;
   $('#sPath').value = sync.path;
-  $('#sToken').value = sync.token;
-  $('#setErr').textContent = $('#statusBtn').dataset.state === 'error' ? $('#statusBtn').dataset.message : '';
-  $('#setMsg').textContent = '';
-  $('#connectBtn').textContent = connected() ? 'Spremi i sinkroniziraj' : 'Poveži i sinkroniziraj';
-  $('#disconnectBtn').hidden = !connected();
+  for (const id of ['#lPass', '#cPass', '#sToken']) $(id).value = '';
+  $('#lUser').value = sync.user || '';
+  for (const id of ['#setErr', '#createErr', '#setMsg']) $(id).textContent = '';
+  $('#advBox').open = !$('#sRepo').value;
+  drawAccount();
   $('#setDlg').showModal();
 }
 $('#statusBtn').addEventListener('click', openSettings);
-async function connect() {
-  const err = $('#setErr'), msg = $('#setMsg');
-  err.textContent = ''; msg.textContent = '';
-  const repo = $('#sRepo').value.trim().replace(/^https?:\/\/github\.com\//i, '').replace(/\.git$/i, '').replace(/\/+$/, '');
+$('#toCreate').addEventListener('click', () => { acctMode = 'create'; $('#cUser').value = $('#lUser').value; drawAccount(); $('#cUser').focus(); });
+$('#toLogin').addEventListener('click', () => { acctMode = 'login'; drawAccount(); $('#lUser').focus(); });
+$('#cPass').addEventListener('input', () => {
+  const v = $('#cPass').value, hint = $('#passHint');
+  const weak = v.length > 0 && (v.length < 10 || /^\d+$/.test(v));
+  hint.classList.toggle('warn', weak);
+  hint.textContent = weak ? 'Ovu lozinku je lako pogoditi. Kratke lozinke i one samo od brojeva (datumi) probiju se brzo, pa je bolje uzeti dulju, sa slovima.'
+    : 'Lozinka čuva pristup popisu. Što je dulja, to ju je teže pogoditi.';
+});
+function storageTarget(errEl) {
+  const repo = $('#sRepo').value.trim().replace(/^https?:\/\/github\.com\//i, '').replace(/\.git$/i, '').replace(/\/+$/, '') || sync.repo || guessRepo();
   const branch = $('#sBranch').value.trim() || 'data';
   const path = $('#sPath').value.trim().replace(/^\/+/, '') || 'data.json';
-  const token = $('#sToken').value.trim();
-  if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) { err.textContent = 'Repozitorij upiši kao korisnik/repozitorij.'; return; }
-  if (!/^[\w.\-\/]+$/.test(branch) || !/^[\w.\-\/ ]+$/.test(path)) { err.textContent = 'Naziv grane ili datoteke sadrži nedopuštene znakove.'; return; }
-  if (!token) { err.textContent = 'Zalijepi pristupni token.'; return; }
-  Object.assign(sync, { repo, branch, path, token, ready: false });
-  saveSync();
-  $('#connectBtn').disabled = true;
-  const res = await syncNow();
-  $('#connectBtn').disabled = false;
-  if (res.ok) { msg.textContent = 'Povezano. Popis se od sada sinkronizira sam.'; $('#disconnectBtn').hidden = false; $('#connectBtn').textContent = 'Spremi i sinkroniziraj'; }
-  else err.textContent = res.message;
+  if (!/^[\w.-]+\/[\w.-]+$/.test(repo)) { errEl.textContent = 'Ne znam u kojem su repozitoriju podaci. Otvori stranicu na njezinoj github.io adresi.'; return null; }
+  if (!/^[\w.\-\/]+$/.test(branch) || !/^[\w.\-\/ ]+$/.test(path)) { errEl.textContent = 'Naziv grane ili datoteke sadrži nedopuštene znakove.'; return null; }
+  return { repo, branch, path };
 }
-$('#connectBtn').addEventListener('click', connect);
-onEnter('#setForm', connect);
+function busy(btn, on, label) { btn.disabled = on; if (label) btn.textContent = label; }
+
+async function login() {
+  const err = $('#setErr');
+  err.textContent = ''; $('#setMsg').textContent = '';
+  const user = userKey($('#lUser').value), password = $('#lPass').value;
+  if (!user) { err.textContent = 'Upiši korisničko ime.'; $('#lUser').focus(); return; }
+  if (!password) { err.textContent = 'Upiši lozinku.'; $('#lPass').focus(); return; }
+  if (!cryptoReady()) { err.textContent = 'Ovaj preglednik ovdje ne podržava prijavu. Otvori stranicu na njezinoj https adresi.'; return; }
+  const target = storageTarget(err);
+  if (!target) return;
+  const btn = $('#connectBtn');
+  busy(btn, true, 'Prijavljujem…');
+  try {
+    const acc = await readAccounts(target.repo, target.branch);
+    const rec = acc.users[user];
+    if (!rec) { err.textContent = acc.missing ? 'Još nema nijednog računa. Napravi ga gumbom „Nemam račun”.' : 'Račun „' + user + '” ne postoji.'; return; }
+    let token;
+    try { token = await unlockToken(rec, password, user); } catch (e) { err.textContent = 'Kriva lozinka.'; $('#lPass').select(); return; }
+    Object.assign(sync, target, { token, user, ready: false, lastSync: 0 });
+    saveSync();
+    const res = await syncNow();
+    if (!res.ok) { sync.token = ''; saveSync(); setStatus('local'); err.textContent = res.message + ' Ako je token istekao, napravi račun ponovno s novim tokenom.'; return; }
+    $('#lPass').value = '';
+    drawAccount();
+    $('#setMsg').textContent = 'Prijavljen si. Popis je učitan.';
+  } catch (e) {
+    err.textContent = e instanceof SyncError ? e.message : 'Nema veze s GitHubom. Provjeri internet pa pokušaj ponovno.';
+  } finally { busy(btn, false, 'Prijavi se'); }
+}
+async function createAccount() {
+  const err = $('#createErr');
+  err.textContent = ''; $('#setMsg').textContent = '';
+  const user = userKey($('#cUser').value), password = $('#cPass').value, token = $('#sToken').value.trim();
+  if (!/^[a-z0-9._-]{3,30}$/.test(user)) { err.textContent = 'Korisničko ime: 3 do 30 znakova, slova, brojke, točka, crtica.'; $('#cUser').focus(); return; }
+  if (password.length < 8) { err.textContent = 'Lozinka treba imati barem 8 znakova.'; $('#cPass').focus(); return; }
+  if (!token) { err.textContent = 'Zalijepi GitHub token.'; $('#sToken').focus(); return; }
+  if (!cryptoReady()) { err.textContent = 'Ovaj preglednik ovdje ne podržava izradu računa. Otvori stranicu na njezinoj https adresi.'; return; }
+  const target = storageTarget(err);
+  if (!target) { $('#advBox').open = true; return; }
+  const btn = $('#createBtn');
+  busy(btn, true, 'Radim račun…');
+  const before = { ...sync };
+  try {
+    Object.assign(sync, target, { token, user, ready: false, lastSync: 0 });
+    const res = await syncNow();
+    if (!res.ok) throw new SyncError(res.message);
+    const rec = await lockToken(token, password, user);
+    let saved = false;
+    for (let i = 0; i < 3 && !saved; i++) {
+      const acc = await readAccounts(sync.repo, sync.branch, token);
+      acc.users[user] = rec;
+      const body = { message: 'Račun: ' + user, content: b64encode(JSON.stringify({ v: 1, users: acc.users }, null, 2) + '\n'), branch: sync.branch };
+      if (acc.sha) body.sha = acc.sha;
+      const r = await gh('PUT', '/repos/' + sync.repo + '/contents/' + ACC_PATH, body);
+      if (r.status === 409 || r.status === 422) continue;
+      checkAuth(r);
+      if (!r.ok) throw new SyncError('Spremanje računa nije uspjelo (greška ' + r.status + ').');
+      saved = true;
+    }
+    if (!saved) throw new SyncError('Spremanje računa nije uspjelo, pokušaj ponovno.');
+    saveSync();
+    for (const id of ['#cPass', '#sToken']) $(id).value = '';
+    setStatus('ok');
+    drawAccount();
+    $('#setMsg').textContent = 'Račun je napravljen. Na drugim uređajima se prijavi istim imenom i lozinkom.';
+  } catch (e) {
+    Object.assign(sync, before); saveSync();
+    setStatus(connected() ? 'ok' : 'local');
+    err.textContent = e instanceof SyncError ? e.message : 'Nema veze s GitHubom. Provjeri internet pa pokušaj ponovno.';
+  } finally { busy(btn, false, 'Napravi račun'); }
+}
+$('#connectBtn').addEventListener('click', login);
+onEnter('#loginView', login);
+$('#createBtn').addEventListener('click', createAccount);
+onEnter('#createView', createAccount);
+$('#syncBtn').addEventListener('click', async () => {
+  $('#setMsg').textContent = '';
+  const res = await syncNow();
+  drawAccount();
+  if (res.ok) $('#setMsg').textContent = 'Sinkronizirano.';
+});
 $('#disconnectBtn').addEventListener('click', () => {
+  const name = sync.user;
   sync.token = ''; sync.ready = false; sync.lastSync = 0;
   saveSync();
   setStatus('local');
-  $('#sToken').value = '';
-  $('#disconnectBtn').hidden = true;
-  $('#connectBtn').textContent = 'Poveži i sinkroniziraj';
-  $('#setMsg').textContent = 'Uređaj je odspojen. Popis je ostao i ovdje i u repozitoriju, obrisan je samo token iz ovog preglednika.';
+  acctMode = 'login';
+  $('#lUser').value = name || '';
+  drawAccount();
+  $('#setMsg').textContent = 'Odjavljen si. Popis je ostao na ovom uređaju i na tvom računu.';
 });
 
 /* ---------- Izvoz i uvoz ---------- */
@@ -1736,8 +1935,10 @@ layoutCols();
 try { if (localStorage.getItem(LS_VIEW) === 'list') { view = 'list'; document.body.dataset.view = 'list'; for (const b of document.querySelectorAll('.tabs button')) b.setAttribute('aria-pressed', String(b.dataset.tab === 'list')); } } catch (e) { /* nije bitno */ }
 render(true);
 enter();
-if (connected()) { setStatus(sync.lastSync ? 'ok' : 'busy'); syncNow(); }
-else setStatus('local');
+if (connected()) {
+  setStatus(sync.lastSync ? 'ok' : 'busy');
+  syncNow();
+} else setStatus('local');
 })();
 </script>
 </body>
