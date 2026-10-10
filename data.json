@@ -68,7 +68,7 @@
     {
       "id": "6687282f-5c7a-4412-b029-3dbccb45a18e",
       "name": "PEĆNICA BOSCH HBA574BB3",
-      "type": "",
+      "type": "Pečnica",
       "desc": "",
       "cat": "kuhinja",
       "source": "https://www.centar-tehnike.hr/pecnica-bosch-hba574bb3-proizvod-43516/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
@@ -76,7 +76,7 @@
       "bought": false,
       "paid": null,
       "createdAt": 1791653434791,
-      "updatedAt": 1791653434791
+      "updatedAt": 1791659841043
     },
     {
       "id": "e3d00454-5192-406d-87cf-70e593b934f1",
