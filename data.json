@@ -103,6 +103,19 @@
       "paid": null,
       "createdAt": 1791654824640,
       "updatedAt": 1791654824640
+    },
+    {
+      "id": "9b3bd765-6d6c-410f-9736-e828e21c0a06",
+      "name": "Bosch BFL524MB0 Ugradbeni mikrovalna pećnica Vulkan Crna",
+      "type": "Mikrovalna",
+      "desc": "https://tech24.hr/proizvod/bosch-bfl524mb0-einbau-mikrowellengerat-vulkan-schwarz/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
+      "cat": "kuhinja",
+      "source": "https://tech24.hr/proizvod/bosch-bfl524mb0-einbau-mikrowellengerat-vulkan-schwarz/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
+      "price": 302,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791656462952,
+      "updatedAt": 1791656462952
     }
   ],
   "deleted": {
