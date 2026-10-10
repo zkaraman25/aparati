@@ -168,6 +168,19 @@
       "paid": null,
       "createdAt": 1791660178813,
       "updatedAt": 1791660195790
+    },
+    {
+      "id": "780e9720-aedf-49b3-b4ec-2bbed81d2a1b",
+      "name": "Štapni usisavač Dreame Z30 Slim, bežični, bez vrećice, 600ml, 310AW, siva",
+      "type": "Usisavač",
+      "desc": "",
+      "cat": "stan",
+      "source": "Štapni usisavač Dreame Z30 Slim, bežični, bez vrećice, 600ml, 310AW, siva",
+      "price": 269,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791666367641,
+      "updatedAt": 1791666367641
     }
   ],
   "deleted": {
