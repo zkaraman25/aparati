@@ -155,6 +155,19 @@
       "paid": null,
       "createdAt": 1791660145556,
       "updatedAt": 1791660145556
+    },
+    {
+      "id": "1aac71e9-7f41-4a00-86e7-4ed872512a2c",
+      "name": "Prijenosni zvučnik Sonos - Play, Wi-Fi, crni",
+      "type": "",
+      "desc": "",
+      "cat": "",
+      "source": "",
+      "price": null,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791660178813,
+      "updatedAt": 1791660178813
     }
   ],
   "deleted": {
