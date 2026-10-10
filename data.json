@@ -142,6 +142,19 @@
       "paid": null,
       "createdAt": 1791659788231,
       "updatedAt": 1791659788231
+    },
+    {
+      "id": "4dbf95bf-8c14-4b21-ab37-482d54a2d163",
+      "name": "ROŠTILJ WEBER Q2100N PLINSKI",
+      "type": "Rošitlj",
+      "desc": "",
+      "cat": "vrt",
+      "source": "https://www.kingtrade.hr/rostilj-weber-q2100n-plinski/41402/product/",
+      "price": 449,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791660145556,
+      "updatedAt": 1791660145556
     }
   ],
   "deleted": {
