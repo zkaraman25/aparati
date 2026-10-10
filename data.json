@@ -116,6 +116,19 @@
       "paid": null,
       "createdAt": 1791656462952,
       "updatedAt": 1791656462952
+    },
+    {
+      "id": "d5b5563a-0df2-4f56-92a4-47f7da3c2cc1",
+      "name": "Aparat za espresso kavu De Longhi ECAM220.22.GB",
+      "type": "Kava",
+      "desc": "za esspresso top",
+      "cat": "kuhinja",
+      "source": "https://www.pevex.hr/aparat-za-espresso-kavu-de-longhi-ecam220-22-gb?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
+      "price": 299,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791659698187,
+      "updatedAt": 1791659698187
     }
   ],
   "deleted": {
