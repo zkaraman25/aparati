@@ -1,0 +1,11 @@
+{
+  "v": 1,
+  "users": {
+    "ciko123": {
+      "salt": "y+f7Nzypu1cT8q48Tfj6vw==",
+      "iv": "SqVR8QsWnh0IT35i",
+      "ct": "S2zvHPrRPCA23j59DTvg3veFMkxB3UyiHSmUCCAMeRblP6yDZeprFX/VMTT8UrAM4malUw+CWodMSGJuj6jpGjudQsRMDVQwqtVR9t6cWivGPwv5crJUciXEZyvCyAV1HEpn6/qY4yZFxzNgaA==",
+      "rounds": 600000
+    }
+  }
+}
