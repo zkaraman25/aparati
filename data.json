@@ -66,19 +66,6 @@
       "updatedAt": 1791652435462
     },
     {
-      "id": "58f1c09c-782b-4c30-a358-ff6b24e4daac",
-      "name": "TV Neo QLED Samsung QE65QN85FAUXXH - IZLOŽBENI PROIZVOD",
-      "type": "TV",
-      "desc": "Izlozbeni primjer jako jeftin na 749.. dobar za jaku svijetlost u prostoriji 144ghz",
-      "cat": "dnevni",
-      "source": "https://www.centar-tehnike.hr/tv-neo-qled-samsung-qe65qn85fauxxh-proizvod-46161/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
-      "price": 749,
-      "bought": false,
-      "paid": 749,
-      "createdAt": 1791653185877,
-      "updatedAt": 1791654701928
-    },
-    {
       "id": "6687282f-5c7a-4412-b029-3dbccb45a18e",
       "name": "PEĆNICA BOSCH HBA574BB3",
       "type": "",
@@ -114,6 +101,7 @@
     "pocetni-6": 1791647431481,
     "pocetni-7": 1791647434632,
     "943d5288-17fc-4e5e-9a6c-987ca41ac388": 1791652449445,
-    "6d7056b3-60ac-48ed-8c94-62aa568956af": 1791654224054
+    "6d7056b3-60ac-48ed-8c94-62aa568956af": 1791654224054,
+    "58f1c09c-782b-4c30-a358-ff6b24e4daac": 1791654706906
   }
 }
