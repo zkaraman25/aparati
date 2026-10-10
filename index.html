@@ -209,6 +209,23 @@ svg.ico{width:18px; height:18px; flex:none; fill:none; stroke:currentColor; stro
 .seg-ctl{display:inline-flex; padding:3px; background:var(--surface-2); border:1px solid var(--line); border-radius:10px}
 .seg-ctl button{min-height:30px; padding:4px 10px; border:0; border-radius:7px; background:transparent; color:var(--muted); font-size:.8125rem; font-weight:550; white-space:nowrap; transition:background .15s, color .15s}
 .seg-ctl button[aria-pressed="true"]{background:var(--surface); color:var(--ink); box-shadow:0 0 0 1px var(--line), 0 1px 2px rgba(0,0,0,.06)}
+.tools{display:flex; flex-wrap:wrap; gap:8px; padding:12px 16px 0}
+.search{display:flex; align-items:center; gap:8px; flex:1 1 220px; max-width:340px; min-height:36px; padding:0 10px; border:1px solid var(--line-2); border-radius:10px; background:var(--surface); color:var(--muted); transition:border-color .15s, box-shadow .15s}
+.search:focus-within{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+.search svg.ico{width:16px; height:16px}
+.search input{flex:1; min-width:0; border:0; background:transparent; outline:none; font-size:.875rem; color:var(--ink); padding:6px 0}
+.sortsel{position:relative; display:none; flex:1 1 180px; min-height:36px; border:1px solid var(--line-2); border-radius:10px; background:var(--surface)}
+.sortsel select{appearance:none; -webkit-appearance:none; width:100%; height:100%; min-height:36px; border:0; background:transparent; padding:0 30px 0 12px; font-size:.875rem; outline:none}
+.sortsel::after{content:""; position:absolute; right:13px; top:50%; width:6px; height:6px; border-right:1.5px solid var(--muted); border-bottom:1.5px solid var(--muted); transform:translateY(-70%) rotate(45deg); pointer-events:none}
+.sortsel:focus-within{border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+.th-sort{all:unset; box-sizing:border-box; display:inline-flex; align-items:center; gap:5px; max-width:100%; cursor:pointer; border-radius:5px}
+.th-sort:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
+.th-sort span{overflow:hidden; text-overflow:ellipsis}
+.th-sort i{flex:none; width:0; height:0; border-left:4px solid transparent; border-right:4px solid transparent; border-bottom:5px solid var(--muted); opacity:0; transition:opacity .15s, transform .2s var(--ease)}
+.th-sort:hover i{opacity:.45}
+th[aria-sort="ascending"] .th-sort i{opacity:1; border-bottom-color:var(--accent)}
+th[aria-sort="descending"] .th-sort i{opacity:1; border-bottom-color:var(--accent); transform:rotate(180deg)}
+th[aria-sort="ascending"] .th-sort,th[aria-sort="descending"] .th-sort{color:var(--accent-text)}
 .catchips{display:flex; gap:6px; overflow-x:auto; padding:10px 16px 12px; scrollbar-width:none}
 .catchips::-webkit-scrollbar{display:none}
 .catchips button{
@@ -355,6 +372,10 @@ tr.open .sum::after{transform:rotate(225deg) translate(-2px,-1px)}
   .sheet tbody .src .icon-btn{border:0; box-shadow:none; background:transparent; width:32px; height:32px; top:3px}
   .sheet tbody .src-link,.sheet tbody .src-text{padding-right:34px}
   #addBtn2{display:none}
+  .sortsel{display:block}
+  .search{max-width:none}
+  .search input{font-size:16px}
+  .sortsel select{font-size:16px}
   .totals{flex-direction:column; gap:0; padding:14px 16px}
   .tot-main{margin:0 0 8px; padding:0; align-self:flex-start}
   .tot-box{min-width:0; padding:10px 0; border-left:0; border-top:1px solid var(--line-2)}
@@ -480,6 +501,22 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
           <button class="btn" type="button" id="xlsBtn"><span data-ico="sheet"></span>Izvezi u Excel</button>
           <button class="btn btn-primary" type="button" id="addBtn2"><span data-ico="plus"></span>Dodaj proizvod</button>
         </div>
+      </div>
+      <div class="tools">
+        <label class="search"><span data-ico="search"></span><input type="search" id="searchBox" placeholder="Pretraži proizvode" aria-label="Pretraži proizvode" autocomplete="off" spellcheck="false"></label>
+        <label class="sortsel"><span class="sr-only">Sortiraj</span><select id="sortSel" aria-label="Sortiraj popis">
+          <option value="">Redoslijed dodavanja</option>
+          <option value="name:asc">Ime, A do Ž</option>
+          <option value="name:desc">Ime, Ž do A</option>
+          <option value="type:asc">Tip proizvoda</option>
+          <option value="cat:asc">Kategorija</option>
+          <option value="price:desc">Cijena, najskuplje prvo</option>
+          <option value="price:asc">Cijena, najjeftinije prvo</option>
+          <option value="paid:desc">Plaćeno, najviše prvo</option>
+          <option value="save:desc">Ušteda, najveća prvo</option>
+          <option value="check:asc">Za kupiti prvo</option>
+          <option value="check:desc">Kupljeno prvo</option>
+        </select></label>
       </div>
       <div class="catchips" id="catChips" role="group" aria-label="Filtar po kategoriji"></div>
       <div class="sheet-wrap">
@@ -661,6 +698,7 @@ const LS_DATA = 'aparati.data.v1';
 const LS_SYNC = 'aparati.sync.v1';
 const LS_VIEW = 'aparati.view.v3';
 const LS_COLS = 'aparati.cols.v1';
+const LS_SORT = 'aparati.sort.v1';
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 function h(tag, attrs, ...kids) {
@@ -705,6 +743,7 @@ const ICONS = {
   trash: 'M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13M10 11v5M14 11v5',
   cloud: 'M7 18a4 4 0 0 1-.5-7.97A6 6 0 0 1 18 9.5a4.25 4.25 0 0 1 .25 8.5z',
   sheet: 'M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM4 9h16M4 15h16M10 3v18',
+  search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4.2-4.2',
 };
 function icon(name) {
   const svg = s('svg', { class: 'ico', viewBox: '0 0 24 24', 'aria-hidden': 'true' });
@@ -880,7 +919,38 @@ let typeFilter = null;
 const getItem = (id) => state.items.find((x) => x.id === id);
 const inCatFilter = (it) => !catFilter || (catFilter === '-' ? !it.cat : it.cat === catFilter);
 const inTypeFilter = (it) => typeFilter == null || it.type.trim().toLowerCase() === typeFilter;
-const matches = (it) => inCatFilter(it) && inTypeFilter(it) && (filter === 'all' || (filter === 'done') === it.bought);
+/* Pretraga gleda ime, tip, opis, izvor i kategoriju; ne razlikuje velika i mala slova ni kvačice */
+const plain = (v) => String(v || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/đ/g, 'd');
+let search = '';
+const inSearch = (it) => {
+  if (!search) return true;
+  const hay = plain([it.name, it.type, it.desc, it.source, CAT[it.cat] ? CAT[it.cat].label : ''].join(' '));
+  return search.split(/\s+/).every((word) => hay.includes(word));
+};
+const matches = (it) => inCatFilter(it) && inTypeFilter(it) && inSearch(it) && (filter === 'all' || (filter === 'done') === it.bought);
+/* Sortiranje: klik na zaglavlje stupca (računalo) ili izbornik (mobitel) */
+let sort = { key: '', dir: 'asc' };
+try { const sv = JSON.parse(localStorage.getItem(LS_SORT) || 'null'); if (sv && typeof sv.key === 'string' && (sv.dir === 'asc' || sv.dir === 'desc')) sort = { key: sv.key, dir: sv.dir }; } catch (e) { /* zadani redoslijed */ }
+const SORT_VALUE = {
+  name: (it) => it.name, type: (it) => it.type, desc: (it) => it.desc,
+  cat: (it) => (CAT[it.cat] ? CAT[it.cat].label : ''),
+  src: (it) => sourceInfo(it.source).label,
+  check: (it) => (it.bought ? 1 : 0),
+  price: (it) => it.price,
+  save: (it) => { const sv = saving(it); return sv ? sv.diff : null; },
+  paid: (it) => (it.bought ? it.paid : null),
+};
+function sortItems(list) {
+  const get = SORT_VALUE[sort.key];
+  if (!get) return list;
+  const sign = sort.dir === 'desc' ? -1 : 1;
+  const empty = (v) => v == null || v === '';
+  return list.map((it, i) => ({ it, i, v: get(it) })).sort((a, b) => {
+    if (empty(a.v) || empty(b.v)) return empty(a.v) && empty(b.v) ? a.i - b.i : empty(a.v) ? 1 : -1;
+    const c = typeof a.v === 'number' ? a.v - b.v : String(a.v).localeCompare(String(b.v), 'hr', { sensitivity: 'base', numeric: true });
+    return c ? c * sign : a.i - b.i;
+  }).map((x) => x.it);
+}
 
 function touched() {
   saveLocal();
@@ -1389,7 +1459,7 @@ function switchList(change) {
   }, 130);
 }
 function renderList() {
-  const list = state.items.filter(matches);
+  const list = sortItems(state.items.filter(matches));
   const openRow = document.querySelector('#rows tr.open');
   const openId = openRow ? openRow.dataset.id : null;
   $('#rows').replaceChildren(...list.map((it) => { const tr = rowEl(it); if (it.id === openId) { tr.classList.add('open'); tr.querySelector('.sum').setAttribute('aria-expanded', 'true'); } return tr; }));
@@ -1399,7 +1469,7 @@ function renderList() {
 function renderListMeta() {
   const t = totals(state.items);
   $('#typeList').replaceChildren(...[...new Set(state.items.map((x) => x.type.trim()).filter(Boolean))].sort((a, b) => a.localeCompare(b, 'hr')).map((v) => h('option', { value: v })));
-  const inCat = state.items.filter((it) => inCatFilter(it) && inTypeFilter(it));
+  const inCat = state.items.filter((it) => inCatFilter(it) && inTypeFilter(it) && inSearch(it));
   const list = inCat.filter(matches);
   $('#listTitle').textContent = catFilter === '-' ? 'Bez kategorije' : catFilter ? CAT[catFilter].label : 'Svi proizvodi';
 
@@ -1423,13 +1493,14 @@ function renderListMeta() {
   empty.hidden = list.length > 0;
   if (!list.length) {
     empty.textContent = t.count === 0 ? 'Još nema proizvoda. Dodaj prvi gumbom „Dodaj proizvod”.'
+      : search && tc.count === 0 ? 'Nema proizvoda za „' + $('#searchBox').value.trim() + '”.'
       : tc.count === 0 ? 'U ovoj kategoriji još nema proizvoda.'
       : filter === 'done' ? 'Ovdje još ništa nije kupljeno.' : 'Ovdje je sve kupljeno.';
   }
   const foot = $('#foot');
   if (!list.length) { foot.replaceChildren(); return; }
   const ts = totals(list);
-  const all = !catFilter && typeFilter == null && filter === 'all';
+  const all = !catFilter && typeFilter == null && !search && filter === 'all';
   const savedPct = ts.listOfBought > 0 ? (Math.abs(ts.saved) / ts.listOfBought) * 100 : 0;
   const tot = (cls, label, value, extra) => h('div', { class: 'tot-box ' + cls }, h('span', { class: 'tot-label' }, label), h('span', { class: 'tot-val num' }, value, extra || null));
   foot.replaceChildren(
@@ -1453,7 +1524,7 @@ function flashRow(id) {
   setTimeout(() => tr.classList.remove('flash'), 1700);
 }
 function goToItem(id) {
-  filter = 'all'; catFilter = ''; typeFilter = null;
+  filter = 'all'; catFilter = ''; typeFilter = null; search = ''; $('#searchBox').value = '';
   renderList();
   if (document.body.dataset.view !== 'list' && matchMedia('(max-width:999px)').matches) setView('list');
   flashRow(id);
@@ -1479,7 +1550,7 @@ $('#delYes').addEventListener('click', () => {
 /* Širine stupaca: povuci rub zaglavlja, dvoklik vraća zadanu širinu */
 const COLS = [
   { key: 'name', flex: 2.6, min: 140 }, { key: 'type', flex: 1.2, min: 84 }, { key: 'desc', flex: 1.0, min: 76 },
-  { key: 'cat', w: 104, min: 80 }, { key: 'src', w: 80, min: 60 }, { key: 'check', w: 74, min: 60 },
+  { key: 'cat', w: 132, min: 80 }, { key: 'src', w: 88, min: 60 }, { key: 'check', w: 92, min: 60 },
   { key: 'price', w: 98, min: 70 }, { key: 'save', w: 132, min: 90 }, { key: 'paid', w: 98, min: 70 }, { key: 'del', w: 32, min: 32 },
 ];
 let colW = {};
@@ -1503,8 +1574,38 @@ function layoutCols() {
   for (const c of COLS) colEls[c.key].style.width = colNow[c.key] + 'px';
   table.style.width = total + 'px';
 }
+function paintSort() {
+  for (const th of document.querySelectorAll('.sheet thead th[data-col]')) {
+    if (th.dataset.col === sort.key) th.setAttribute('aria-sort', sort.dir === 'desc' ? 'descending' : 'ascending'); else th.removeAttribute('aria-sort');
+  }
+  const value = sort.key ? sort.key + ':' + sort.dir : '';
+  const sel = $('#sortSel');
+  sel.value = [...sel.options].some((o) => o.value === value) ? value : '';
+}
+function setSort(key, dir) {
+  switchList(() => { sort = { key, dir }; });
+  try { localStorage.setItem(LS_SORT, JSON.stringify(sort)); } catch (e) { /* nije bitno */ }
+  paintSort();
+}
+$('#sortSel').addEventListener('change', (e) => { const [key, dir] = e.target.value.split(':'); setSort(key || '', dir || 'asc'); });
+let searchTimer = null;
+$('#searchBox').addEventListener('input', (e) => {
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => { search = plain(e.target.value).trim(); renderList(); }, 140);
+});
 for (const th of document.querySelectorAll('.sheet thead th[data-col]')) {
   const c = COLS.find((x) => x.key === th.dataset.col);
+  /* Naslov stupca je gumb: prvi klik sortira uzlazno, drugi silazno, treći vraća redoslijed dodavanja */
+  const label = th.textContent.trim();
+  const sortBtn = h('button', { class: 'th-sort', type: 'button', title: 'Sortiraj po stupcu ' + label }, h('span', null, label), h('i', { 'aria-hidden': 'true' }));
+  sortBtn.addEventListener('click', () => {
+    const numeric = ['price', 'save', 'paid'].includes(c.key);
+    const first = numeric ? 'desc' : 'asc', second = numeric ? 'asc' : 'desc';
+    if (sort.key !== c.key) setSort(c.key, first);
+    else if (sort.dir === first) setSort(c.key, second);
+    else setSort('', 'asc');
+  });
+  th.replaceChildren(sortBtn);
   const grip = h('span', { class: 'grip', title: 'Povuci za širinu stupca, dvoklik vraća zadanu' });
   grip.addEventListener('pointerdown', (e) => {
     e.preventDefault();
@@ -1593,7 +1694,7 @@ function saveNew() {
   const it = addItem({ name, type: $('#fType').value.trim(), desc: $('#fDesc').value.trim(), cat: pickedCat(), source: normSource($('#fSource').value), price, bought, paid: bought ? paid : null });
   $('#itemDlg').close();
   toast('Proizvod je dodan na popis');
-  if (!matches(it)) { filter = 'all'; typeFilter = null; if (!inCatFilter(it)) catFilter = ''; }
+  if (!matches(it)) { filter = 'all'; typeFilter = null; if (!inCatFilter(it)) catFilter = ''; if (!inSearch(it)) { search = ''; $('#searchBox').value = ''; } }
   render(false);
   renderStats(true);
   const tr = document.querySelector('#rows tr[data-id="' + CSS.escape(it.id) + '"]');
@@ -2039,6 +2140,7 @@ $('#importFile').addEventListener('change', async (e) => {
 if (matchMedia('(max-width:999px)').matches) $('#listHint').textContent = 'Dodirni proizvod za uređivanje';
 buildStats();
 layoutCols();
+paintSort();
 try { if (localStorage.getItem(LS_VIEW) === 'list') { view = 'list'; document.body.dataset.view = 'list'; for (const b of document.querySelectorAll('.tabs button')) b.setAttribute('aria-pressed', String(b.dataset.tab === 'list')); } } catch (e) { /* nije bitno */ }
 render(true);
 enter();
