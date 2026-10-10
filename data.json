@@ -1,19 +1,6 @@
 {
   "items": [
     {
-      "id": "6d7056b3-60ac-48ed-8c94-62aa568956af",
-      "name": "Cozze rotirajuća plinska pizza pećnica 17\" (90437) Classic Black",
-      "type": "Plinska Pizza Pećnica",
-      "desc": "Rotirajuca 17inch",
-      "cat": "vrt",
-      "source": "https://www.mall.hr/pecnice-za-pizzu/cozze-rotirajuca-plinska-pizza-pecnica-17-90437-classic-black",
-      "price": 449.73,
-      "bought": false,
-      "paid": 449.73,
-      "createdAt": 1791647489118,
-      "updatedAt": 1791651249491
-    },
-    {
       "id": "f989d9e5-f9c5-4f93-968b-1151c5758e17",
       "name": "Prijenosni zvučnik Sonos - Play, Wi-Fi, crni",
       "type": "Zvučnik",
@@ -126,6 +113,7 @@
     "pocetni-5": 1791647429865,
     "pocetni-6": 1791647431481,
     "pocetni-7": 1791647434632,
-    "943d5288-17fc-4e5e-9a6c-987ca41ac388": 1791652449445
+    "943d5288-17fc-4e5e-9a6c-987ca41ac388": 1791652449445,
+    "6d7056b3-60ac-48ed-8c94-62aa568956af": 1791654224054
   }
 }
