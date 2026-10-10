@@ -90,6 +90,19 @@
       "paid": null,
       "createdAt": 1791653939636,
       "updatedAt": 1791653939636
+    },
+    {
+      "id": "b0ed72ff-4c7d-4cdb-86b0-26f995cdcd0a",
+      "name": "NEO QLED TV SAMSUNG QE55QN85FAUXXH (Mini LED)",
+      "type": "TV",
+      "desc": "55inca za veliku svijetlost",
+      "cat": "dnevni",
+      "source": "https://www.makspro.hr/qled-tv-samsung-qe55qn85fauxxh-qe55qn85f.html",
+      "price": 669,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791654824640,
+      "updatedAt": 1791654824640
     }
   ],
   "deleted": {
