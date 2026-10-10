@@ -51,6 +51,19 @@
       "paid": null,
       "createdAt": 1791651234014,
       "updatedAt": 1791651244074
+    },
+    {
+      "id": "04a4e0c0-bd74-40af-92b3-feb6fa64b70e",
+      "name": "Perilica rublja BOSCH WGG244Z5BY",
+      "type": "Perilica Rublja",
+      "desc": "NA POPUSTU -220E (719,00 €)Bez wifi je",
+      "cat": "wc",
+      "source": "https://www.harveynorman.hr/perilica-rublja-bosch-wgg244z5by?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
+      "price": 498.99,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791651996764,
+      "updatedAt": 1791651996764
     }
   ],
   "deleted": {
