@@ -64,6 +64,19 @@
       "paid": null,
       "createdAt": 1791651996764,
       "updatedAt": 1791651996764
+    },
+    {
+      "id": "5e21c31c-9099-4ac2-a0d7-87ae03c691e7",
+      "name": "BOSCH sušilica rublja WTH83256BY",
+      "type": "Sušilica Rublja",
+      "desc": "",
+      "cat": "wc",
+      "source": "https://www.alles.hr/susilice-rublja/bosch-susilica-rublja-wth83256by?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
+      "price": 499,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791652117021,
+      "updatedAt": 1791652117021
     }
   ],
   "deleted": {
