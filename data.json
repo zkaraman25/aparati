@@ -181,6 +181,19 @@
       "paid": null,
       "createdAt": 1791666367641,
       "updatedAt": 1791666367641
+    },
+    {
+      "id": "940942f6-eea3-4a16-8994-dc36bb221832",
+      "name": "Xiaomi Robot Vacuum H50 – Robotski usisavač",
+      "type": "Usisavač",
+      "desc": "Brise i pod",
+      "cat": "stan",
+      "source": "https://e-point.hr/product/xiaomi-robot-vacuum-h50-robotski-usisavac/",
+      "price": 285,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791666721680,
+      "updatedAt": 1791666721680
     }
   ],
   "deleted": {
