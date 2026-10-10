@@ -77,6 +77,19 @@
       "paid": null,
       "createdAt": 1791652427399,
       "updatedAt": 1791652435462
+    },
+    {
+      "id": "58f1c09c-782b-4c30-a358-ff6b24e4daac",
+      "name": "TV Neo QLED Samsung QE65QN85FAUXXH - IZLOŽBENI PROIZVOD",
+      "type": "TV",
+      "desc": "Izlozbeni primjer jako jeftin na 749.. dobar za jaku svijetlost u prostoriji 144ghz",
+      "cat": "dnevni",
+      "source": "https://www.centar-tehnike.hr/tv-neo-qled-samsung-qe65qn85fauxxh-proizvod-46161/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
+      "price": 749,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791653185877,
+      "updatedAt": 1791653185877
     }
   ],
   "deleted": {
