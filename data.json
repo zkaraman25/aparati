@@ -77,6 +77,19 @@
       "paid": null,
       "createdAt": 1791652117021,
       "updatedAt": 1791652117021
+    },
+    {
+      "id": "64a10140-768b-461d-b02c-705e6d4d0ebd",
+      "name": "UGRADBENI HLADNJAK BOSCH KIV86VSE0",
+      "type": "HLADNJAK",
+      "desc": "177cm visine",
+      "cat": "",
+      "source": "https://www.centar-tehnike.hr/hladnjak-bosch-kiv86vse0-proizvod-14540/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
+      "price": 699,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791652427399,
+      "updatedAt": 1791652427399
     }
   ],
   "deleted": {
