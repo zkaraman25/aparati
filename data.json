@@ -223,6 +223,20 @@
       "paid": null,
       "createdAt": 1791752530102,
       "updatedAt": 1791752530102
+    },
+    {
+      "id": "3193cd34-9c3d-4461-a686-fb2081fa8eea",
+      "name": "Modularna kutna garnitura Sorcoro 105 (Vogue 01)",
+      "type": "Kutna Garnitura",
+      "desc": "",
+      "cat": "dnevni",
+      "source": "https://www.namjestaj.hr/kolekcije-namjestaja/kolekcija-namjestaja-sorcoro/modularna-kutna-garnitura-sorcoro-105.html?variation_id=685194",
+      "qty": 1,
+      "price": 1895,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791752561493,
+      "updatedAt": 1791752561493
     }
   ],
   "deleted": {
