@@ -79,19 +79,6 @@
       "updatedAt": 1791659841043
     },
     {
-      "id": "e3d00454-5192-406d-87cf-70e593b934f1",
-      "name": "Bosch ploča s integriranom napom PXX801D67E indukcijska 80cm",
-      "type": "Indukcijska ploča",
-      "desc": "Mat u ravnini s pločom",
-      "cat": "dnevni",
-      "source": "https://tehno-mag.hr/bosch-ploca-s-integriranom-napom-pxx801d67e-indukcijska-80cm-proizvod-13277/?gad_source=1&gad_campaignid=24328624712&gbraid=0AAAABCBD-rh3RbENaiFgo2s5MICL1EZRF&gclid=Cj0KCQjwxKfWBhDkARIsAMKwkNZHvT6emj4mbKovubIa3lFJCS8RO5DJogM0bvHv4f9kAg9qFoh8PnoaAhgJEALw_wcB",
-      "price": 2299.99,
-      "bought": false,
-      "paid": null,
-      "createdAt": 1791653939636,
-      "updatedAt": 1791653939636
-    },
-    {
       "id": "b0ed72ff-4c7d-4cdb-86b0-26f995cdcd0a",
       "name": "NEO QLED TV SAMSUNG QE55QN85FAUXXH (Mini LED)",
       "type": "TV",
@@ -206,6 +193,7 @@
     "pocetni-7": 1791647434632,
     "943d5288-17fc-4e5e-9a6c-987ca41ac388": 1791652449445,
     "6d7056b3-60ac-48ed-8c94-62aa568956af": 1791654224054,
-    "58f1c09c-782b-4c30-a358-ff6b24e4daac": 1791654706906
+    "58f1c09c-782b-4c30-a358-ff6b24e4daac": 1791654706906,
+    "e3d00454-5192-406d-87cf-70e593b934f1": 1791746899627
   }
 }
