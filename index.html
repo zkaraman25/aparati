@@ -356,7 +356,9 @@ tr.open .sum::after{transform:rotate(225deg) translate(-2px,-1px)}
   .sheet tbody tr.open td.c-name,.sheet tbody tr.open td.c-type,.sheet tbody tr.open td.c-desc{flex:0 0 100%}
   .sheet tbody tr.open td.c-cat{flex:0 0 46%}
   .sheet tbody tr.open td.c-src{flex:1 1 40%}
-  .sheet tbody tr.open td.c-price,.sheet tbody tr.open td.c-paid{flex:1 1 34%; order:1}
+  .sheet tbody tr.open td.c-qty{flex:0 0 22%; order:1}
+  .sheet tbody tr.open td.c-price,.sheet tbody tr.open td.c-paid{flex:1 1 26%; order:1}
+  .sheet tbody tr.open td.c-save{order:3}
   .sheet tbody tr.open td.c-del{flex:0 0 auto; order:2}
   .sheet tbody tr.open td.c-save{flex:0 0 100%; order:3}
   .sheet tbody tr.open td.c-save:has(.none){display:none}
@@ -510,6 +512,7 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
           <option value="name:desc">Ime, Ž do A</option>
           <option value="type:asc">Tip proizvoda</option>
           <option value="cat:asc">Kategorija</option>
+          <option value="qty:desc">Količina, najviše prvo</option>
           <option value="price:desc">Cijena, najskuplje prvo</option>
           <option value="price:asc">Cijena, najjeftinije prvo</option>
           <option value="paid:desc">Plaćeno, najviše prvo</option>
@@ -531,6 +534,7 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
               <th scope="col" class="c-cat" data-col="cat">Kategorija</th>
               <th scope="col" class="c-src" data-col="src">Izvor</th>
               <th scope="col" class="c-check" data-col="check">Kupljeno</th>
+              <th scope="col" class="c-qty num" data-col="qty">Količina</th>
               <th scope="col" class="c-price num" data-col="price">Cijena</th>
               <th scope="col" class="c-save num" data-col="save">Ušteda</th>
               <th scope="col" class="c-paid num" data-col="paid">Plaćeno</th>
@@ -575,14 +579,19 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
       <input type="text" id="fSource" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off" maxlength="500" placeholder="https://…">
     </label>
     <div class="field-row">
-      <label class="field"><span>Cijena (€)</span>
+      <label class="field"><span>Količina</span>
+        <input type="text" id="fQty" inputmode="numeric" autocomplete="off" maxlength="3" value="1">
+      </label>
+      <label class="field"><span>Cijena po komadu (€)</span>
         <input type="text" id="fPrice" inputmode="decimal" autocomplete="off" placeholder="0,00">
       </label>
-      <label class="field" id="fPaidWrap"><span>Plaćeno (€)</span>
+    </div>
+    <div class="field-row">
+      <label class="check-row" style="align-self:end; margin:0 0 10px"><span class="chk"><input type="checkbox" id="fBought"><span></span></span>Već kupljeno</label>
+      <label class="field" id="fPaidWrap"><span>Plaćeno ukupno (€)</span>
         <input type="text" id="fPaid" inputmode="decimal" autocomplete="off" placeholder="0,00">
       </label>
     </div>
-    <label class="check-row"><span class="chk"><input type="checkbox" id="fBought"><span></span></span>Već kupljeno</label>
     <p class="err" id="itemErr" role="alert"></p>
     <div class="dlg-actions">
       <span class="spacer"></span>
@@ -813,10 +822,13 @@ function sourceInfo(src) {
   return { label: t, url: null };
 }
 /* Ušteda po proizvodu: cijena koju si našao minus ono što si platio. */
+/* Cijena je po komadu; iznos stavke je cijena puta količina. Plaćeno je ukupno za cijelu stavku. */
+const lineTotal = (it) => (it.price == null ? null : round2(it.price * (it.qty || 1)));
 function saving(it) {
-  if (!it.bought || it.price == null || it.paid == null) return null;
-  const diff = round2(it.price - it.paid);
-  return { diff, pct: it.price > 0 ? (diff / it.price) * 100 : 0 };
+  const full = lineTotal(it);
+  if (!it.bought || full == null || it.paid == null) return null;
+  const diff = round2(full - it.paid);
+  return { diff, pct: full > 0 ? (diff / full) * 100 : 0 };
 }
 
 let toastTimer = null;
@@ -854,6 +866,7 @@ function normItem(it) {
     desc: String(it.desc == null ? '' : it.desc).slice(0, 1000),
     cat,
     source: String(it.source == null ? '' : it.source).slice(0, 500),
+    qty: Math.min(999, Math.max(1, Math.round(Number(it.qty)) || 1)),
     price: numOrNull(it.price),
     bought: it.bought === true,
     paid: numOrNull(it.paid),
@@ -936,6 +949,7 @@ const SORT_VALUE = {
   cat: (it) => (CAT[it.cat] ? CAT[it.cat].label : ''),
   src: (it) => sourceInfo(it.source).label,
   check: (it) => (it.bought ? 1 : 0),
+  qty: (it) => it.qty,
   price: (it) => it.price,
   save: (it) => { const sv = saving(it); return sv ? sv.diff : null; },
   paid: (it) => (it.bought ? it.paid : null),
@@ -987,16 +1001,18 @@ function removeItem(id) {
 
 /* ---------- Izračuni ---------- */
 function totals(items) {
-  let total = 0, spent = 0, remaining = 0, saved = 0, listOfBought = 0, bought = 0, priced = 0;
+  let total = 0, spent = 0, remaining = 0, saved = 0, listOfBought = 0, bought = 0, priced = 0, pieces = 0;
   for (const it of items) {
-    if (it.price != null) { total += it.price; priced++; }
+    const full = lineTotal(it);
+    pieces += it.qty || 1;
+    if (full != null) { total += full; priced++; }
     if (it.bought) {
       bought++;
       spent += it.paid || 0;
-      if (it.price != null && it.paid != null) { saved += it.price - it.paid; listOfBought += it.price; }
-    } else if (it.price != null) remaining += it.price;
+      if (full != null && it.paid != null) { saved += full - it.paid; listOfBought += full; }
+    } else if (full != null) remaining += full;
   }
-  return { total: round2(total), spent: round2(spent), remaining: round2(remaining), saved: round2(saved), listOfBought, bought, priced, count: items.length };
+  return { total: round2(total), spent: round2(spent), remaining: round2(remaining), saved: round2(saved), listOfBought, bought, priced, pieces, count: items.length };
 }
 /* ---------- Prikaz ---------- */
 function setView(v) {
@@ -1095,7 +1111,7 @@ function typeGroups() {
     const key = it.type.trim().toLowerCase();
     const g = map.get(key) || { key, label: it.type.trim() || 'Bez tipa', paid: 0, todo: 0, count: 0, bought: 0 };
     g.count++;
-    if (it.bought) { g.bought++; g.paid += it.paid || 0; } else g.todo += it.price || 0;
+    if (it.bought) { g.bought++; g.paid += it.paid || 0; } else g.todo += lineTotal(it) || 0;
     map.set(key, g);
   }
   return [...map.values()].map((g) => ({ ...g, sum: g.paid + g.todo })).filter((g) => g.sum > 0).sort((a, b) => b.sum - a.sum);
@@ -1207,7 +1223,7 @@ function renderColumns(animate) {
   for (const it of state.items) {
     const grp = groups.get(it.cat) || { paid: 0, todo: 0, count: 0, bought: 0 };
     grp.count++;
-    if (it.bought) { grp.bought++; grp.paid += it.paid || 0; } else grp.todo += it.price || 0;
+    if (it.bought) { grp.bought++; grp.paid += it.paid || 0; } else grp.todo += lineTotal(it) || 0;
     groups.set(it.cat, grp);
   }
   const cols = [...CATS, { key: '', label: 'Bez kategorije', short: 'Ostalo' }]
@@ -1336,7 +1352,7 @@ function rowEl(it) {
   const box = h('input', { type: 'checkbox', checked: it.bought, 'aria-label': 'Kupljeno' });
   box.addEventListener('change', () => {
     const cur = getItem(id);
-    if (box.checked) patch(id, { bought: true, paid: cur.paid != null ? cur.paid : cur.price });
+    if (box.checked) patch(id, { bought: true, paid: cur.paid != null ? cur.paid : lineTotal(cur) });
     else patch(id, { bought: false });
   });
 
@@ -1375,7 +1391,25 @@ function rowEl(it) {
   }
   drawSrc();
 
-  const price = moneyCell('Cijena', () => getItem(id).price, (n) => patch(id, { price: n }));
+  const price = moneyCell('Cijena po komadu', () => getItem(id).price, (n) => patch(id, { price: n }));
+  /* Količina: cijeli broj od 1 naviše; prazno polje znači 1 */
+  const qty = h('input', { type: 'text', inputmode: 'numeric', class: 'cell num', 'aria-label': 'Količina', autocomplete: 'off', maxlength: '3' });
+  const showQty = () => { qty.value = String(getItem(id).qty); };
+  qty.addEventListener('focus', () => qty.select());
+  qty.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); qty.blur(); }
+    if (e.key === 'Escape') { showQty(); qty.blur(); }
+  });
+  qty.addEventListener('blur', () => {
+    const raw = qty.value.trim();
+    const n = raw === '' ? 1 : /^\d{1,3}$/.test(raw) ? Number(raw) : NaN;
+    if (!(n >= 1)) { bad(qty); showQty(); return; }
+    if (n !== getItem(id).qty) patch(id, { qty: n });
+    showQty();
+  });
+  showQty();
+  const hintPrice = () => { const c = getItem(id), full = lineTotal(c); price.title = c.qty > 1 && full != null ? 'Po komadu. Ukupno za ' + c.qty + ' kom: ' + money(full) : 'Cijena po komadu'; };
+  hintPrice();
   const paid = moneyCell('Plaćeno', () => { const c = getItem(id); return c.bought ? c.paid : null; },
     (n) => patch(id, n == null ? { bought: false, paid: null } : { bought: true, paid: n }));
   const saveTd = h('td', { class: 'c-save', 'data-label': 'Ušteda' }, savedNode(it));
@@ -1396,8 +1430,8 @@ function rowEl(it) {
   const drawSum = () => {
     const cur = getItem(id), sv = saving(cur), src = sourceInfo(cur.source);
     sumName.textContent = cur.name || 'Bez imena';
-    sumMeta.textContent = [cur.type, CAT[cur.cat] ? CAT[cur.cat].label : '', src.url ? src.label : ''].filter(Boolean).join(', ') || 'Bez kategorije';
-    const amount = cur.bought ? cur.paid : cur.price;
+    sumMeta.textContent = [cur.qty > 1 ? cur.qty + ' kom' : '', cur.type, CAT[cur.cat] ? CAT[cur.cat].label : '', src.url ? src.label : ''].filter(Boolean).join(', ') || 'Bez kategorije';
+    const amount = cur.bought ? cur.paid : lineTotal(cur);
     sumAmt.textContent = amount != null ? money(amount) : '—';
     sumAmt.classList.toggle('todo', !cur.bought);
     sumTag.replaceChildren(cur.bought
@@ -1414,7 +1448,8 @@ function rowEl(it) {
     h('td', { class: 'c-cat', 'data-label': 'Kategorija' }, h('label', { class: 'pick' }, catIco, select)),
     srcTd,
     h('td', { class: 'c-check' }, h('label', { class: 'chk', title: 'Kupljeno' }, box, h('span', { 'aria-hidden': 'true' }))),
-    h('td', { class: 'c-price', 'data-label': 'Cijena' }, price),
+    h('td', { class: 'c-qty', 'data-label': 'Količina' }, qty),
+    h('td', { class: 'c-price', 'data-label': 'Cijena po komadu' }, price),
     saveTd,
     h('td', { class: 'c-paid', 'data-label': 'Plaćeno' }, paid),
     h('td', { class: 'c-del' }, del)
@@ -1425,6 +1460,8 @@ function rowEl(it) {
     box.checked = cur.bought;
     if (document.activeElement !== price) price._show();
     if (document.activeElement !== paid) paid._show();
+    if (document.activeElement !== qty) showQty();
+    hintPrice();
     saveTd.replaceChildren(savedNode(cur));
     drawSum();
   };
@@ -1551,7 +1588,7 @@ $('#delYes').addEventListener('click', () => {
 const COLS = [
   { key: 'name', flex: 2.6, min: 140 }, { key: 'type', flex: 1.2, min: 84 }, { key: 'desc', flex: 1.0, min: 76 },
   { key: 'cat', w: 132, min: 80 }, { key: 'src', w: 88, min: 60 }, { key: 'check', w: 92, min: 60 },
-  { key: 'price', w: 98, min: 70 }, { key: 'save', w: 132, min: 90 }, { key: 'paid', w: 98, min: 70 }, { key: 'del', w: 32, min: 32 },
+  { key: 'qty', w: 92, min: 54 }, { key: 'price', w: 98, min: 70 }, { key: 'save', w: 132, min: 90 }, { key: 'paid', w: 98, min: 70 }, { key: 'del', w: 32, min: 32 },
 ];
 let colW = {};
 try { const saved = JSON.parse(localStorage.getItem(LS_COLS) || '{}'); for (const c of COLS) if (Number(saved[c.key]) > 0) colW[c.key] = Number(saved[c.key]); } catch (e) { /* zadane širine */ }
@@ -1599,7 +1636,7 @@ for (const th of document.querySelectorAll('.sheet thead th[data-col]')) {
   const label = th.textContent.trim();
   const sortBtn = h('button', { class: 'th-sort', type: 'button', title: 'Sortiraj po stupcu ' + label }, h('span', null, label), h('i', { 'aria-hidden': 'true' }));
   sortBtn.addEventListener('click', () => {
-    const numeric = ['price', 'save', 'paid'].includes(c.key);
+    const numeric = ['qty', 'price', 'save', 'paid'].includes(c.key);
     const first = numeric ? 'desc' : 'asc', second = numeric ? 'asc' : 'desc';
     if (sort.key !== c.key) setSort(c.key, first);
     else if (sort.dir === first) setSort(c.key, second);
@@ -1669,6 +1706,7 @@ $('#fCat').replaceChildren(...CATS.map((c) => h('label', null,
 const pickedCat = () => { const r = document.querySelector('input[name="fCat"]:checked'); return r ? r.value : ''; };
 function openNew() {
   for (const el of ['#fName', '#fType', '#fDesc', '#fSource', '#fPrice', '#fPaid']) $(el).value = '';
+  $('#fQty').value = '1';
   $('#fBought').checked = false;
   for (const r of document.querySelectorAll('input[name="fCat"]')) r.checked = r.value === catFilter;
   $('#itemErr').textContent = '';
@@ -1679,19 +1717,22 @@ function openNew() {
 function syncPaidField() { $('#fPaidWrap').style.visibility = $('#fBought').checked ? 'visible' : 'hidden'; }
 $('#fBought').addEventListener('change', () => {
   syncPaidField();
-  if ($('#fBought').checked && !$('#fPaid').value.trim()) $('#fPaid').value = $('#fPrice').value;
+  if ($('#fBought').checked && !$('#fPaid').value.trim()) { const pr = parseMoney($('#fPrice').value), q = Number($('#fQty').value) || 1; $('#fPaid').value = pr != null && !Number.isNaN(pr) ? toInput(round2(pr * q)) : ''; }
 });
 function saveNew() {
   const name = $('#fName').value.trim();
   const price = parseMoney($('#fPrice').value);
+  const qtyRaw = $('#fQty').value.trim();
+  const qty = qtyRaw === '' ? 1 : /^\d{1,3}$/.test(qtyRaw) ? Number(qtyRaw) : NaN;
   const bought = $('#fBought').checked;
   let paid = parseMoney($('#fPaid').value);
   const err = $('#itemErr');
   if (!name) { err.textContent = 'Upiši ime proizvoda.'; $('#fName').focus(); return; }
   if (Number.isNaN(price)) { err.textContent = 'Cijena nije ispravan iznos. Primjer: 1299,90'; $('#fPrice').focus(); return; }
   if (bought && Number.isNaN(paid)) { err.textContent = 'Plaćeni iznos nije ispravan. Primjer: 1199,00'; $('#fPaid').focus(); return; }
-  if (bought && paid == null) paid = price;
-  const it = addItem({ name, type: $('#fType').value.trim(), desc: $('#fDesc').value.trim(), cat: pickedCat(), source: normSource($('#fSource').value), price, bought, paid: bought ? paid : null });
+  if (!(qty >= 1)) { err.textContent = 'Količina treba biti cijeli broj, najmanje 1.'; $('#fQty').focus(); return; }
+  if (bought && paid == null) paid = price == null ? null : round2(price * qty);
+  const it = addItem({ name, type: $('#fType').value.trim(), desc: $('#fDesc').value.trim(), cat: pickedCat(), source: normSource($('#fSource').value), qty, price, bought, paid: bought ? paid : null });
   $('#itemDlg').close();
   toast('Proizvod je dodan na popis');
   if (!matches(it)) { filter = 'all'; typeFilter = null; if (!inCatFilter(it)) catFilter = ''; if (!inSearch(it)) { search = ''; $('#searchBox').value = ''; } }
@@ -2046,18 +2087,20 @@ function zipStore(files, type) {
 }
 const xmlEsc = (v) => String(v == null ? '' : v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '').replace(/[<>&"]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]));
 function buildXlsx() {
-  const heads = ['Proizvod', 'Tip proizvoda', 'Kategorija', 'Opis ili komentar', 'Izvor', 'Kupljeno', 'Cijena', 'Ušteda', 'Ušteda %', 'Plaćeno'];
-  const widths = [40, 20, 16, 42, 36, 10, 13, 13, 10, 13];
+  const heads = ['Proizvod', 'Tip proizvoda', 'Kategorija', 'Opis ili komentar', 'Izvor', 'Kupljeno', 'Količina', 'Cijena po komadu', 'Ukupna cijena', 'Ušteda', 'Ušteda %', 'Plaćeno'];
+  const widths = [40, 20, 16, 42, 36, 10, 10, 17, 15, 13, 10, 13];
   const col = (i) => String.fromCharCode(65 + i);
   const text = (ref, v, style) => (v === '' || v == null ? '<c r="' + ref + '" s="' + style + '"/>' : '<c r="' + ref + '" t="inlineStr" s="' + style + '"><is><t xml:space="preserve">' + xmlEsc(v) + '</t></is></c>');
   const num = (ref, n, style) => (n == null ? '<c r="' + ref + '" s="' + style + '"/>' : '<c r="' + ref + '" s="' + style + '"><v>' + n + '</v></c>');
-  const sumCell = (ref, range, cached, style) => '<c r="' + ref + '" s="' + style + '"><f>SUM(' + range + ')</f><v>' + cached + '</v></c>';
+  const calc = (ref, formula, cached, style) => '<c r="' + ref + '" s="' + style + '"><f>' + formula + '</f>' + (cached == null ? '' : '<v>' + cached + '</v>') + '</c>';
   const rows = ['<row r="1">' + heads.map((hd, i) => text(col(i) + '1', hd, 1)).join('') + '</row>'];
   state.items.forEach((it, idx) => {
-    const r = idx + 2, sv = saving(it);
+    const r = idx + 2, sv = saving(it), full = lineTotal(it);
     rows.push('<row r="' + r + '">' + [
       text('A' + r, it.name, 0), text('B' + r, it.type, 0), text('C' + r, CAT[it.cat] ? CAT[it.cat].label : '', 0), text('D' + r, it.desc, 7), text('E' + r, it.source, 0),
-      text('F' + r, it.bought ? 'Da' : 'Ne', 0), num('G' + r, it.price, 2), num('H' + r, sv ? sv.diff : null, 2), num('I' + r, sv ? Math.round(sv.pct * 100) / 10000 : null, 3), num('J' + r, it.bought ? it.paid : null, 2),
+      text('F' + r, it.bought ? 'Da' : 'Ne', 0), num('G' + r, it.qty, 0), num('H' + r, it.price, 2),
+      full == null ? num('I' + r, null, 2) : calc('I' + r, 'G' + r + '*H' + r, full, 2),
+      num('J' + r, sv ? sv.diff : null, 2), num('K' + r, sv ? Math.round(sv.pct * 100) / 10000 : null, 3), num('L' + r, it.bought ? it.paid : null, 2),
     ].join('') + '</row>');
   });
   const last = state.items.length + 1;
@@ -2065,7 +2108,8 @@ function buildXlsx() {
     const t = totals(state.items), r = last + 1;
     rows.push('<row r="' + r + '">' + [
       text('A' + r, 'Ukupno', 4), text('B' + r, '', 4), text('C' + r, '', 4), text('D' + r, '', 4), text('E' + r, '', 4), text('F' + r, t.bought + ' od ' + t.count, 4),
-      sumCell('G' + r, 'G2:G' + last, t.total, 5), sumCell('H' + r, 'H2:H' + last, t.saved, 5), num('I' + r, t.listOfBought > 0 ? Math.round((t.saved / t.listOfBought) * 10000) / 10000 : null, 6), sumCell('J' + r, 'J2:J' + last, t.spent, 5),
+      calc('G' + r, 'SUM(G2:G' + last + ')', t.pieces, 4), text('H' + r, '', 4), calc('I' + r, 'SUM(I2:I' + last + ')', t.total, 5), calc('J' + r, 'SUM(J2:J' + last + ')', t.saved, 5),
+      num('K' + r, t.listOfBought > 0 ? Math.round((t.saved / t.listOfBought) * 10000) / 10000 : null, 6), calc('L' + r, 'SUM(L2:L' + last + ')', t.spent, 5),
     ].join('') + '</row>');
   }
   const NS = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main', REL = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships', PKG = 'http://schemas.openxmlformats.org/package/2006';
@@ -2094,7 +2138,7 @@ function buildXlsx() {
       + '</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>' },
     { name: 'xl/worksheets/sheet1.xml', text: head + '<worksheet xmlns="' + NS + '"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>'
       + '<cols>' + widths.map((w, i) => '<col min="' + (i + 1) + '" max="' + (i + 1) + '" width="' + w + '" customWidth="1"/>').join('') + '</cols>'
-      + '<sheetData>' + rows.join('') + '</sheetData>' + (state.items.length ? '<autoFilter ref="A1:J' + last + '"/>' : '') + '</worksheet>' },
+      + '<sheetData>' + rows.join('') + '</sheetData>' + (state.items.length ? '<autoFilter ref="A1:L' + last + '"/>' : '') + '</worksheet>' },
   ];
   return zipStore(files, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 }
