@@ -209,6 +209,20 @@
       "paid": null,
       "createdAt": 1791747694152,
       "updatedAt": 1791747694152
+    },
+    {
+      "id": "4308616c-83bf-4805-8a21-f9b04f598276",
+      "name": "Kutna garnitura Rocklin 193 (Cremona 2)",
+      "type": "Kutna Garnitura",
+      "desc": "",
+      "cat": "dnevni",
+      "source": "https://www.namjestaj.hr/tapecirani-namjestaj/kutne-garniture/kutna-garnitura-rocklin-193.html?variation_id=655894",
+      "qty": 1,
+      "price": 1125,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791752530102,
+      "updatedAt": 1791752530102
     }
   ],
   "deleted": {
