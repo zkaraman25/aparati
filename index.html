@@ -206,7 +206,8 @@ svg.ico{width:18px; height:18px; flex:none; fill:none; stroke:currentColor; stro
 #tip.show{opacity:1}
 
 /* Filtri iznad popisa */
-.seg-ctl{display:inline-flex; padding:3px; background:var(--surface-2); border:1px solid var(--line); border-radius:10px}
+.lbl-short{display:none}
+.seg-ctl{display:inline-flex; max-width:100%; overflow-x:auto; padding:3px; background:var(--surface-2); border:1px solid var(--line); border-radius:10px}
 .seg-ctl button{min-height:30px; padding:4px 10px; border:0; border-radius:7px; background:transparent; color:var(--muted); font-size:.8125rem; font-weight:550; white-space:nowrap; transition:background .15s, color .15s}
 .seg-ctl button[aria-pressed="true"]{background:var(--surface); color:var(--ink); box-shadow:0 0 0 1px var(--line), 0 1px 2px rgba(0,0,0,.06)}
 .tools{display:flex; flex-wrap:wrap; gap:8px; padding:12px 16px 0}
@@ -288,6 +289,9 @@ input.cell.num{text-align:right; font-variant-numeric:tabular-nums}
 .chk input:checked + span{background:var(--accent); border-color:var(--accent); animation:pop .28s var(--ease)}
 .chk input:checked + span::after{content:""; width:9px; height:5px; border-left:2px solid var(--accent-ink); border-bottom:2px solid var(--accent-ink); transform:rotate(-45deg) translate(1px,-1px)}
 .chk input:focus-visible + span{outline:2px solid var(--accent); outline-offset:2px}
+.chk.plan input:checked + span{background:var(--ink-2); border-color:var(--ink-2)}
+.plan-row{display:flex; align-items:center; gap:2px; cursor:pointer}
+.plan-text{font-size:.875rem; color:var(--ink-2)}
 @keyframes pop{40%{transform:scale(1.22)}}
 .sheet tbody tr.flash > td{animation:flash 1.6s ease-out}
 @keyframes flash{0%,35%{background:var(--accent-soft)}}
@@ -319,8 +323,12 @@ input.cell.num{text-align:right; font-variant-numeric:tabular-nums}
   .sheet tr > :last-child{border-right:0}
   .sheet tbody tr:hover td{background:color-mix(in srgb, var(--surface-2) 55%, transparent)}
   .sheet th{position:relative; overflow:hidden; text-overflow:ellipsis}
-  .sheet th.c-check{text-align:center}
+  .sheet th.c-check,.sheet th.c-plan{text-align:center}
   .sheet td.c-check .chk{width:100%}
+  .sheet td.c-plan .plan-row{justify-content:center}
+  .sheet td.c-plan .plan-text{display:none}
+  .sheet tbody td{transition:opacity .2s}
+  .sheet tbody tr.plan td:not(.c-plan):not(.c-del){opacity:.5}
   .grip{position:absolute; top:0; right:0; width:9px; height:100%; cursor:col-resize; touch-action:none; z-index:3}
   .grip::after{content:""; position:absolute; right:0; top:0; bottom:0; width:2px; background:transparent; transition:background .15s}
   .grip:hover::after,.grip.drag::after{background:var(--accent)}
@@ -360,6 +368,9 @@ tr.open .sum::after{transform:rotate(225deg) translate(-2px,-1px)}
   .sheet tbody tr.open td.c-price,.sheet tbody tr.open td.c-paid{flex:1 1 26%; order:1}
   .sheet tbody tr.open td.c-save{order:3}
   .sheet tbody tr.open td.c-del{flex:0 0 auto; order:2}
+  .sheet tbody tr.open td.c-plan{flex:1 1 60%; order:2}
+  .sheet tbody td.c-plan .plan-row{min-height:40px; margin-left:-8px}
+  .sheet tbody tr.plan td.c-sum{opacity:.55}
   .sheet tbody tr.open td.c-save{flex:0 0 100%; order:3}
   .sheet tbody tr.open td.c-save:has(.none){display:none}
   .sheet tbody td[data-label]::before{content:attr(data-label); display:block; font-size:.75rem; color:var(--muted); margin-bottom:3px}
@@ -374,6 +385,8 @@ tr.open .sum::after{transform:rotate(225deg) translate(-2px,-1px)}
   .sheet tbody .src .icon-btn{border:0; box-shadow:none; background:transparent; width:32px; height:32px; top:3px}
   .sheet tbody .src-link,.sheet tbody .src-text{padding-right:34px}
   #addBtn2{display:none}
+  .lbl-long{display:none}
+  .lbl-short{display:inline}
   .sortsel{display:block}
   .search{max-width:none}
   .search input{font-size:16px}
@@ -499,6 +512,7 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
             <button type="button" data-filter="all" aria-pressed="true">Sve</button>
             <button type="button" data-filter="todo" aria-pressed="false">Za kupiti</button>
             <button type="button" data-filter="done" aria-pressed="false">Kupljeno</button>
+            <button type="button" data-filter="plan" aria-pressed="false">Planiranje</button>
           </div>
           <button class="btn" type="button" id="xlsBtn"><span data-ico="sheet"></span>Izvezi u Excel</button>
           <button class="btn btn-primary" type="button" id="addBtn2"><span data-ico="plus"></span>Dodaj proizvod</button>
@@ -519,6 +533,7 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
           <option value="save:desc">Ušteda, najveća prvo</option>
           <option value="check:asc">Za kupiti prvo</option>
           <option value="check:desc">Kupljeno prvo</option>
+          <option value="plan:asc">Planiranje na kraju</option>
         </select></label>
       </div>
       <div class="catchips" id="catChips" role="group" aria-label="Filtar po kategoriji"></div>
@@ -533,6 +548,7 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
               <th scope="col" class="c-desc" data-col="desc">Opis ili komentar</th>
               <th scope="col" class="c-cat" data-col="cat">Kategorija</th>
               <th scope="col" class="c-src" data-col="src">Izvor</th>
+              <th scope="col" class="c-plan" data-col="plan">Planiranje</th>
               <th scope="col" class="c-check" data-col="check">Kupljeno</th>
               <th scope="col" class="c-qty num" data-col="qty">Količina</th>
               <th scope="col" class="c-price num" data-col="price">Cijena</th>
@@ -592,6 +608,7 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
         <input type="text" id="fPaid" inputmode="decimal" autocomplete="off" placeholder="0,00">
       </label>
     </div>
+    <label class="check-row" style="margin-top:2px"><span class="chk plan"><input type="checkbox" id="fPlan"><span></span></span>Planiranje, ne ulazi u zbrojeve</label>
     <p class="err" id="itemErr" role="alert"></p>
     <div class="dlg-actions">
       <span class="spacer"></span>
@@ -869,6 +886,7 @@ function normItem(it) {
     qty: Math.min(999, Math.max(1, Math.round(Number(it.qty)) || 1)),
     price: numOrNull(it.price),
     bought: it.bought === true,
+    plan: it.plan === true,
     paid: numOrNull(it.paid),
     createdAt: Number(it.createdAt) || 0,
     updatedAt: Number(it.updatedAt) || 0,
@@ -940,7 +958,9 @@ const inSearch = (it) => {
   const hay = plain([it.name, it.type, it.desc, it.source, CAT[it.cat] ? CAT[it.cat].label : ''].join(' '));
   return search.split(/\s+/).every((word) => hay.includes(word));
 };
-const matches = (it) => inCatFilter(it) && inTypeFilter(it) && inSearch(it) && (filter === 'all' || (filter === 'done') === it.bought);
+/* Planiranje je zaseban status: takav proizvod ostaje na popisu, ali ne ulazi ni u jedan zbroj ni u grafove */
+const inStatus = (it) => filter === 'all' || (filter === 'plan' ? it.plan : !it.plan && (filter === 'done') === it.bought);
+const matches = (it) => inCatFilter(it) && inTypeFilter(it) && inSearch(it) && inStatus(it);
 /* Sortiranje: klik na zaglavlje stupca (računalo) ili izbornik (mobitel) */
 let sort = { key: '', dir: 'asc' };
 try { const sv = JSON.parse(localStorage.getItem(LS_SORT) || 'null'); if (sv && typeof sv.key === 'string' && (sv.dir === 'asc' || sv.dir === 'desc')) sort = { key: sv.key, dir: sv.dir }; } catch (e) { /* zadani redoslijed */ }
@@ -949,6 +969,7 @@ const SORT_VALUE = {
   cat: (it) => (CAT[it.cat] ? CAT[it.cat].label : ''),
   src: (it) => sourceInfo(it.source).label,
   check: (it) => (it.bought ? 1 : 0),
+  plan: (it) => (it.plan ? 1 : 0),
   qty: (it) => it.qty,
   price: (it) => it.price,
   save: (it) => { const sv = saving(it); return sv ? sv.diff : null; },
@@ -1001,9 +1022,11 @@ function removeItem(id) {
 
 /* ---------- Izračuni ---------- */
 function totals(items) {
-  let total = 0, spent = 0, remaining = 0, saved = 0, listOfBought = 0, bought = 0, priced = 0, pieces = 0;
+  let total = 0, spent = 0, remaining = 0, saved = 0, listOfBought = 0, bought = 0, priced = 0, pieces = 0, count = 0, planned = 0, plannedTotal = 0;
   for (const it of items) {
     const full = lineTotal(it);
+    if (it.plan) { planned++; plannedTotal += full || 0; continue; }
+    count++;
     pieces += it.qty || 1;
     if (full != null) { total += full; priced++; }
     if (it.bought) {
@@ -1012,7 +1035,7 @@ function totals(items) {
       if (full != null && it.paid != null) { saved += full - it.paid; listOfBought += full; }
     } else if (full != null) remaining += full;
   }
-  return { total: round2(total), spent: round2(spent), remaining: round2(remaining), saved: round2(saved), listOfBought, bought, priced, pieces, count: items.length };
+  return { total: round2(total), spent: round2(spent), remaining: round2(remaining), saved: round2(saved), listOfBought, bought, priced, pieces, count, planned, plannedTotal: round2(plannedTotal), all: items.length };
 }
 /* ---------- Prikaz ---------- */
 function setView(v) {
@@ -1091,7 +1114,7 @@ function renderStats(animate) {
   tween(STATS.spent.val, t.spent, animate);
   STATS.spent.sub.replaceChildren(...(t.bought ? [h('b', null, pct + ' %'), ' očekivanog iznosa'] : ['Još ništa nije kupljeno']));
   tween(STATS.total.val, t.total, animate);
-  STATS.total.sub.textContent = pieces(t.count) + (t.count - t.priced > 0 ? ', ' + (t.count - t.priced) + ' bez cijene' : '');
+  STATS.total.sub.textContent = pieces(t.count) + (t.count - t.priced > 0 ? ', ' + (t.count - t.priced) + ' bez cijene' : '') + (t.planned ? ' (još ' + t.planned + ' u planiranju)' : '');
   tween(STATS.todo.val, t.remaining, animate);
   STATS.todo.sub.textContent = t.count - t.bought > 0 ? pieces(t.count - t.bought) : 'Sve je kupljeno';
   STATS.saved.lab.textContent = t.saved >= 0 ? 'Ušteda na kupljenom' : 'Plaćeno iznad cijene';
@@ -1108,6 +1131,7 @@ function renderCharts(animate) {
 function typeGroups() {
   const map = new Map();
   for (const it of state.items) {
+    if (it.plan) continue;
     const key = it.type.trim().toLowerCase();
     const g = map.get(key) || { key, label: it.type.trim() || 'Bez tipa', paid: 0, todo: 0, count: 0, bought: 0 };
     g.count++;
@@ -1221,6 +1245,7 @@ function renderColumns(animate) {
   const box = $('#colsBox');
   const groups = new Map();
   for (const it of state.items) {
+    if (it.plan) continue;
     const grp = groups.get(it.cat) || { paid: 0, todo: 0, count: 0, bought: 0 };
     grp.count++;
     if (it.bought) { grp.bought++; grp.paid += it.paid || 0; } else grp.todo += lineTotal(it) || 0;
@@ -1352,9 +1377,13 @@ function rowEl(it) {
   const box = h('input', { type: 'checkbox', checked: it.bought, 'aria-label': 'Kupljeno' });
   box.addEventListener('change', () => {
     const cur = getItem(id);
-    if (box.checked) patch(id, { bought: true, paid: cur.paid != null ? cur.paid : lineTotal(cur) });
+    if (box.checked) patch(id, { bought: true, plan: false, paid: cur.paid != null ? cur.paid : lineTotal(cur) });
     else patch(id, { bought: false });
   });
+  /* Planiranje: proizvod ostaje na popisu, ali se ne zbraja. Kad se kupi, oznaka se sama makne. */
+  const planBox = h('input', { type: 'checkbox', checked: it.plan, 'aria-label': 'Planiranje, ne ulazi u zbrojeve' });
+  planBox.addEventListener('change', () => patch(id, { plan: planBox.checked }));
+  tr.classList.toggle('plan', it.plan);
 
   const catIco = h('span', { style: 'display:contents' }, icon(it.cat || 'all'));
   const select = h('select', { 'aria-label': 'Kategorija' },
@@ -1411,7 +1440,7 @@ function rowEl(it) {
   const hintPrice = () => { const c = getItem(id), full = lineTotal(c); price.title = c.qty > 1 && full != null ? 'Po komadu. Ukupno za ' + c.qty + ' kom: ' + money(full) : 'Cijena po komadu'; };
   hintPrice();
   const paid = moneyCell('Plaćeno', () => { const c = getItem(id); return c.bought ? c.paid : null; },
-    (n) => patch(id, n == null ? { bought: false, paid: null } : { bought: true, paid: n }));
+    (n) => patch(id, n == null ? { bought: false, paid: null } : { bought: true, plan: false, paid: n }));
   const saveTd = h('td', { class: 'c-save', 'data-label': 'Ušteda' }, savedNode(it));
 
   const del = h('button', { class: 'icon-btn', type: 'button', 'aria-label': 'Obriši proizvod', title: 'Obriši' }, icon('trash'));
@@ -1434,7 +1463,7 @@ function rowEl(it) {
     const amount = cur.bought ? cur.paid : lineTotal(cur);
     sumAmt.textContent = amount != null ? money(amount) : '—';
     sumAmt.classList.toggle('todo', !cur.bought);
-    sumTag.replaceChildren(cur.bought
+    sumTag.replaceChildren(cur.plan ? 'planiranje' : cur.bought
       ? (sv && sv.diff !== 0 ? h('span', { class: 'pct' + (sv.diff < 0 ? ' over' : '') }, (sv.diff < 0 ? '+' : '−') + pctText(Math.abs(sv.pct))) : 'plaćeno')
       : 'za kupiti');
   };
@@ -1447,6 +1476,7 @@ function rowEl(it) {
     h('td', { class: 'c-desc', 'data-label': 'Opis ili komentar' }, textCell(id, 'desc', 'cell-desc', 'Opis ili komentar', 'Opis ili komentar', { max: '600', wrap: !wideScreen.matches })),
     h('td', { class: 'c-cat', 'data-label': 'Kategorija' }, h('label', { class: 'pick' }, catIco, select)),
     srcTd,
+    h('td', { class: 'c-plan' }, h('label', { class: 'plan-row', title: 'Planiranje: ne ulazi u zbrojeve' }, h('span', { class: 'chk plan' }, planBox, h('span', { 'aria-hidden': 'true' })), h('span', { class: 'plan-text' }, 'Planiranje, ne ulazi u zbrojeve'))),
     h('td', { class: 'c-check' }, h('label', { class: 'chk', title: 'Kupljeno' }, box, h('span', { 'aria-hidden': 'true' }))),
     h('td', { class: 'c-qty', 'data-label': 'Količina' }, qty),
     h('td', { class: 'c-price', 'data-label': 'Cijena po komadu' }, price),
@@ -1458,6 +1488,8 @@ function rowEl(it) {
   tr._sync = () => {
     const cur = getItem(id);
     box.checked = cur.bought;
+    planBox.checked = cur.plan;
+    tr.classList.toggle('plan', cur.plan);
     if (document.activeElement !== price) price._show();
     if (document.activeElement !== paid) paid._show();
     if (document.activeElement !== qty) showQty();
@@ -1522,16 +1554,17 @@ function renderListMeta() {
   const tc = totals(inCat);
   for (const b of document.querySelectorAll('#filters button')) {
     const f = b.dataset.filter;
-    const n = f === 'all' ? tc.count : f === 'done' ? tc.bought : tc.count - tc.bought;
-    b.replaceChildren({ all: 'Sve', todo: 'Za kupiti', done: 'Kupljeno' }[f] + ' ', h('span', { class: 'count' }, String(n)));
+    const n = f === 'all' ? tc.all : f === 'plan' ? tc.planned : f === 'done' ? tc.bought : tc.count - tc.bought;
+    b.replaceChildren(...(f === 'plan' ? [h('span', { class: 'lbl-long' }, 'Planiranje'), h('span', { class: 'lbl-short' }, 'Plan'), ' '] : [{ all: 'Sve', todo: 'Za kupiti', done: 'Kupljeno' }[f] + ' ']), h('span', { class: 'count' }, String(n)));
     b.setAttribute('aria-pressed', String(f === filter));
   }
   const empty = $('#emptyMsg');
   empty.hidden = list.length > 0;
   if (!list.length) {
-    empty.textContent = t.count === 0 ? 'Još nema proizvoda. Dodaj prvi gumbom „Dodaj proizvod”.'
-      : search && tc.count === 0 ? 'Nema proizvoda za „' + $('#searchBox').value.trim() + '”.'
-      : tc.count === 0 ? 'U ovoj kategoriji još nema proizvoda.'
+    empty.textContent = t.all === 0 ? 'Još nema proizvoda. Dodaj prvi gumbom „Dodaj proizvod”.'
+      : search && tc.all === 0 ? 'Nema proizvoda za „' + $('#searchBox').value.trim() + '”.'
+      : tc.all === 0 ? 'U ovoj kategoriji još nema proizvoda.'
+      : filter === 'plan' ? 'Ništa nije u planiranju. Označi „Planiranje” na proizvodu i neće ulaziti u zbrojeve.'
       : filter === 'done' ? 'Ovdje još ništa nije kupljeno.' : 'Ovdje je sve kupljeno.';
   }
   const foot = $('#foot');
@@ -1540,8 +1573,16 @@ function renderListMeta() {
   const all = !catFilter && typeFilter == null && !search && filter === 'all';
   const savedPct = ts.listOfBought > 0 ? (Math.abs(ts.saved) / ts.listOfBought) * 100 : 0;
   const tot = (cls, label, value, extra) => h('div', { class: 'tot-box ' + cls }, h('span', { class: 'tot-label' }, label), h('span', { class: 'tot-val num' }, value, extra || null));
+  /* Kad su na popisu samo proizvodi u planiranju, pokaži koliko bi koštali, odvojeno od pravih zbrojeva */
+  if (ts.count === 0 && ts.planned) {
+    foot.replaceChildren(
+      h('div', { class: 'tot-main' }, h('b', null, 'Planiranje'), h('small', null, pieces(ts.planned) + ', ne ulazi u zbrojeve ni u grafove')),
+      tot('', 'Cijena planiranog', money(ts.plannedTotal)));
+    return;
+  }
   foot.replaceChildren(
-    h('div', { class: 'tot-main' }, h('b', null, 'Ukupno'), h('small', null, (all ? 'Svi proizvodi' : 'Prikazani proizvodi') + ', kupljeno ' + ts.bought + ' od ' + ts.count)),
+    h('div', { class: 'tot-main' }, h('b', null, 'Ukupno'), h('small', null, (all ? 'Svi proizvodi' : 'Prikazani proizvodi') + ', kupljeno ' + ts.bought + ' od ' + ts.count),
+      ts.planned ? h('small', { class: 'tot-plan' }, 'Planiranje se ne zbraja: ' + pieces(ts.planned) + (ts.plannedTotal > 0 ? ', ' + money(ts.plannedTotal) : '')) : null),
     tot('', 'Ukupna cijena proizvoda', money(ts.total)),
     tot('', ts.saved >= 0 ? 'Ukupna ušteda' : 'Plaćeno iznad cijene', money(Math.abs(ts.saved)),
       ts.saved !== 0 ? h('span', { class: 'pct' + (ts.saved < 0 ? ' over' : '') }, (ts.saved < 0 ? '+' : '−') + pctText(savedPct)) : null),
@@ -1587,7 +1628,7 @@ $('#delYes').addEventListener('click', () => {
 /* Širine stupaca: povuci rub zaglavlja, dvoklik vraća zadanu širinu */
 const COLS = [
   { key: 'name', flex: 2.6, min: 140 }, { key: 'type', flex: 1.2, min: 84 }, { key: 'desc', flex: 1.0, min: 76 },
-  { key: 'cat', w: 132, min: 80 }, { key: 'src', w: 88, min: 60 }, { key: 'check', w: 92, min: 60 },
+  { key: 'cat', w: 132, min: 80 }, { key: 'src', w: 88, min: 60 }, { key: 'plan', w: 104, min: 60 }, { key: 'check', w: 92, min: 60 },
   { key: 'qty', w: 92, min: 54 }, { key: 'price', w: 98, min: 70 }, { key: 'save', w: 132, min: 90 }, { key: 'paid', w: 98, min: 70 }, { key: 'del', w: 32, min: 32 },
 ];
 let colW = {};
@@ -1708,6 +1749,7 @@ function openNew() {
   for (const el of ['#fName', '#fType', '#fDesc', '#fSource', '#fPrice', '#fPaid']) $(el).value = '';
   $('#fQty').value = '1';
   $('#fBought').checked = false;
+  $('#fPlan').checked = filter === 'plan';
   for (const r of document.querySelectorAll('input[name="fCat"]')) r.checked = r.value === catFilter;
   $('#itemErr').textContent = '';
   syncPaidField();
@@ -1715,7 +1757,9 @@ function openNew() {
   $('#fName').focus();
 }
 function syncPaidField() { $('#fPaidWrap').style.visibility = $('#fBought').checked ? 'visible' : 'hidden'; }
+$('#fPlan').addEventListener('change', () => { if ($('#fPlan').checked) { $('#fBought').checked = false; syncPaidField(); } });
 $('#fBought').addEventListener('change', () => {
+  if ($('#fBought').checked) $('#fPlan').checked = false;
   syncPaidField();
   if ($('#fBought').checked && !$('#fPaid').value.trim()) { const pr = parseMoney($('#fPrice').value), q = Number($('#fQty').value) || 1; $('#fPaid').value = pr != null && !Number.isNaN(pr) ? toInput(round2(pr * q)) : ''; }
 });
@@ -1732,7 +1776,7 @@ function saveNew() {
   if (bought && Number.isNaN(paid)) { err.textContent = 'Plaćeni iznos nije ispravan. Primjer: 1199,00'; $('#fPaid').focus(); return; }
   if (!(qty >= 1)) { err.textContent = 'Količina treba biti cijeli broj, najmanje 1.'; $('#fQty').focus(); return; }
   if (bought && paid == null) paid = price == null ? null : round2(price * qty);
-  const it = addItem({ name, type: $('#fType').value.trim(), desc: $('#fDesc').value.trim(), cat: pickedCat(), source: normSource($('#fSource').value), qty, price, bought, paid: bought ? paid : null });
+  const it = addItem({ name, type: $('#fType').value.trim(), desc: $('#fDesc').value.trim(), cat: pickedCat(), source: normSource($('#fSource').value), qty, price, bought, plan: !bought && $('#fPlan').checked, paid: bought ? paid : null });
   $('#itemDlg').close();
   toast('Proizvod je dodan na popis');
   if (!matches(it)) { filter = 'all'; typeFilter = null; if (!inCatFilter(it)) catFilter = ''; if (!inSearch(it)) { search = ''; $('#searchBox').value = ''; } }
@@ -2087,8 +2131,8 @@ function zipStore(files, type) {
 }
 const xmlEsc = (v) => String(v == null ? '' : v).replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '').replace(/[<>&"]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]));
 function buildXlsx() {
-  const heads = ['Proizvod', 'Tip proizvoda', 'Kategorija', 'Opis ili komentar', 'Izvor', 'Kupljeno', 'Količina', 'Cijena po komadu', 'Ukupna cijena', 'Ušteda', 'Ušteda %', 'Plaćeno'];
-  const widths = [40, 20, 16, 42, 36, 10, 10, 17, 15, 13, 10, 13];
+  const heads = ['Proizvod', 'Tip proizvoda', 'Kategorija', 'Opis ili komentar', 'Izvor', 'Kupljeno', 'Planiranje', 'Količina', 'Cijena po komadu', 'Ukupna cijena', 'Ušteda', 'Ušteda %', 'Plaćeno'];
+  const widths = [40, 20, 16, 42, 36, 10, 12, 10, 17, 15, 13, 10, 13];
   const col = (i) => String.fromCharCode(65 + i);
   const text = (ref, v, style) => (v === '' || v == null ? '<c r="' + ref + '" s="' + style + '"/>' : '<c r="' + ref + '" t="inlineStr" s="' + style + '"><is><t xml:space="preserve">' + xmlEsc(v) + '</t></is></c>');
   const num = (ref, n, style) => (n == null ? '<c r="' + ref + '" s="' + style + '"/>' : '<c r="' + ref + '" s="' + style + '"><v>' + n + '</v></c>');
@@ -2098,18 +2142,20 @@ function buildXlsx() {
     const r = idx + 2, sv = saving(it), full = lineTotal(it);
     rows.push('<row r="' + r + '">' + [
       text('A' + r, it.name, 0), text('B' + r, it.type, 0), text('C' + r, CAT[it.cat] ? CAT[it.cat].label : '', 0), text('D' + r, it.desc, 7), text('E' + r, it.source, 0),
-      text('F' + r, it.bought ? 'Da' : 'Ne', 0), num('G' + r, it.qty, 0), num('H' + r, it.price, 2),
-      full == null ? num('I' + r, null, 2) : calc('I' + r, 'G' + r + '*H' + r, full, 2),
-      num('J' + r, sv ? sv.diff : null, 2), num('K' + r, sv ? Math.round(sv.pct * 100) / 10000 : null, 3), num('L' + r, it.bought ? it.paid : null, 2),
+      text('F' + r, it.bought ? 'Da' : 'Ne', 0), text('G' + r, it.plan ? 'Da' : 'Ne', 0), num('H' + r, it.qty, 0), num('I' + r, it.price, 2),
+      full == null ? num('J' + r, null, 2) : calc('J' + r, 'H' + r + '*I' + r, full, 2),
+      num('K' + r, sv ? sv.diff : null, 2), num('L' + r, sv ? Math.round(sv.pct * 100) / 10000 : null, 3), num('M' + r, it.bought ? it.paid : null, 2),
     ].join('') + '</row>');
   });
   const last = state.items.length + 1;
   if (state.items.length) {
     const t = totals(state.items), r = last + 1;
+    /* Zbrojevi preskaču redove označene kao planiranje */
+    const sumIf = (c) => 'SUMIF(G2:G' + last + ',"Ne",' + c + '2:' + c + last + ')';
     rows.push('<row r="' + r + '">' + [
-      text('A' + r, 'Ukupno', 4), text('B' + r, '', 4), text('C' + r, '', 4), text('D' + r, '', 4), text('E' + r, '', 4), text('F' + r, t.bought + ' od ' + t.count, 4),
-      calc('G' + r, 'SUM(G2:G' + last + ')', t.pieces, 4), text('H' + r, '', 4), calc('I' + r, 'SUM(I2:I' + last + ')', t.total, 5), calc('J' + r, 'SUM(J2:J' + last + ')', t.saved, 5),
-      num('K' + r, t.listOfBought > 0 ? Math.round((t.saved / t.listOfBought) * 10000) / 10000 : null, 6), calc('L' + r, 'SUM(L2:L' + last + ')', t.spent, 5),
+      text('A' + r, t.planned ? 'Ukupno (bez planiranja)' : 'Ukupno', 4), text('B' + r, '', 4), text('C' + r, '', 4), text('D' + r, '', 4), text('E' + r, '', 4), text('F' + r, t.bought + ' od ' + t.count, 4), text('G' + r, '', 4),
+      calc('H' + r, sumIf('H'), t.pieces, 4), text('I' + r, '', 4), calc('J' + r, sumIf('J'), t.total, 5), calc('K' + r, sumIf('K'), t.saved, 5),
+      num('L' + r, t.listOfBought > 0 ? Math.round((t.saved / t.listOfBought) * 10000) / 10000 : null, 6), calc('M' + r, sumIf('M'), t.spent, 5),
     ].join('') + '</row>');
   }
   const NS = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main', REL = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships', PKG = 'http://schemas.openxmlformats.org/package/2006';
@@ -2138,7 +2184,7 @@ function buildXlsx() {
       + '</cellXfs><cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles></styleSheet>' },
     { name: 'xl/worksheets/sheet1.xml', text: head + '<worksheet xmlns="' + NS + '"><sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>'
       + '<cols>' + widths.map((w, i) => '<col min="' + (i + 1) + '" max="' + (i + 1) + '" width="' + w + '" customWidth="1"/>').join('') + '</cols>'
-      + '<sheetData>' + rows.join('') + '</sheetData>' + (state.items.length ? '<autoFilter ref="A1:L' + last + '"/>' : '') + '</worksheet>' },
+      + '<sheetData>' + rows.join('') + '</sheetData>' + (state.items.length ? '<autoFilter ref="A1:M' + last + '"/>' : '') + '</worksheet>' },
   ];
   return zipStore(files, 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 }
