@@ -10,6 +10,7 @@
       "qty": 2,
       "price": 363.54,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791647690170,
       "updatedAt": 1791748532138
@@ -24,6 +25,7 @@
       "qty": 1,
       "price": 639,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791651234014,
       "updatedAt": 1791656487481
@@ -38,6 +40,7 @@
       "qty": 1,
       "price": 498.99,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791651996764,
       "updatedAt": 1791651996764
@@ -52,6 +55,7 @@
       "qty": 1,
       "price": 499,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791652117021,
       "updatedAt": 1791652117021
@@ -66,6 +70,7 @@
       "qty": 1,
       "price": 699,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791652427399,
       "updatedAt": 1791659844611
@@ -80,6 +85,7 @@
       "qty": 1,
       "price": 530,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791653434791,
       "updatedAt": 1791659841043
@@ -94,6 +100,7 @@
       "qty": 1,
       "price": 669,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791654824640,
       "updatedAt": 1791654824640
@@ -108,6 +115,7 @@
       "qty": 1,
       "price": 302,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791656462952,
       "updatedAt": 1791656462952
@@ -122,6 +130,7 @@
       "qty": 1,
       "price": 299,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791659698187,
       "updatedAt": 1791659698187
@@ -136,6 +145,7 @@
       "qty": 1,
       "price": 135,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791659788231,
       "updatedAt": 1791659788231
@@ -150,6 +160,7 @@
       "qty": 1,
       "price": 449,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791660145556,
       "updatedAt": 1791660145556
@@ -164,6 +175,7 @@
       "qty": 1,
       "price": 269,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791666367641,
       "updatedAt": 1791718978867
@@ -178,6 +190,7 @@
       "qty": 1,
       "price": 285,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791666721680,
       "updatedAt": 1791666721680
@@ -192,6 +205,7 @@
       "qty": 1,
       "price": 824,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791747567834,
       "updatedAt": 1791747567834
@@ -206,6 +220,7 @@
       "qty": 1,
       "price": 353,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791747694152,
       "updatedAt": 1791747694152
@@ -220,6 +235,7 @@
       "qty": 1,
       "price": 1125,
       "bought": false,
+      "plan": false,
       "paid": null,
       "createdAt": 1791752530102,
       "updatedAt": 1791752530102
@@ -234,9 +250,10 @@
       "qty": 1,
       "price": 1895,
       "bought": false,
+      "plan": true,
       "paid": null,
       "createdAt": 1791752561493,
-      "updatedAt": 1791752561493
+      "updatedAt": 1791753544960
     }
   ],
   "deleted": {
