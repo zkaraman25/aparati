@@ -181,6 +181,19 @@
       "paid": null,
       "createdAt": 1791666721680,
       "updatedAt": 1791666721680
+    },
+    {
+      "id": "ab02a099-74cb-4ca1-860b-91383c616d57",
+      "name": "Indukcijska ploča BOSCH PXE801DC1E",
+      "type": "Indukcijska Ploča",
+      "desc": "u ravnini s pločom nije mat",
+      "cat": "kuhinja",
+      "source": "https://www.centar-tehnike.hr/kuhalo-bosch-pxe801dc1e-proizvod-5519/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
+      "price": 824,
+      "bought": false,
+      "paid": null,
+      "createdAt": 1791747567834,
+      "updatedAt": 1791747567834
     }
   ],
   "deleted": {
