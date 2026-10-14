@@ -234,11 +234,11 @@
       "source": "https://www.namjestaj.hr/tapecirani-namjestaj/kutne-garniture/kutna-garnitura-rocklin-193.html?variation_id=655894",
       "qty": 1,
       "price": 1125,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 1125,
       "createdAt": 1791752530102,
-      "updatedAt": 1791752530102
+      "updatedAt": 1791982113249
     },
     {
       "id": "3193cd34-9c3d-4461-a686-fb2081fa8eea",
