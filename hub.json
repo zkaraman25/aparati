@@ -1,0 +1,21 @@
+{
+ "apps": [
+  {
+   "id": 1,
+   "name": "Kućni budžet",
+   "desc": "Raspodjela plaće po kategorijama, slajderi, lista troškova",
+   "url": "/budzet/",
+   "icon": "wallet",
+   "color": "c1"
+  },
+  {
+   "id": 2,
+   "name": "Aparati za stan",
+   "desc": "Popis aparata i namještaja za stan, cijene, kupljeno, ušteda",
+   "url": "/aparati/",
+   "icon": "washer",
+   "color": "c2"
+  }
+ ],
+ "updatedAt": 0
+}
