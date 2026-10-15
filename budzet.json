@@ -121,7 +121,7 @@
    "desc": "",
    "group": "g3",
    "period": "m",
-   "amount": 25.2
+   "amount": 20
   },
   {
    "id": 13,
@@ -204,5 +204,5 @@
    "amount": 80
   }
  ],
- "updatedAt": 1792083308856
+ "updatedAt": 1792083406271
 }
