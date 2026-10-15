@@ -249,6 +249,7 @@ th[aria-sort="ascending"] .th-sort,th[aria-sort="descending"] .th-sort{color:var
 }
 .catchips button[aria-pressed="true"]{background:var(--accent-soft); border-color:transparent; color:var(--accent-text); font-weight:600}
 .catchips svg.ico{width:15px; height:15px}
+.catchips button.add-cat{border-style:dashed; color:var(--accent-text)}
 .count{color:var(--muted); font-weight:400; font-variant-numeric:tabular-nums}
 [aria-pressed="true"] > .count{color:inherit; opacity:.75}
 
@@ -639,6 +640,24 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
 <datalist id="typeList"></datalist>
 
 <!-- Potvrda brisanja -->
+
+<dialog id="catDlg" aria-labelledby="catTitle">
+  <div class="dlg" id="catForm">
+    <h2 id="catTitle">Nova kategorija</h2>
+    <label class="field"><span>Naziv</span>
+      <input type="text" id="cName" autocomplete="off" maxlength="40" placeholder="npr. Balkon">
+    </label>
+    <div class="field"><span id="cIcoLabel">Ikona</span>
+      <div class="catpick" id="cIco" role="radiogroup" aria-labelledby="cIcoLabel"></div>
+    </div>
+    <p class="err" id="catErr" role="alert"></p>
+    <div class="dlg-actions">
+      <span class="spacer"></span>
+      <button class="btn" type="button" data-close>Odustani</button>
+      <button class="btn btn-primary" type="button" id="catSaveBtn">Dodaj kategoriju</button>
+    </div>
+  </div>
+</dialog>
 <dialog id="delDlg" aria-labelledby="delTitle">
   <div class="dlg">
     <h2 id="delTitle">Obrisati proizvod?</h2>
@@ -791,12 +810,12 @@ const ICONS = {
 };
 function icon(name) {
   const svg = s('svg', { class: 'ico', viewBox: '0 0 24 24', 'aria-hidden': 'true' });
-  svg.append(s('path', { d: ICONS[name] || ICONS.all }));
+  svg.append(s('path', { d: ICONS[name] || (CAT[name] && ICONS[CAT[name].ico]) || ICONS.all }));
   return svg;
 }
 for (const el of document.querySelectorAll('[data-ico]')) { if (el.classList.length) el.append(icon(el.dataset.ico)); else el.replaceWith(icon(el.dataset.ico)); }
 
-const CATS = [
+const BASE_CATS = [
   { key: 'kuhinja', label: 'Kuhinja', short: 'Kuhinja' },
   { key: 'vrt', label: 'Vrt', short: 'Vrt' },
   { key: 'wc', label: 'WC', short: 'WC' },
@@ -806,7 +825,15 @@ const CATS = [
   { key: 'stan', label: 'Stan', short: 'Stan' },
   { key: 'garaza', label: 'Garaža', short: 'Garaža' },
 ];
-const CAT = Object.fromEntries(CATS.map((c) => [c.key, c]));
+let CATS = [...BASE_CATS];
+let CAT = Object.fromEntries(CATS.map((c) => [c.key, c]));
+/* Vlastite kategorije žive u state.cats i sinkroniziraju se kao i proizvodi */
+function applyCats(st) {
+  const extra = (st && Array.isArray(st.cats) ? st.cats : []).filter((c) => !BASE_CATS.some((b) => b.key === c.key));
+  CATS = [...BASE_CATS, ...extra];
+  CAT = Object.fromEntries(CATS.map((c) => [c.key, c]));
+}
+const CAT_ICONS = ['kuhinja', 'vrt', 'wc', 'dnevni', 'spavaca', 'hodnik', 'stan', 'garaza', 'tag', 'all', 'cart', 'sheet', 'cloud'];
 const fmt0 = new Intl.NumberFormat('hr-HR', { style: 'currency', currency: 'EUR', maximumFractionDigits: 0 });
 const fmt2 = new Intl.NumberFormat('hr-HR', { style: 'currency', currency: 'EUR', minimumFractionDigits: 2, maximumFractionDigits: 2 });
 const fmtN = new Intl.NumberFormat('hr-HR', { maximumFractionDigits: 0 });
@@ -911,9 +938,11 @@ function normItem(it) {
   };
 }
 function normState(d) {
-  const out = { items: [], deleted: {} };
+  const out = { items: [], deleted: {}, cats: [] };
   if (!d || typeof d !== 'object') return out;
   if (Array.isArray(d.items)) out.items = d.items.map(normItem).filter(Boolean);
+  if (Array.isArray(d.cats)) out.cats = d.cats.filter((c) => c && typeof c.key === 'string' && c.key && c.label)
+    .map((c) => ({ key: String(c.key).slice(0, 30), label: String(c.label).slice(0, 40), short: String(c.short || c.label).slice(0, 16), ico: String(c.ico || 'tag') }));
   if (d.deleted && typeof d.deleted === 'object') {
     for (const [id, ts] of Object.entries(d.deleted)) if (Number(ts) > 0) out.deleted[id] = Number(ts);
   }
@@ -934,12 +963,14 @@ function merge(a, b) {
     if (!cur || it.updatedAt > cur.updatedAt) map.set(it.id, it);
   }
   const items = [...map.values()].filter((it) => !(deleted[it.id] && deleted[it.id] >= it.updatedAt));
-  return sortState({ items, deleted });
+  const cm = new Map();
+  for (const c of [...(a.cats || []), ...(b.cats || [])]) if (!cm.has(c.key)) cm.set(c.key, c);
+  return sortState({ items, deleted, cats: [...cm.values()] });
 }
 function canon(st) {
   const del = {};
   for (const k of Object.keys(st.deleted).sort()) del[k] = st.deleted[k];
-  return JSON.stringify({ items: st.items, deleted: del });
+  return JSON.stringify({ items: st.items, deleted: del, cats: st.cats || [] });
 }
 function seed() {
   return {
@@ -959,6 +990,8 @@ function saveLocal() {
 }
 
 let state = loadLocal() || seed();
+if (!Array.isArray(state.cats)) state.cats = [];
+applyCats(state);
 let view = 'dash';
 let filter = 'all';
 let catFilter = '';
@@ -1089,6 +1122,7 @@ function renderDerived() {
 /* Osvježavanje nakon sinkronizacije: ne diramo popis dok korisnik tipka u njemu. */
 let pendingRender = false;
 function renderExternal() {
+  applyCats(state);
   const a = document.activeElement;
   if (a && a.closest && a.closest('#rows')) { pendingRender = true; renderStats(true); renderCharts(false); return; }
   render(false);
@@ -1567,7 +1601,8 @@ function renderListMeta() {
     icon('tag'), h('span', null, 'Tip: ' + ((state.items.find((x) => x.type.trim().toLowerCase() === typeFilter) || {}).type || 'Bez tipa').trim()), h('span', { 'aria-hidden': 'true' }, '✕'));
   $('#catChips').replaceChildren(...[typeChip, ...entries.filter((e) => e.key === '' || e.n > 0 || e.key === catFilter).map((e) =>
     h('button', { type: 'button', 'aria-pressed': String(catFilter === e.key), onclick: () => switchList(() => { catFilter = e.key; }) },
-      icon(e.ico), h('span', null, e.label), h('span', { class: 'count' }, String(e.n))))].filter(Boolean));
+      icon(e.ico), h('span', null, e.label), h('span', { class: 'count' }, String(e.n)))),
+    h('button', { type: 'button', class: 'add-cat', title: 'Nova kategorija', onclick: openCatDlg }, icon('plus'), h('span', null, 'Kategorija'))].filter(Boolean));
 
   const tc = totals(inCat);
   for (const b of document.querySelectorAll('#filters button')) {
@@ -2245,6 +2280,32 @@ $('#importFile').addEventListener('change', async (e) => {
 });
 
 /* ---------- Pokretanje ---------- */
+/* ---------- Vlastite kategorije ---------- */
+function openCatDlg() {
+  $('#cName').value = ''; $('#catErr').textContent = '';
+  $('#cIco').replaceChildren(...CAT_ICONS.map((k, i) => h('label', null, h('input', { type: 'radio', name: 'cIco', value: k, ...(i === 0 ? { checked: '' } : {}) }), h('span', null, icon(k)))));
+  $('#catDlg').showModal();
+  $('#cName').focus();
+}
+function slug(t) { return t.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 24) || 'kat'; }
+function saveCat() {
+  const label = $('#cName').value.trim();
+  if (!label) { $('#catErr').textContent = 'Upiši naziv kategorije.'; $('#cName').focus(); return; }
+  let key = slug(label), n = 2;
+  while (CAT[key]) key = slug(label) + '-' + n++;
+  const ico = ($('input[name="cIco"]:checked') || {}).value || 'tag';
+  if (!Array.isArray(state.cats)) state.cats = [];
+  state.cats.push({ key, label, short: label.length > 12 ? label.slice(0, 12) : label, ico });
+  applyCats(state);
+  touched();
+  $('#catDlg').close();
+  renderExternal();
+  catFilter = key;
+  renderExternal();
+}
+$('#catSaveBtn').addEventListener('click', saveCat);
+onEnter('#catForm', saveCat);
+
 if (matchMedia('(max-width:999px)').matches) $('#listHint').textContent = 'Dodirni proizvod za uređivanje';
 buildStats();
 layoutCols();
@@ -2257,6 +2318,8 @@ if (connected()) {
   syncNow();
 } else setStatus('local');
 })();
+
+
 
 /* ---------- Dnevni / noćni mod (zajednički ključ sa svim aplikacijama na ovoj domeni) ---------- */
 (function(){
