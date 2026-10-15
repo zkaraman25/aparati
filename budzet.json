@@ -129,7 +129,7 @@
    "desc": "dizalica topline, energetski stan",
    "group": "g4",
    "period": "m",
-   "amount": 120
+   "amount": 140
   },
   {
    "id": 15,
@@ -204,5 +204,5 @@
    "amount": 50
   }
  ],
- "updatedAt": 1792083597780
+ "updatedAt": 1792083638728
 }
