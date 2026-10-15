@@ -133,7 +133,7 @@
   },
   {
    "id": 15,
-   "name": "Hrana",
+   "name": "Špeceraj",
    "desc": "",
    "group": "g4",
    "period": "m",
@@ -180,5 +180,5 @@
    "amount": 50
   }
  ],
- "updatedAt": 1792083665491
+ "updatedAt": 1792083795778
 }
