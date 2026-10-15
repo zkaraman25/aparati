@@ -156,14 +156,6 @@
    "amount": 84.92
   },
   {
-   "id": 19,
-   "name": "Putovanja",
-   "desc": "",
-   "group": "g5",
-   "period": "y",
-   "amount": 339.66
-  },
-  {
    "id": 21,
    "name": "Štednja",
    "desc": "štedni račun, rezerva",
@@ -188,5 +180,5 @@
    "amount": 50
   }
  ],
- "updatedAt": 1792083652534
+ "updatedAt": 1792083655755
 }
