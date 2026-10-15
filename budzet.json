@@ -1,0 +1,207 @@
+{
+ "income": 2300,
+ "groups": [
+  {
+   "id": "g1",
+   "name": "Banka"
+  },
+  {
+   "id": "g2",
+   "name": "Auto"
+  },
+  {
+   "id": "g3",
+   "name": "Pretplate"
+  },
+  {
+   "id": "g4",
+   "name": "Život"
+  },
+  {
+   "id": "g5",
+   "name": "Luksuz"
+  },
+  {
+   "id": "g6",
+   "name": "Štednja"
+  }
+ ],
+ "items": [
+  {
+   "id": 1,
+   "name": "Kredit (anuitet)",
+   "desc": "ZABA, 2,98 % fiksno, 15. u mjesecu",
+   "group": "g1",
+   "period": "m",
+   "amount": 807
+  },
+  {
+   "id": 2,
+   "name": "Paket računa",
+   "desc": "",
+   "group": "g1",
+   "period": "m",
+   "amount": 7
+  },
+  {
+   "id": 3,
+   "name": "Osiguranje stana od požara",
+   "desc": "obvezno uz kredit, vinkulirano",
+   "group": "g1",
+   "period": "y",
+   "amount": 150
+  },
+  {
+   "id": 4,
+   "name": "Osiguranje od nezgode",
+   "desc": "obvezno uz kredit, vinkulirano",
+   "group": "g1",
+   "period": "y",
+   "amount": 154
+  },
+  {
+   "id": 5,
+   "name": "Gorivo",
+   "desc": "",
+   "group": "g2",
+   "period": "m",
+   "amount": 120
+  },
+  {
+   "id": 6,
+   "name": "Registracija i osiguranje auta",
+   "desc": "Škoda, bez kaska",
+   "group": "g2",
+   "period": "y",
+   "amount": 600
+  },
+  {
+   "id": 7,
+   "name": "Servis",
+   "desc": "",
+   "group": "g2",
+   "period": "m",
+   "amount": 30
+  },
+  {
+   "id": 8,
+   "name": "Multisport",
+   "desc": "",
+   "group": "g3",
+   "period": "m",
+   "amount": 0
+  },
+  {
+   "id": 9,
+   "name": "Claude",
+   "desc": "",
+   "group": "g3",
+   "period": "m",
+   "amount": 80
+  },
+  {
+   "id": 10,
+   "name": "Figma",
+   "desc": "",
+   "group": "g3",
+   "period": "m",
+   "amount": 15
+  },
+  {
+   "id": 11,
+   "name": "Spotify",
+   "desc": "",
+   "group": "g3",
+   "period": "m",
+   "amount": 10
+  },
+  {
+   "id": 12,
+   "name": "Internet doma",
+   "desc": "",
+   "group": "g3",
+   "period": "m",
+   "amount": 25
+  },
+  {
+   "id": 13,
+   "name": "Mobitel",
+   "desc": "",
+   "group": "g3",
+   "period": "m",
+   "amount": 12
+  },
+  {
+   "id": 14,
+   "name": "Režije + pričuva",
+   "desc": "dizalica topline, energetski stan",
+   "group": "g4",
+   "period": "m",
+   "amount": 120
+  },
+  {
+   "id": 15,
+   "name": "Kućne potrepštine",
+   "desc": "",
+   "group": "g4",
+   "period": "m",
+   "amount": 40
+  },
+  {
+   "id": 16,
+   "name": "Odjeća, frizer",
+   "desc": "",
+   "group": "g4",
+   "period": "m",
+   "amount": 60
+  },
+  {
+   "id": 17,
+   "name": "Hrana",
+   "desc": "",
+   "group": "g5",
+   "period": "m",
+   "amount": 300
+  },
+  {
+   "id": 18,
+   "name": "Izlasci i kava",
+   "desc": "",
+   "group": "g5",
+   "period": "m",
+   "amount": 150
+  },
+  {
+   "id": 19,
+   "name": "Putovanja",
+   "desc": "",
+   "group": "g5",
+   "period": "y",
+   "amount": 600
+  },
+  {
+   "id": 20,
+   "name": "Pokloni",
+   "desc": "",
+   "group": "g5",
+   "period": "m",
+   "amount": 30
+  },
+  {
+   "id": 21,
+   "name": "Štednja",
+   "desc": "štedni račun, rezerva",
+   "group": "g6",
+   "period": "m",
+   "amount": 200
+  },
+  {
+   "id": 22,
+   "name": "ETF",
+   "desc": "mjesečni plan",
+   "group": "g6",
+   "period": "m",
+   "amount": 50
+  }
+ ]
+}
