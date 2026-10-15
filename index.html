@@ -1275,7 +1275,7 @@ function renderDonut(animate) {
   const rows = groups.map((g) => {
     const row = h('div', { class: 'prow' },
       h('button', { type: 'button', 'aria-expanded': 'false', onclick: () => pick(g.key) },
-        h('span', { class: 'ptile ' + (g.todo <= 0 ? 'sw-paid' : g.paid <= 0 ? 'sw-todo' : 'sw-mix') }, icon(typeIcon(g.label))), h('span', { class: 'pname' }, g.label), h('span', { class: 'pval num' }, money(g.sum))),
+        h('i', { class: 'swatch ' + (g.todo <= 0 ? 'sw-paid' : g.paid <= 0 ? 'sw-todo' : 'sw-mix') }), h('span', { class: 'pname' }, g.label), h('span', { class: 'pval num' }, money(g.sum))),
       h('div', { class: 'pdetail' }, h('div', null,
         h('dl', null,
           h('dt', null, 'Plaćeno'), h('dd', { class: 'num' }, money(g.paid)),
