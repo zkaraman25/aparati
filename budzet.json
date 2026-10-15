@@ -148,14 +148,6 @@
    "amount": 60
   },
   {
-   "id": 17,
-   "name": "Hrana",
-   "desc": "",
-   "group": "g5",
-   "period": "m",
-   "amount": 169.83
-  },
-  {
    "id": 18,
    "name": "Izlasci i kava",
    "desc": "",
@@ -204,5 +196,5 @@
    "amount": 50
   }
  ],
- "updatedAt": 1792083638728
+ "updatedAt": 1792083643548
 }
