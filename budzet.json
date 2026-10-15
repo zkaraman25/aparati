@@ -141,7 +141,7 @@
   },
   {
    "id": 16,
-   "name": "Odjeća, frizer",
+   "name": "Frizer",
    "desc": "",
    "group": "g4",
    "period": "m",
@@ -204,5 +204,5 @@
    "amount": 50
   }
  ],
- "updatedAt": 1792083578841
+ "updatedAt": 1792083588625
 }
