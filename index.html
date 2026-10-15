@@ -128,6 +128,8 @@ svg.ico{width:18px; height:18px; flex:none; fill:none; stroke:currentColor; stro
 .arc-paid{stroke:var(--c-paid)} .arc-todo{stroke:var(--c-todo)}
 .arc-track{fill:none; stroke:var(--surface-2); stroke-width:24}
 .arc:hover,.arc:focus-visible{stroke-width:29; outline:none}
+.arc:focus,.col:focus,svg:focus,svg:focus-visible,.donut:focus{outline:none}
+.hub-back{display:inline-flex;align-items:center;justify-content:center;width:38px;height:38px;padding:0;margin-right:10px;text-decoration:none}
 .donut.has-sel .arc{opacity:.38}
 .donut.has-sel .arc.on{opacity:1; stroke-width:32}
 .donut-center{position:absolute; inset:22%; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; pointer-events:none}
@@ -475,7 +477,7 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
 
 <div class="app">
   <header class="head">
-    <div class="brand"><span class="logo" data-ico="washer"></span><h1>Aparati za stan</h1></div>
+    <div class="brand"><a href="/" class="btn hub-back" title="Natrag na Hub" aria-label="Natrag na Hub"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 6l-6 6 6 6"/></svg></a><span class="logo" data-ico="washer"></span><h1>Aparati za stan</h1></div>
     <button class="btn acct" id="statusBtn" type="button" data-state="local"><span class="status-dot" aria-hidden="true"></span><span id="statusText">Prijava</span></button>
     <button class="btn btn-primary" type="button" id="addBtn" aria-label="Dodaj proizvod"><span data-ico="plus"></span><span class="add-short">Dodaj</span><span class="add-long">Dodaj proizvod</span></button>
   </header>
