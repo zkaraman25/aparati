@@ -194,7 +194,15 @@
    "group": "g6",
    "period": "m",
    "amount": 80
+  },
+  {
+   "id": 1792083444067,
+   "name": "Adobe CC",
+   "desc": "",
+   "group": "g6",
+   "period": "m",
+   "amount": 0
   }
  ],
- "updatedAt": 1792083429205
+ "updatedAt": 1792083446268
 }
