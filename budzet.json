@@ -97,7 +97,7 @@
    "desc": "",
    "group": "g3",
    "period": "m",
-   "amount": 80
+   "amount": 78.4
   },
   {
    "id": 10,
@@ -105,7 +105,7 @@
    "desc": "",
    "group": "g3",
    "period": "m",
-   "amount": 15
+   "amount": 15.4
   },
   {
    "id": 11,
@@ -113,7 +113,7 @@
    "desc": "",
    "group": "g3",
    "period": "m",
-   "amount": 10
+   "amount": 9.8
   },
   {
    "id": 12,
@@ -121,7 +121,7 @@
    "desc": "",
    "group": "g3",
    "period": "m",
-   "amount": 25
+   "amount": 25.2
   },
   {
    "id": 13,
@@ -129,7 +129,7 @@
    "desc": "",
    "group": "g3",
    "period": "m",
-   "amount": 12
+   "amount": 11.2
   },
   {
    "id": 14,
@@ -204,5 +204,5 @@
    "amount": 80
   }
  ],
- "updatedAt": 1792083277716
+ "updatedAt": 1792083282435
 }
