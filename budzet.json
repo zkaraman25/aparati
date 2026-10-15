@@ -164,14 +164,6 @@
    "amount": 339.66
   },
   {
-   "id": 20,
-   "name": "Pokloni",
-   "desc": "",
-   "group": "g5",
-   "period": "m",
-   "amount": 16.98
-  },
-  {
    "id": 21,
    "name": "Štednja",
    "desc": "štedni račun, rezerva",
@@ -196,5 +188,5 @@
    "amount": 50
   }
  ],
- "updatedAt": 1792083643548
+ "updatedAt": 1792083652534
 }
