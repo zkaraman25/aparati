@@ -161,7 +161,7 @@
    "desc": "",
    "group": "g5",
    "period": "m",
-   "amount": 300
+   "amount": 169.83
   },
   {
    "id": 18,
@@ -169,7 +169,7 @@
    "desc": "",
    "group": "g5",
    "period": "m",
-   "amount": 150
+   "amount": 84.92
   },
   {
    "id": 19,
@@ -177,7 +177,7 @@
    "desc": "",
    "group": "g5",
    "period": "y",
-   "amount": 600
+   "amount": 339.66
   },
   {
    "id": 20,
@@ -185,7 +185,7 @@
    "desc": "",
    "group": "g5",
    "period": "m",
-   "amount": 30
+   "amount": 16.98
   },
   {
    "id": 21,
@@ -204,5 +204,5 @@
    "amount": 80
   }
  ],
- "updatedAt": 1792083282435
+ "updatedAt": 1792083289861
 }
