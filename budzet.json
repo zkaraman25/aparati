@@ -169,7 +169,7 @@
    "desc": "mjesečni plan",
    "group": "g6",
    "period": "m",
-   "amount": 80
+   "amount": 50
   },
   {
    "id": 1792083444067,
@@ -180,5 +180,5 @@
    "amount": 50
   }
  ],
- "updatedAt": 1792083655755
+ "updatedAt": 1792083662895
 }
