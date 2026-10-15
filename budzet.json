@@ -124,14 +124,6 @@
    "amount": 20
   },
   {
-   "id": 13,
-   "name": "Mobitel",
-   "desc": "",
-   "group": "g3",
-   "period": "m",
-   "amount": 11.2
-  },
-  {
    "id": 14,
    "name": "Režije + pričuva",
    "desc": "dizalica topline, energetski stan",
@@ -204,5 +196,5 @@
    "amount": 80
   }
  ],
- "updatedAt": 1792083406271
+ "updatedAt": 1792083421624
 }
