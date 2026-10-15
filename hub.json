@@ -12,10 +12,10 @@
    "id": 2,
    "name": "Aparati za stan",
    "desc": "Popis aparata i namještaja za stan, cijene, kupljeno, ušteda",
-   "url": "/aparati/",
+   "url": "https:///aparati/",
    "icon": "washer",
-   "color": "c2"
+   "color": "c5"
   }
  ],
- "updatedAt": 0
+ "updatedAt": 1792082951754
 }
