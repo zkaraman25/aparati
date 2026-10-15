@@ -210,7 +210,8 @@ svg.ico{width:18px; height:18px; flex:none; fill:none; stroke:currentColor; stro
 .cols-x > span{flex:1 1 0; min-width:0; display:flex; flex-direction:column; align-items:center; gap:3px; font-size:.75rem; color:var(--muted)}
 .cols-x svg.ico{width:16px; height:16px}
 .cols-x b{font-weight:400; max-width:100%; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:none}
-@container (min-width:440px){ .cols-x b{display:block} .cols-x svg.ico{display:none} }
+@container (min-width:440px){ .cols-x b{display:block} }
+.cols-x > span.on svg.ico{color:var(--accent-text)}
 #tip{
   position:fixed; z-index:60; pointer-events:none; max-width:240px; padding:7px 10px; border-radius:9px;
   background:var(--ink); color:var(--surface); font-size:.8125rem; line-height:1.35; white-space:pre-line;
