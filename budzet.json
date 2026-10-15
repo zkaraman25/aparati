@@ -145,7 +145,7 @@
    "desc": "",
    "group": "g4",
    "period": "m",
-   "amount": 136
+   "amount": 190
   },
   {
    "id": 17,
@@ -204,5 +204,5 @@
    "amount": 50
   }
  ],
- "updatedAt": 1792083565552
+ "updatedAt": 1792083573258
 }
