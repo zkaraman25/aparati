@@ -161,7 +161,7 @@
    "desc": "štedni račun, rezerva",
    "group": "g6",
    "period": "m",
-   "amount": 28
+   "amount": 288.03
   },
   {
    "id": 22,
@@ -180,5 +180,5 @@
    "amount": 50
   }
  ],
- "updatedAt": 1792083886265
+ "updatedAt": 1792083889827
 }
