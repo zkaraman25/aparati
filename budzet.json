@@ -33,7 +33,7 @@
    "desc": "ZABA, 2,98 % fiksno, 15. u mjesecu",
    "group": "g1",
    "period": "m",
-   "amount": 807
+   "amount": 807.21
   },
   {
    "id": 2,
@@ -41,7 +41,7 @@
    "desc": "",
    "group": "g1",
    "period": "m",
-   "amount": 7
+   "amount": 7.4
   },
   {
    "id": 3,
@@ -49,7 +49,7 @@
    "desc": "obvezno uz kredit, vinkulirano",
    "group": "g1",
    "period": "y",
-   "amount": 150
+   "amount": 150.05
   },
   {
    "id": 4,
@@ -57,7 +57,7 @@
    "desc": "obvezno uz kredit, vinkulirano",
    "group": "g1",
    "period": "y",
-   "amount": 154
+   "amount": 154.34
   },
   {
    "id": 5,
@@ -204,5 +204,5 @@
    "amount": 50
   }
  ],
- "updatedAt": 1792083454722
+ "updatedAt": 1792083462338
 }
