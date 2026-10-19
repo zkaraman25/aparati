@@ -15,7 +15,15 @@
    "url": "/aparati/",
    "icon": "washer",
    "color": "c5"
+  },
+  {
+   "id": 3,
+   "name": "Kile",
+   "desc": "Jutarnje vaganje, cilj, grafovi i treninzi",
+   "url": "/kile/",
+   "icon": "heart",
+   "color": "c3"
   }
  ],
- "updatedAt": 1792082951754
+ "updatedAt": 1792391574223
 }
