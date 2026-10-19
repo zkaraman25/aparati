@@ -1,9 +1,11 @@
 {
- "entries": {},
+ "entries": {
+  "2026-10-19": 109
+ },
  "training": {
   "2026-10-19": 0
  },
  "target": 100,
  "name": "Čiko",
- "updatedAt": 1792391695411
+ "updatedAt": 1792391892872
 }
