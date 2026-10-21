@@ -254,6 +254,21 @@
       "paid": null,
       "createdAt": 1791752561493,
       "updatedAt": 1791753544960
+    },
+    {
+      "id": "04154b59-55fc-4988-b9bb-361965560852",
+      "name": "Kutna garnitura Bastian",
+      "type": "Kutna Garnitura",
+      "desc": "",
+      "cat": "dnevni",
+      "source": "https://www.sklum.com/ie/buy-3-seater-modular-sofas/204162-bastian-3-piece-right-sided-chaise-longue-modular-sofa.html?id_c=545556#measures",
+      "qty": 1,
+      "price": null,
+      "bought": false,
+      "plan": true,
+      "paid": null,
+      "createdAt": 1792600323942,
+      "updatedAt": 1792600323942
     }
   ],
   "deleted": {
@@ -269,5 +284,6 @@
     "58f1c09c-782b-4c30-a358-ff6b24e4daac": 1791654706906,
     "e3d00454-5192-406d-87cf-70e593b934f1": 1791746899627,
     "1aac71e9-7f41-4a00-86e7-4ed872512a2c": 1791748522075
-  }
+  },
+  "cats": []
 }
