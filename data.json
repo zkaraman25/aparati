@@ -263,12 +263,12 @@
       "cat": "dnevni",
       "source": "https://www.sklum.com/ie/buy-3-seater-modular-sofas/204162-bastian-3-piece-right-sided-chaise-longue-modular-sofa.html?id_c=545556#measures",
       "qty": 1,
-      "price": null,
+      "price": 1609,
       "bought": false,
       "plan": true,
       "paid": null,
       "createdAt": 1792600323942,
-      "updatedAt": 1792600323942
+      "updatedAt": 1792600652149
     },
     {
       "id": "e9c819df-4191-4382-899a-d28dd27a4491",
