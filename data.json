@@ -314,6 +314,21 @@
       "paid": null,
       "createdAt": 1792601028541,
       "updatedAt": 1792601028541
+    },
+    {
+      "id": "283ba26e-a62f-487b-8108-24f2ee6b3583",
+      "name": "Kutna Jastebo u djelovima",
+      "type": "Kutna Garnitura",
+      "desc": "",
+      "cat": "dnevni",
+      "source": "https://www.ikea.com/hr/hr/p/jaettebo-modul-2-5-sjeda-s-pocivaljkom-lijevo-samsala-sivo-bez-s99471341/",
+      "qty": 1,
+      "price": 1920,
+      "bought": false,
+      "plan": true,
+      "paid": null,
+      "createdAt": 1792602881055,
+      "updatedAt": 1792602881055
     }
   ],
   "deleted": {
