@@ -284,6 +284,21 @@
       "paid": null,
       "createdAt": 1792600614656,
       "updatedAt": 1792600630362
+    },
+    {
+      "id": "46fd2c67-e96f-4922-a31d-2b384c82968d",
+      "name": "Martina Kutna garnitura",
+      "type": "Kutna Garnitura",
+      "desc": "",
+      "cat": "dnevni",
+      "source": "https://kavehome.com/hr/en/p/martina-stone-coloured-chenille-3-seater-modular-sofa-with-left-chaise-longue-287cm?material_fabric=kavehome%3AMTKA000NR36",
+      "qty": 1,
+      "price": 2940,
+      "bought": false,
+      "plan": true,
+      "paid": null,
+      "createdAt": 1792600956562,
+      "updatedAt": 1792600956562
     }
   ],
   "deleted": {
