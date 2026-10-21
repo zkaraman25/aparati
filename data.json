@@ -299,6 +299,21 @@
       "paid": null,
       "createdAt": 1792600956562,
       "updatedAt": 1792600956562
+    },
+    {
+      "id": "7ac9e279-7fea-4685-8b94-0a0feb4cc14b",
+      "name": "Kutna Garnitura Sofia",
+      "type": "Kutna Garnitura",
+      "desc": "",
+      "cat": "dnevni",
+      "source": "https://www.westwing.hr/modularna-kutna-sofa-sofia-trosjed-hr-23wes52810.html?simple=DEQ23WES52810-193624",
+      "qty": 1,
+      "price": 2899,
+      "bought": false,
+      "plan": true,
+      "paid": null,
+      "createdAt": 1792601028541,
+      "updatedAt": 1792601028541
     }
   ],
   "deleted": {
