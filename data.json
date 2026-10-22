@@ -359,6 +359,21 @@
       "paid": null,
       "createdAt": 1792663740219,
       "updatedAt": 1792675143620
+    },
+    {
+      "id": "0ebf8c35-ee13-4ce7-9a7f-6440372040b0",
+      "name": "Kutna Melva",
+      "type": "Kutna Garnitura",
+      "desc": "Š 238",
+      "cat": "dnevni",
+      "source": "https://www.westwing.hr/kutna-sofa-melva-trosjed-hr-23wes21874.html?simple=DEQ23WES21874-200550",
+      "qty": 1,
+      "price": 1930,
+      "bought": false,
+      "plan": true,
+      "paid": null,
+      "createdAt": 1792675355538,
+      "updatedAt": 1792675355538
     }
   ],
   "deleted": {
