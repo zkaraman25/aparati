@@ -374,6 +374,21 @@
       "paid": null,
       "createdAt": 1792675355538,
       "updatedAt": 1792675355538
+    },
+    {
+      "id": "01696e6b-c2b3-4d44-aa1e-dadaa203e42a",
+      "name": "Kutna garnitura Wolke",
+      "type": "Kutna Garnitura",
+      "desc": "Š 258",
+      "cat": "dnevni",
+      "source": "https://www.westwing.hr/modular-boucle-corner-sofa-wolke-3-seater-en-25wes85085.html?simple=DEQ25WES85085-191802",
+      "qty": 1,
+      "price": 2400,
+      "bought": false,
+      "plan": true,
+      "paid": null,
+      "createdAt": 1792675835474,
+      "updatedAt": 1792675835474
     }
   ],
   "deleted": {
