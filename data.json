@@ -241,21 +241,6 @@
       "updatedAt": 1791982129186
     },
     {
-      "id": "d89e1afa-1878-4081-adf9-7862e7f44fed",
-      "name": "Krevet s podiznim mehanizmom Alma - special - 180x200 cm",
-      "type": "Krevet",
-      "desc": "180x200",
-      "cat": "spavaca",
-      "source": "https://www.svijetnamjestaja.hr/trgovina/kreveti/quarto/5662733-krevet-s-podiznim-mehanizmom-alma-special-180x200-cm.html",
-      "qty": 1,
-      "price": 932,
-      "bought": false,
-      "plan": false,
-      "paid": null,
-      "createdAt": 1792741230939,
-      "updatedAt": 1792741230939
-    },
-    {
       "id": "a371199f-1611-4d3d-b5c4-f8b132659ba6",
       "name": "Polubarska stolica Detroit 956 (Bež + Kašmir)",
       "type": "Polubarska stolica",
@@ -293,7 +278,8 @@
     "8c98f1ec-75e8-4558-8f96-9f4b8b5b1ced": 1792741249546,
     "7dff96c4-6dae-42d3-a8fc-5e3fcbfb3574": 1792741251231,
     "0ebf8c35-ee13-4ce7-9a7f-6440372040b0": 1792741252805,
-    "01696e6b-c2b3-4d44-aa1e-dadaa203e42a": 1792741254646
+    "01696e6b-c2b3-4d44-aa1e-dadaa203e42a": 1792741254646,
+    "d89e1afa-1878-4081-adf9-7862e7f44fed": 1792753978206
   },
   "cats": []
 }
