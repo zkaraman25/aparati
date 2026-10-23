@@ -254,6 +254,21 @@
       "paid": null,
       "createdAt": 1792741230939,
       "updatedAt": 1792741230939
+    },
+    {
+      "id": "a371199f-1611-4d3d-b5c4-f8b132659ba6",
+      "name": "Polubarska stolica Detroit 956 (Bež + Kašmir)",
+      "type": "Polubarska stolica",
+      "desc": "",
+      "cat": "kuhinja",
+      "source": "https://www.namjestaj.hr/barske-stolice/polubarske-stolice/polubarska-stolica-detroit-956.html?variation_id=653941",
+      "qty": 4,
+      "price": 109,
+      "bought": false,
+      "plan": false,
+      "paid": null,
+      "createdAt": 1792741456080,
+      "updatedAt": 1792741456080
     }
   ],
   "deleted": {
