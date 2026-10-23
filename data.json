@@ -254,6 +254,21 @@
       "paid": null,
       "createdAt": 1792741456080,
       "updatedAt": 1792741456080
+    },
+    {
+      "id": "2b5d124e-8e04-4aee-8f43-928480578f47",
+      "name": "Beliani KREVET s prostorom za pohranu 180/200 cm tkanina bež Arbois",
+      "type": "Krevet",
+      "desc": "180x200",
+      "cat": "spavaca",
+      "source": "https://www.xxxlesnina.hr/p/beliani-krevet-s-prostorom-za-pohranu-180-200-cm-tkanina-bez-arbois-800001910022",
+      "qty": 1,
+      "price": null,
+      "bought": false,
+      "plan": false,
+      "paid": null,
+      "createdAt": 1792754038446,
+      "updatedAt": 1792754038446
     }
   ],
   "deleted": {
