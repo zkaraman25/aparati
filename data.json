@@ -389,6 +389,21 @@
       "paid": null,
       "createdAt": 1792675835474,
       "updatedAt": 1792675835474
+    },
+    {
+      "id": "d89e1afa-1878-4081-adf9-7862e7f44fed",
+      "name": "Krevet s podiznim mehanizmom Alma - special - 180x200 cm",
+      "type": "Krevet",
+      "desc": "180x200",
+      "cat": "spavaca",
+      "source": "https://www.svijetnamjestaja.hr/trgovina/kreveti/quarto/5662733-krevet-s-podiznim-mehanizmom-alma-special-180x200-cm.html",
+      "qty": 1,
+      "price": 932,
+      "bought": false,
+      "plan": false,
+      "paid": null,
+      "createdAt": 1792741230939,
+      "updatedAt": 1792741230939
     }
   ],
   "deleted": {
