@@ -144,11 +144,11 @@
       "source": "https://www.elipso.hr/mali-kucanski/parne-postaje/TEFAL-SV8151/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
       "qty": 1,
       "price": 135,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 135,
       "createdAt": 1791659788231,
-      "updatedAt": 1791659788231
+      "updatedAt": 1792754097890
     },
     {
       "id": "4dbf95bf-8c14-4b21-ab37-482d54a2d163",
