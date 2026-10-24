@@ -9,11 +9,11 @@
       "source": "https://www.ozone.hr/product/prijenosni-zvu-nik-sonos-play-wi-fi-crni/?utm_source=pazaruvaj&utm_medium=cpc&utm_content=Games&utm_campaign=pazaruvaj-games",
       "qty": 2,
       "price": 363.54,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 0,
       "createdAt": 1791647690170,
-      "updatedAt": 1791748532138
+      "updatedAt": 1792838596647
     },
     {
       "id": "9fec1c11-7485-45b5-a131-45fbf4c998fd",
