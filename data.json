@@ -11,9 +11,9 @@
       "price": 363.54,
       "bought": true,
       "plan": false,
-      "paid": 300,
+      "paid": 0,
       "createdAt": 1791647690170,
-      "updatedAt": 1792838612161
+      "updatedAt": 1792838620065
     },
     {
       "id": "9fec1c11-7485-45b5-a131-45fbf4c998fd",
