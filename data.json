@@ -269,6 +269,21 @@
       "paid": null,
       "createdAt": 1792754038446,
       "updatedAt": 1793226355420
+    },
+    {
+      "id": "8d73d7ec-5b57-4517-a008-17374843f186",
+      "name": "Lampa za kuhinju",
+      "type": "Lampa",
+      "desc": "",
+      "cat": "kuhinja",
+      "source": "https://a.aliexpress.com/_EGqyBEa",
+      "qty": 1,
+      "price": 223,
+      "bought": false,
+      "plan": false,
+      "paid": null,
+      "createdAt": 1793279466882,
+      "updatedAt": 1793279466882
     }
   ],
   "deleted": {
