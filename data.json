@@ -284,6 +284,21 @@
       "paid": null,
       "createdAt": 1793279466882,
       "updatedAt": 1793279466882
+    },
+    {
+      "id": "c9627100-8806-47e0-aee3-873ab4d1a0ff",
+      "name": "Cozze rotirajuća plinska pizza pećnica 17\" (90437) Classic Black",
+      "type": "Pec",
+      "desc": "",
+      "cat": "vrt",
+      "source": "https://www.mall.hr/pecnice-za-pizzu/cozze-rotirajuca-plinska-pizza-pecnica-17-90437-classic-black",
+      "qty": 1,
+      "price": 450,
+      "bought": false,
+      "plan": false,
+      "paid": null,
+      "createdAt": 1793377583650,
+      "updatedAt": 1793377583650
     }
   ],
   "deleted": {
