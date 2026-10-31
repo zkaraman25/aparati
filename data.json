@@ -215,7 +215,7 @@
       "name": "Napa ugradbena Bosch DBB95CC60",
       "type": "Napa",
       "desc": "",
-      "cat": "",
+      "cat": "kuhinja",
       "source": "https://www.allmall.hr/napa-ugradbena-bosch-dbb95cc60/87143/product/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
       "qty": 1,
       "price": 353,
@@ -223,7 +223,7 @@
       "plan": false,
       "paid": null,
       "createdAt": 1791747694152,
-      "updatedAt": 1791747694152
+      "updatedAt": 1793457277686
     },
     {
       "id": "4308616c-83bf-4805-8a21-f9b04f598276",
