@@ -62,7 +62,7 @@
     },
     {
       "id": "64a10140-768b-461d-b02c-705e6d4d0ebd",
-      "name": "UGRADBENI HLADNJAK BOSCH KIV86VSE0",
+      "name": "HLADNJAK BOSCH KIN96VFD0",
       "type": "Hladnjak",
       "desc": "177cm visine",
       "cat": "kuhinja",
@@ -73,7 +73,7 @@
       "plan": false,
       "paid": null,
       "createdAt": 1791652427399,
-      "updatedAt": 1793472143316
+      "updatedAt": 1793472168207
     },
     {
       "id": "6687282f-5c7a-4412-b029-3dbccb45a18e",
