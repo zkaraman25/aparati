@@ -197,7 +197,7 @@
     },
     {
       "id": "ab02a099-74cb-4ca1-860b-91383c616d57",
-      "name": "Indukcijska ploča BOSCH PXE801DC1E",
+      "name": "INDUKCIJSKA PLOCA BOSCH PXE601DC1E",
       "type": "Indukcijska Ploča",
       "desc": "u ravnini s pločom nije mat",
       "cat": "kuhinja",
@@ -208,7 +208,7 @@
       "plan": false,
       "paid": null,
       "createdAt": 1791747567834,
-      "updatedAt": 1793472334969
+      "updatedAt": 1793472360126
     },
     {
       "id": "2e6106f6-3b03-49e7-a734-250a77b32dfe",
