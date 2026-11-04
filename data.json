@@ -299,6 +299,21 @@
       "paid": null,
       "createdAt": 1793377583650,
       "updatedAt": 1793377583650
+    },
+    {
+      "id": "fde92eed-55a3-44b9-badb-7648765a47ab",
+      "name": "Mlinac",
+      "type": "Mlinac",
+      "desc": "",
+      "cat": "kuhinja",
+      "source": "https://iponcomp.hr/shop/proizvod/delonghi-kg-89-mlinac-za-kavu-od-nehrdajuceg-celika/1461259?utm_source=nabava&utm_medium=referral&utm_campaign=nabava&utm_content=1461259",
+      "qty": 1,
+      "price": 53.9,
+      "bought": false,
+      "plan": false,
+      "paid": null,
+      "createdAt": 1793802139807,
+      "updatedAt": 1793802139807
     }
   ],
   "deleted": {
