@@ -302,7 +302,7 @@
     },
     {
       "id": "fde92eed-55a3-44b9-badb-7648765a47ab",
-      "name": "Mlinac",
+      "name": "DeLonghi KG89 mlinac za kavu",
       "type": "Mlinac",
       "desc": "",
       "cat": "kuhinja",
@@ -313,7 +313,7 @@
       "plan": false,
       "paid": null,
       "createdAt": 1793802139807,
-      "updatedAt": 1793802139807
+      "updatedAt": 1793802148539
     }
   ],
   "deleted": {
