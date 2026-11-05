@@ -92,7 +92,7 @@
     },
     {
       "id": "b0ed72ff-4c7d-4cdb-86b0-26f995cdcd0a",
-      "name": "Samsung 65\" 4K UHD Neo QLED TV TVQE65QN80HAUXXH",
+      "name": "Samsung 65\" 4K UHD Neo QLED TV QE65QN80HAUXXH",
       "type": "TV",
       "desc": "65inch za veliku svijetlost",
       "cat": "dnevni",
@@ -103,7 +103,7 @@
       "plan": false,
       "paid": null,
       "createdAt": 1791654824640,
-      "updatedAt": 1793867019424
+      "updatedAt": 1793867031606
     },
     {
       "id": "9b3bd765-6d6c-410f-9736-e828e21c0a06",
