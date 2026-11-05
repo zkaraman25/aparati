@@ -344,6 +344,21 @@
       "paid": null,
       "createdAt": 1793880728579,
       "updatedAt": 1793880728579
+    },
+    {
+      "id": "d0c9a86e-8940-4dfc-a3e2-47dbfa5d5f99",
+      "name": "Stolić Jeans 45",
+      "type": "Stolic",
+      "desc": "",
+      "cat": "dnevni",
+      "source": "https://www.moemax.hr/p/premium-living-stolic-jens-008103026902",
+      "qty": 1,
+      "price": 50,
+      "bought": false,
+      "plan": false,
+      "paid": null,
+      "createdAt": 1793880781382,
+      "updatedAt": 1793880781382
     }
   ],
   "deleted": {
