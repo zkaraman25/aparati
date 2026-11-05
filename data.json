@@ -93,7 +93,7 @@
     {
       "id": "b0ed72ff-4c7d-4cdb-86b0-26f995cdcd0a",
       "name": "Samsung 65\" 4K UHD Neo QLED TV TVQE65QN80HAUXXH",
-      "type": "TVQE65QN80HAUXXH",
+      "type": "TV",
       "desc": "65inch za veliku svijetlost",
       "cat": "dnevni",
       "source": "https://euronics.hr/qled-tv/samsung-qe65qn80hauxxh-65quot-4k-uhd-neo-qled-tv-p331331?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
@@ -103,7 +103,7 @@
       "plan": false,
       "paid": null,
       "createdAt": 1791654824640,
-      "updatedAt": 1793867015978
+      "updatedAt": 1793867019424
     },
     {
       "id": "9b3bd765-6d6c-410f-9736-e828e21c0a06",
