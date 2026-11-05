@@ -314,6 +314,21 @@
       "paid": null,
       "createdAt": 1793802139807,
       "updatedAt": 1793802148539
+    },
+    {
+      "id": "827c9b9c-e89b-4bd4-b488-d84494551284",
+      "name": "Nosač za TV",
+      "type": "TV",
+      "desc": "",
+      "cat": "dnevni",
+      "source": "https://www.bigbang.hr/zidni-stalak-za-tv-samsung-wmn-b50eb-p-20434180/",
+      "qty": 1,
+      "price": 120,
+      "bought": false,
+      "plan": false,
+      "paid": null,
+      "createdAt": 1793867432081,
+      "updatedAt": 1793867432081
     }
   ],
   "deleted": {
