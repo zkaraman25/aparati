@@ -77,7 +77,7 @@
     },
     {
       "id": "6687282f-5c7a-4412-b029-3dbccb45a18e",
-      "name": "PEĆNICA BOSCH HBA574BB3",
+      "name": "PEĆNICA BOSCH HRG7784B1",
       "type": "Pečnica",
       "desc": "",
       "cat": "kuhinja",
@@ -88,7 +88,7 @@
       "plan": false,
       "paid": null,
       "createdAt": 1791653434791,
-      "updatedAt": 1793802105412
+      "updatedAt": 1793866549261
     },
     {
       "id": "b0ed72ff-4c7d-4cdb-86b0-26f995cdcd0a",
