@@ -329,6 +329,21 @@
       "paid": null,
       "createdAt": 1793867432081,
       "updatedAt": 1793867432081
+    },
+    {
+      "id": "0e8bada7-abdc-4324-bcfa-9aba70f3b5ed",
+      "name": "Stolić Jens 38",
+      "type": "Stolic",
+      "desc": "",
+      "cat": "dnevni",
+      "source": "https://www.moemax.hr/p/premium-living-stolic-jens-008103026901",
+      "qty": 1,
+      "price": 36,
+      "bought": false,
+      "plan": false,
+      "paid": null,
+      "createdAt": 1793880728579,
+      "updatedAt": 1793880728579
     }
   ],
   "deleted": {
