@@ -39,11 +39,11 @@
       "source": "https://www.bosch-home.hr/hr/mkt-product/pranje-i-susenje-rublja/perilice-rublja/perilice-rublja-s-punjenjem-sprijeda/WGG244Z5BY",
       "qty": 1,
       "price": 719,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 376,
       "createdAt": 1791651996764,
-      "updatedAt": 1793973243624
+      "updatedAt": 1793973248880
     },
     {
       "id": "5e21c31c-9099-4ac2-a0d7-87ae03c691e7",
