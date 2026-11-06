@@ -359,6 +359,21 @@
       "paid": null,
       "createdAt": 1793880781382,
       "updatedAt": 1793880781382
+    },
+    {
+      "id": "9228f4c0-9bee-41a3-8549-e77b81d66101",
+      "name": "Uredska stolica OMEGA Crni",
+      "type": "Stolica",
+      "desc": "",
+      "cat": "spavaca",
+      "source": "https://www.beliani.hr/uredska-stolica-omega-crni-647575.html",
+      "qty": 1,
+      "price": 189,
+      "bought": false,
+      "plan": false,
+      "paid": null,
+      "createdAt": 1793989840746,
+      "updatedAt": 1793989840746
     }
   ],
   "deleted": {
