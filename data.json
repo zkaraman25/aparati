@@ -204,11 +204,11 @@
       "source": "https://www.centar-tehnike.hr/kuhalo-bosch-pxe801dc1e-proizvod-5519/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
       "qty": 1,
       "price": 1019,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 588,
       "createdAt": 1791747567834,
-      "updatedAt": 1793973021485
+      "updatedAt": 1793973043949
     },
     {
       "id": "2e6106f6-3b03-49e7-a734-250a77b32dfe",
