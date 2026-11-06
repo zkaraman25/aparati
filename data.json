@@ -114,11 +114,11 @@
       "source": "https://www.bosch-home.hr/hr/mkt-product/kuhanje-i-pecenje/mikrovalne-pecnice/ugradbene-mikrovalne-pecnice/BFL554MB0",
       "qty": 1,
       "price": 449,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 231,
       "createdAt": 1791656462952,
-      "updatedAt": 1793973095248
+      "updatedAt": 1793973101685
     },
     {
       "id": "d5b5563a-0df2-4f56-92a4-47f7da3c2cc1",
