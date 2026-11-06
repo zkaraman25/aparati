@@ -69,11 +69,11 @@
       "source": "https://www.bosch-home.hr/hr/mkt-product/hladjenje-i-zamrzavanje/hladnjaci-sa-zamrzivacem/ugradbeni-hladnjaci-sa-zamrzivacem/KIN96VFD0",
       "qty": 1,
       "price": 1209,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 578,
       "createdAt": 1791652427399,
-      "updatedAt": 1793973330902
+      "updatedAt": 1793973337472
     },
     {
       "id": "6687282f-5c7a-4412-b029-3dbccb45a18e",
