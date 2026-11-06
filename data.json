@@ -219,11 +219,11 @@
       "source": "https://bijela-tehnika.com.hr/ugradbene-nape/7001-bosch-dbb97am60-ugradbena-napa.html",
       "qty": 1,
       "price": 603,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 318,
       "createdAt": 1791747694152,
-      "updatedAt": 1793866380932
+      "updatedAt": 1793973305206
     },
     {
       "id": "4308616c-83bf-4805-8a21-f9b04f598276",
