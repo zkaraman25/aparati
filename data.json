@@ -374,6 +374,21 @@
       "paid": null,
       "createdAt": 1793989840746,
       "updatedAt": 1793989840746
+    },
+    {
+      "id": "64772f74-0694-454e-86f3-afa409653d55",
+      "name": "Madrac perfecta",
+      "type": "",
+      "desc": "",
+      "cat": "spavaca",
+      "source": "",
+      "qty": 1,
+      "price": 1175,
+      "bought": false,
+      "plan": false,
+      "paid": null,
+      "createdAt": 1794064709615,
+      "updatedAt": 1794064709615
     }
   ],
   "deleted": {
