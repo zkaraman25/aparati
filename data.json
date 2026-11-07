@@ -128,12 +128,12 @@
       "cat": "kuhinja",
       "source": "https://e-point.hr/product/delonghi-aparat-za-kavu-ec890-m-dedica-duo/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
       "qty": 1,
-      "price": 199,
-      "bought": false,
+      "price": 278,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 200,
       "createdAt": 1791659698187,
-      "updatedAt": 1793801714717
+      "updatedAt": 1794057914584
     },
     {
       "id": "ea953ad9-154b-4a3e-98f1-ecaa563f3a29",
