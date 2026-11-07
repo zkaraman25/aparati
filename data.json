@@ -384,11 +384,11 @@
       "source": "",
       "qty": 1,
       "price": 1175,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 705,
       "createdAt": 1794064709615,
-      "updatedAt": 1794064709615
+      "updatedAt": 1794064715616
     }
   ],
   "deleted": {
