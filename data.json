@@ -23,12 +23,12 @@
       "cat": "kuhinja",
       "source": "https://www.centar-tehnike.hr/perilica-posuda-bosch-smv6ecx20e-proizvod-54197/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
       "qty": 1,
-      "price": 846,
+      "price": 850,
       "bought": false,
       "plan": false,
       "paid": null,
       "createdAt": 1791651234014,
-      "updatedAt": 1793802465871
+      "updatedAt": 1794255186100
     },
     {
       "id": "04a4e0c0-bd74-40af-92b3-feb6fa64b70e",
@@ -96,14 +96,14 @@
       "type": "TV",
       "desc": "65inch za veliku svijetlost",
       "cat": "dnevni",
-      "source": "https://euronics.hr/qled-tv/samsung-qe65qn80hauxxh-65quot-4k-uhd-neo-qled-tv-p331331?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
+      "source": "https://www.protis.hr/products/details/samsung-tv-qe65qn80hauxxh-neo-qled/286835?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
       "qty": 1,
       "price": 757,
       "bought": false,
       "plan": false,
       "paid": null,
       "createdAt": 1791654824640,
-      "updatedAt": 1793867039396
+      "updatedAt": 1794301435392
     },
     {
       "id": "9b3bd765-6d6c-410f-9736-e828e21c0a06",
