@@ -323,12 +323,12 @@
       "cat": "dnevni",
       "source": "https://www.wiz.hr/zidni-nosac-za-tv-od-32-do-55-vogels-ma3000",
       "qty": 1,
-      "price": 120,
+      "price": 21,
       "bought": false,
       "plan": false,
       "paid": null,
       "createdAt": 1793867432081,
-      "updatedAt": 1794579284499
+      "updatedAt": 1794579289831
     },
     {
       "id": "0e8bada7-abdc-4324-bcfa-9aba70f3b5ed",
