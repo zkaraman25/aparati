@@ -161,7 +161,7 @@
    "desc": "štedni račun, rezerva",
    "group": "g6",
    "period": "m",
-   "amount": 24
+   "amount": 244
   },
   {
    "id": 22,
@@ -169,7 +169,7 @@
    "desc": "mjesečni plan",
    "group": "g6",
    "period": "m",
-   "amount": 24
+   "amount": 244
   },
   {
    "id": 1792083444067,
@@ -180,5 +180,5 @@
    "amount": 50
   }
  ],
- "updatedAt": 1794836684801
+ "updatedAt": 1794836684939
 }
