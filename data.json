@@ -4,16 +4,16 @@
       "id": "f989d9e5-f9c5-4f93-968b-1151c5758e17",
       "name": "Prijenosni zvučnik Sonos - Play, Wi-Fi, crni",
       "type": "Zvučnik",
-      "desc": "Bezicni, uskladenost preko wifi, bluetooth, baterija",
+      "desc": "x2 u paketu",
       "cat": "stan",
       "source": "https://www.sonos.com/en/shop/sonos-play",
-      "qty": 2,
+      "qty": 1,
       "price": 700,
       "bought": false,
       "plan": false,
       "paid": null,
       "createdAt": 1791647690170,
-      "updatedAt": 1795446269945
+      "updatedAt": 1795641650609
     },
     {
       "id": "9fec1c11-7485-45b5-a131-45fbf4c998fd",
