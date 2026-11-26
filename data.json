@@ -189,11 +189,11 @@
       "source": "https://e-point.hr/product/xiaomi-robot-vacuum-h50-robotski-usisavac/",
       "qty": 1,
       "price": 285,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 281,
       "createdAt": 1791666721680,
-      "updatedAt": 1791666721680
+      "updatedAt": 1795737501252
     },
     {
       "id": "ab02a099-74cb-4ca1-860b-91383c616d57",
