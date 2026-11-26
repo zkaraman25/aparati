@@ -94,7 +94,7 @@
       "id": "b0ed72ff-4c7d-4cdb-86b0-26f995cdcd0a",
       "name": "Televizor Samsung 65\" OLED QE65S90HAEXXH",
       "type": "TV",
-      "desc": "65inch za veliku svijetlost",
+      "desc": "65inch + nosač",
       "cat": "dnevni",
       "source": "https://www.bigbang.hr/tv-lg-oled65c61la-165-1cm-65-oled-4k-uhd-120h-p-5000250592/",
       "qty": 1,
@@ -103,7 +103,7 @@
       "plan": false,
       "paid": null,
       "createdAt": 1791654824640,
-      "updatedAt": 1795713829384
+      "updatedAt": 1795713867703
     },
     {
       "id": "9b3bd765-6d6c-410f-9736-e828e21c0a06",
