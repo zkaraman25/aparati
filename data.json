@@ -441,6 +441,18 @@
       "note": "",
       "createdAt": 1795782870658,
       "updatedAt": 1795782870658
+    },
+    {
+      "id": "d459b108-c0d1-4250-9de9-faf4f05899fd",
+      "itemId": "2e6106f6-3b03-49e7-a734-250a77b32dfe",
+      "itemName": "Napa ugradbena Bosch DBB97AM60",
+      "seller": "https://bijela-tehnika.com.hr/ugradbene-nape/7001-bosch-dbb97am60-ugradbena-napa.html",
+      "mode": "pickup",
+      "date": "",
+      "status": "delivered",
+      "note": "",
+      "createdAt": 1795782878822,
+      "updatedAt": 1795782878822
     }
   ]
 }
