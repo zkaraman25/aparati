@@ -323,12 +323,12 @@
       "cat": "spavaca",
       "source": "https://www.beliani.hr/uredska-stolica-omega-crni-647575.html",
       "qty": 1,
-      "price": 189,
-      "bought": false,
+      "price": 299,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 189,
       "createdAt": 1793989840746,
-      "updatedAt": 1793989840746
+      "updatedAt": 1795740958857
     },
     {
       "id": "64772f74-0694-454e-86f3-afa409653d55",
