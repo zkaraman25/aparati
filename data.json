@@ -9,11 +9,11 @@
       "source": "https://www.sonos.com/en/shop/sonos-play",
       "qty": 1,
       "price": 700,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 558,
       "createdAt": 1791647690170,
-      "updatedAt": 1795739994519
+      "updatedAt": 1795740004818
     },
     {
       "id": "9fec1c11-7485-45b5-a131-45fbf4c998fd",
