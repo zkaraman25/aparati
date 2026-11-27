@@ -279,11 +279,11 @@
       "source": "https://www.mall.hr/pecnice-za-pizzu/cozze-rotirajuca-plinska-pizza-pecnica-17-90437-classic-black",
       "qty": 1,
       "price": 450,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 400,
       "createdAt": 1793377583650,
-      "updatedAt": 1793377583650
+      "updatedAt": 1795770410957
     },
     {
       "id": "9228f4c0-9bee-41a3-8549-e77b81d66101",
