@@ -301,21 +301,6 @@
       "updatedAt": 1793377583650
     },
     {
-      "id": "fde92eed-55a3-44b9-badb-7648765a47ab",
-      "name": "DeLonghi KG89 mlinac za kavu",
-      "type": "Mlinac",
-      "desc": "",
-      "cat": "kuhinja",
-      "source": "https://iponcomp.hr/shop/proizvod/delonghi-kg-89-mlinac-za-kavu-od-nehrdajuceg-celika/1461259?utm_source=nabava&utm_medium=referral&utm_campaign=nabava&utm_content=1461259",
-      "qty": 1,
-      "price": 53.9,
-      "bought": false,
-      "plan": true,
-      "paid": null,
-      "createdAt": 1793802139807,
-      "updatedAt": 1795739535070
-    },
-    {
       "id": "9228f4c0-9bee-41a3-8549-e77b81d66101",
       "name": "Uredska stolica OMEGA Crni",
       "type": "Stolica",
@@ -372,7 +357,8 @@
     "d89e1afa-1878-4081-adf9-7862e7f44fed": 1792753978206,
     "0e8bada7-abdc-4324-bcfa-9aba70f3b5ed": 1794579809001,
     "d0c9a86e-8940-4dfc-a3e2-47dbfa5d5f99": 1794579811585,
-    "827c9b9c-e89b-4bd4-b488-d84494551284": 1795739528732
+    "827c9b9c-e89b-4bd4-b488-d84494551284": 1795739528732,
+    "fde92eed-55a3-44b9-badb-7648765a47ab": 1795764848644
   },
   "cats": []
 }
