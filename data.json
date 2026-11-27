@@ -497,10 +497,10 @@
       "seller": "hgspot",
       "mode": "pickup",
       "date": "",
-      "status": "processing",
+      "status": "confirmed",
       "note": "",
       "createdAt": 1795782959117,
-      "updatedAt": 1795782959117
+      "updatedAt": 1795784476419
     },
     {
       "id": "fecc7a4a-e7f0-4b5c-9487-41f6b85f2aa2",
