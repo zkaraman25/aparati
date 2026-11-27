@@ -673,9 +673,12 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
         </div>
         <div style="display:flex; flex-wrap:wrap; align-items:center; gap:10px">
           <div class="seg-ctl" role="group" aria-label="Filtar dostava" id="dlFilters">
-            <button type="button" data-dlf="open" aria-pressed="true">Aktivne</button>
-            <button type="button" data-dlf="all" aria-pressed="false">Sve</button>
+            <button type="button" data-dlf="transit" aria-pressed="true">U dostavi</button>
+            <button type="button" data-dlf="processing" aria-pressed="false">U obradi</button>
+            <button type="button" data-dlf="confirmed" aria-pressed="false">Potvrđeno</button>
             <button type="button" data-dlf="delivered" aria-pressed="false">Stiglo</button>
+            <button type="button" data-dlf="open" aria-pressed="false">Aktivne</button>
+            <button type="button" data-dlf="all" aria-pressed="false">Sve</button>
           </div>
           <button class="btn btn-primary" type="button" id="dlAddBtn"><span data-ico="plus"></span>Nova dostava</button>
         </div>
@@ -2068,7 +2071,7 @@ for (const d of document.querySelectorAll('dialog')) d.addEventListener('click',
 const DL_MODE_LABEL = { home: 'Dostava doma', pickup: 'Preuzimanje' };
 const DL_MODE_ICO = { home: 'home', pickup: 'store' };
 const dlStatusLabel = (st, mode) => (st === 'processing' ? 'U obradi' : st === 'confirmed' ? 'Potvrđeno' : st === 'transit' ? 'U dostavi' : mode === 'pickup' ? 'Preuzeto' : 'Dostavljeno');
-let dlFilter = 'open';
+let dlFilter = 'transit';
 let dlEditId = null;
 const getDelivery = (id) => state.deliveries.find((d) => d.id === id);
 const pad2 = (n) => String(n).padStart(2, '0');
@@ -2128,7 +2131,9 @@ function dlRow(d) {
     b.addEventListener('click', () => {
       if (d.status === st) return;
       patchDelivery(d.id, { status: st });
+      const visible = dlFilter === 'all' || (dlFilter === 'open' ? st !== 'delivered' : st === dlFilter);
       if (st === 'delivered') toast(d.mode === 'pickup' ? 'Označeno kao preuzeto' : 'Označeno kao dostavljeno');
+      else if (!visible) toast('Premješteno u „' + dlStatusLabel(st, d.mode) + '”');
     });
     seg.append(b);
   }
@@ -2198,7 +2203,7 @@ function renderDlDash(all, cnt) {
   for (const st of DL_STATUS) {
     const b = h('button', { type: 'button', 'aria-pressed': String(dlFilter === st), title: 'Prikaži samo: ' + DL_LEG[st] },
       h('i', { style: 'background:' + DL_COLOR[st] }), DL_LEG[st], h('b', null, String(cnt[st])), h('span', { class: 'dl-pct' }, Math.round((cnt[st] / all.length) * 100) + ' %'));
-    b.addEventListener('click', () => { dlFilter = dlFilter === st ? 'open' : st; renderDeliveries(); });
+    b.addEventListener('click', () => { dlFilter = dlFilter === st ? 'all' : st; renderDeliveries(); });
     leg.append(b);
   }
   sum.append(h('div', { class: 'dl-box' }, h('h3', null, 'Po statusu'), h('div', { class: 'dl-donut' }, svg, leg)));
@@ -2319,8 +2324,8 @@ function saveDelivery() {
     state.deliveries.push(d);
     sortState(state);
     touched();
-    if (dlFilter === 'delivered' && d.status !== 'delivered') dlFilter = 'open';
-    if (dlFilter === 'open' && d.status === 'delivered') dlFilter = 'all';
+    const shown = dlFilter === 'all' || (dlFilter === 'open' ? d.status !== 'delivered' : d.status === dlFilter);
+    if (!shown) dlFilter = d.status;
     renderDeliveries();
     id = d.id;
     toast('Dostava je dodana');
