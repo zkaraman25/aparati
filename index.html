@@ -445,9 +445,43 @@ tr.open .sum::after{transform:rotate(225deg) translate(-2px,-1px)}
 .dl-status button{flex:1}
 .dl-status button[aria-pressed="true"][data-st="delivered"]{background:var(--ok-bg); color:var(--ok-text); box-shadow:none}
 .dl-status button[aria-pressed="true"][data-st="transit"]{background:var(--accent-soft); color:var(--accent-text); box-shadow:none}
-.dl-sum{display:flex; flex-wrap:wrap; gap:8px; padding:12px 16px 0}
-.dl-sum span{display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:999px; background:var(--surface-2); border:1px solid var(--line); font-size:.8125rem; color:var(--ink-2)}
-.dl-sum b{font-weight:650; color:var(--ink)}
+:root{--st-confirmed:#9C9CAD; --st-transit:var(--accent); --st-delivered:#1FA35C}
+.dl-sum{display:grid; gap:12px; padding:12px 16px 0; grid-template-columns:minmax(0,1fr)}
+.dl-box{border:1px solid var(--line); border-radius:12px; padding:12px 14px; min-width:0}
+.dl-box h3{font-size:.8125rem; font-weight:600; color:var(--ink-2); margin:0 0 10px}
+.dl-kpis{display:grid; grid-template-columns:1fr 1fr; padding:0; overflow:hidden}
+.dl-kpi{padding:12px 14px; min-width:0}
+.dl-kpi:nth-child(even){border-left:1px solid var(--line)}
+.dl-kpi:nth-child(n+3){border-top:1px solid var(--line)}
+.dl-kpi .k-label{font-size:.75rem; color:var(--muted); font-weight:550}
+.dl-kpi .k-val{font-size:1.5rem; font-weight:680; letter-spacing:-.02em; font-variant-numeric:tabular-nums; line-height:1.2; margin-top:2px}
+.dl-kpi.late .k-val{color:var(--danger)}
+.dl-kpi.soon .k-val{color:var(--accent-text)}
+.dl-kpi .k-sub{font-size:.75rem; color:var(--muted)}
+.dl-donut{display:flex; align-items:center; gap:16px}
+.dl-donut svg{width:112px; height:112px; flex:none}
+.dl-donut circle{fill:none; stroke-width:14; transition:stroke-dasharray .5s var(--ease), stroke-dashoffset .5s var(--ease)}
+.dl-donut .d-total{font-size:22px; font-weight:700; fill:var(--ink); font-family:var(--font)}
+.dl-donut .d-cap{font-size:10px; fill:var(--muted); font-family:var(--font)}
+.dl-legend{display:grid; gap:4px; flex:1; min-width:0}
+.dl-legend button{display:flex; align-items:center; gap:8px; width:100%; min-height:32px; padding:4px 8px; border:0; border-radius:8px; background:transparent; text-align:left; font-size:.875rem; color:var(--ink-2)}
+.dl-legend button:hover{background:var(--surface-2)}
+.dl-legend button[aria-pressed="true"]{background:var(--accent-soft); color:var(--accent-text); font-weight:600}
+.dl-legend i{width:10px; height:10px; border-radius:3px; flex:none}
+.dl-legend b{margin-left:auto; font-variant-numeric:tabular-nums; font-weight:650; color:var(--ink)}
+.dl-legend .dl-pct{color:var(--muted); font-size:.75rem; font-weight:500; min-width:38px; text-align:right}
+.dl-bars{display:flex; align-items:flex-end; gap:4px; height:110px; padding-top:4px}
+.dl-col{flex:1; min-width:0; display:flex; flex-direction:column; align-items:center; gap:4px; height:100%}
+.dl-stack{flex:1; width:100%; max-width:26px; display:flex; flex-direction:column-reverse; border-radius:5px; background:var(--surface-2); overflow:hidden}
+.dl-stack span{display:block; width:100%; transition:height .45s var(--ease)}
+.dl-col .c-n{font-size:.6875rem; font-weight:650; color:var(--ink); min-height:1em; font-variant-numeric:tabular-nums}
+.dl-col .c-d{font-size:.625rem; color:var(--muted); line-height:1.1; text-align:center; white-space:nowrap}
+.dl-col.today .c-d{color:var(--accent-text); font-weight:650}
+.dl-col.late .c-d{color:var(--danger); font-weight:650}
+.dl-bars-note{font-size:.75rem; color:var(--muted); margin-top:8px}
+@media (min-width:1000px){
+  .dl-sum{grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,1.3fr)}
+}
 .field select,.field input[type="date"]{
   width:100%; min-height:42px; padding:9px 12px; border:1px solid var(--line-2); border-radius:10px; background:var(--surface); font-size:16px;
   transition:border-color .15s, box-shadow .15s;
@@ -2107,21 +2141,14 @@ function renderDeliveries() {
     cnt[d.status]++;
     if (d.status !== 'delivered' && d.date) { const n = dayDiff(d.date); if (n === 0) cnt.today++; else if (n < 0) cnt.late++; }
   }
-  const sum = $('#dlSum');
-  sum.replaceChildren();
-  if (all.length) {
-    const chip = (label, n) => h('span', null, label, h('b', null, String(n)));
-    sum.append(chip('Potvrđeno', cnt.confirmed), chip('U dostavi', cnt.transit), chip('Stiglo', cnt.delivered));
-    if (cnt.today) sum.append(chip('Danas stiže', cnt.today));
-    if (cnt.late) sum.append(chip('Kasni', cnt.late));
-  }
-  sum.hidden = !all.length;
-  const list = dlSorted(all.filter((d) => dlFilter === 'all' || (dlFilter === 'delivered' ? d.status === 'delivered' : d.status !== 'delivered')));
+  renderDlDash(all, cnt);
+  $('#dlSum').hidden = !all.length;
+  const list = dlSorted(all.filter((d) => dlFilter === 'all' || (dlFilter === 'open' ? d.status !== 'delivered' : d.status === dlFilter)));
   $('#dlList').replaceChildren(...list.map(dlRow));
   $('#dlList').hidden = !list.length;
   const empty = $('#dlEmpty');
   empty.hidden = !!list.length;
-  empty.textContent = !all.length ? 'Još nema dostava. Dodaj prvu kad nešto naručiš.' : dlFilter === 'delivered' ? 'Ništa još nije stiglo.' : dlFilter === 'open' ? 'Nema aktivnih dostava, sve je stiglo.' : '';
+  empty.textContent = !all.length ? 'Još nema dostava. Dodaj prvu kad nešto naručiš.' : dlFilter === 'delivered' ? 'Ništa još nije stiglo.' : dlFilter === 'open' ? 'Nema aktivnih dostava, sve je stiglo.' : dlFilter === 'confirmed' ? 'Nema dostava koje čekaju.' : dlFilter === 'transit' ? 'Ništa trenutno nije u dostavi.' : '';
   for (const b of document.querySelectorAll('#dlFilters button')) b.setAttribute('aria-pressed', String(b.dataset.dlf === dlFilter));
   const open = cnt.confirmed + cnt.transit;
   $('#dlBadge').textContent = String(open);
@@ -2129,6 +2156,81 @@ function renderDeliveries() {
 }
 for (const b of document.querySelectorAll('#dlFilters button')) b.addEventListener('click', () => { dlFilter = b.dataset.dlf; renderDeliveries(); });
 
+
+/* Mali dashboard dostava: brojke, krug po statusu i sljedećih 14 dana */
+const DL_COLOR = { confirmed: 'var(--st-confirmed)', transit: 'var(--st-transit)', delivered: 'var(--st-delivered)' };
+const DL_LEG = { confirmed: 'Potvrđeno', transit: 'U dostavi', delivered: 'Stiglo' };
+const fmtWd = new Intl.DateTimeFormat('hr-HR', { weekday: 'short' });
+const dlWord = (n) => (n % 10 === 1 && n % 100 !== 11 ? 'dostava' : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? 'dostave' : 'dostava');
+function renderDlDash(all, cnt) {
+  const sum = $('#dlSum');
+  sum.replaceChildren();
+  if (!all.length) return;
+  const open = cnt.confirmed + cnt.transit;
+  let soon = 0, noDate = 0;
+  for (const d of all) if (d.status !== 'delivered') { if (!d.date) noDate++; else { const n = dayDiff(d.date); if (n === 0 || n === 1) soon++; } }
+  const kpi = (label, val, sub, cls) => h('div', { class: 'dl-kpi ' + (cls || '') }, h('div', { class: 'k-label' }, label), h('div', { class: 'k-val' }, String(val)), h('div', { class: 'k-sub' }, sub));
+  const pctDone = all.length ? Math.round((cnt.delivered / all.length) * 100) : 0;
+  sum.append(h('div', { class: 'dl-box dl-kpis' },
+    kpi('Aktivne dostave', open, noDate ? noDate + ' bez datuma' : 'od ukupno ' + all.length),
+    kpi('Stiglo', cnt.delivered, pctDone + ' % svih dostava'),
+    kpi('Danas i sutra', soon, soon ? 'pripremi se za doček' : 'ništa ne stiže', soon ? 'soon' : ''),
+    kpi('Kasni', cnt.late, cnt.late ? 'provjeri s trgovinom' : 'sve po planu', cnt.late ? 'late' : '')));
+
+  /* Krug po statusu */
+  const R = 46, C = 2 * Math.PI * R;
+  const svg = s('svg', { viewBox: '0 0 120 120', role: 'img', 'aria-label': 'Dostave po statusu' });
+  svg.append(s('circle', { cx: 60, cy: 60, r: R, style: 'stroke:var(--surface-2)' }));
+  let off = 0;
+  const gap = DL_STATUS.filter((st) => cnt[st]).length > 1 ? 3 : 0;
+  for (const st of DL_STATUS) {
+    if (!cnt[st]) continue;
+    const len = (cnt[st] / all.length) * C;
+    svg.append(s('circle', { cx: 60, cy: 60, r: R, transform: 'rotate(-90 60 60)', style: 'stroke:' + DL_COLOR[st], 'stroke-dasharray': Math.max(0, len - gap) + ' ' + C, 'stroke-dashoffset': -off }));
+    off += len;
+  }
+  const t1 = s('text', { x: 60, y: 62, 'text-anchor': 'middle', class: 'd-total' }); t1.textContent = String(all.length);
+  const t2 = s('text', { x: 60, y: 78, 'text-anchor': 'middle', class: 'd-cap' }); t2.textContent = dlWord(all.length);
+  svg.append(t1, t2);
+  const leg = h('div', { class: 'dl-legend' });
+  for (const st of DL_STATUS) {
+    const b = h('button', { type: 'button', 'aria-pressed': String(dlFilter === st), title: 'Prikaži samo: ' + DL_LEG[st] },
+      h('i', { style: 'background:' + DL_COLOR[st] }), DL_LEG[st], h('b', null, String(cnt[st])), h('span', { class: 'dl-pct' }, Math.round((cnt[st] / all.length) * 100) + ' %'));
+    b.addEventListener('click', () => { dlFilter = dlFilter === st ? 'open' : st; renderDeliveries(); });
+    leg.append(b);
+  }
+  sum.append(h('div', { class: 'dl-box' }, h('h3', null, 'Po statusu'), h('div', { class: 'dl-donut' }, svg, leg)));
+
+  /* Sljedećih 14 dana, složeno po statusu */
+  const days = [];
+  if (cnt.late) days.push({ key: 'late', top: 'Kasni', bottom: '', cls: 'late', c: { confirmed: 0, transit: 0, delivered: 0 } });
+  const base = new Date(); base.setHours(0, 0, 0, 0);
+  const span = matchMedia('(max-width:599px)').matches ? 7 : 14;
+  for (let i = 0; i < span; i++) {
+    const dt = new Date(base); dt.setDate(base.getDate() + i);
+    days.push({ key: isoDay(dt), top: i === 0 ? 'Danas' : fmtWd.format(dt).replace('.', ''), bottom: dt.getDate() + '.', cls: i === 0 ? 'today' : '', c: { confirmed: 0, transit: 0, delivered: 0 } });
+  }
+  const byKey = Object.fromEntries(days.map((d) => [d.key, d]));
+  let later = 0;
+  for (const d of all) {
+    if (!d.date) continue;
+    const n = dayDiff(d.date);
+    if (n < 0 && d.status !== 'delivered') { byKey.late.c[d.status]++; continue; }
+    if (byKey[d.date]) byKey[d.date].c[d.status]++;
+    else if (n >= span && d.status !== 'delivered') later++;
+  }
+  const max = Math.max(1, ...days.map((d) => d.c.confirmed + d.c.transit + d.c.delivered));
+  const bars = h('div', { class: 'dl-bars', role: 'img', 'aria-label': 'Dostave po danima' });
+  for (const d of days) {
+    const tot = d.c.confirmed + d.c.transit + d.c.delivered;
+    const stack = h('div', { class: 'dl-stack' });
+    for (const st of DL_STATUS) if (d.c[st]) stack.append(h('span', { style: 'height:' + (d.c[st] / max) * 100 + '%; background:' + DL_COLOR[st] }));
+    const tip = tot ? (d.top + (d.bottom ? ' ' + d.bottom : '') + ': ' + DL_STATUS.filter((st) => d.c[st]).map((st) => DL_LEG[st].toLowerCase() + ' ' + d.c[st]).join(', ')) : '';
+    bars.append(h('div', { class: 'dl-col ' + d.cls, title: tip }, h('span', { class: 'c-n' }, tot ? String(tot) : ''), stack, h('span', { class: 'c-d' }, d.top, h('br'), d.bottom)));
+  }
+  const note = [later ? 'Još ' + later + ' ' + dlWord(later) + ' kasnije od ' + span + ' dana' : '', noDate ? noDate + ' bez datuma' : ''].filter(Boolean).join(' · ');
+  sum.append(h('div', { class: 'dl-box' }, h('h3', null, span === 7 ? 'Sljedećih 7 dana' : 'Sljedećih 14 dana'), bars, note ? h('p', { class: 'dl-bars-note' }, note) : null));
+}
 /* Prozor za novu ili postojeću dostavu */
 $('#dMode').replaceChildren(...DL_MODES.map((m) => h('label', null,
   h('input', { type: 'radio', name: 'dMode', value: m }), h('span', null, icon(DL_MODE_ICO[m]), DL_MODE_LABEL[m]))));
@@ -2244,6 +2346,7 @@ function askDeleteDelivery(id) {
 }
 /* Ponoć: oznake "danas" i "kasni" se osvježe same */
 setInterval(() => { if (!$('#dlDlg').open) renderDeliveries(); }, 10 * 60 * 1000);
+matchMedia('(max-width:599px)').addEventListener('change', () => renderDeliveries());
 
 /* ---------- Sinkronizacija preko GitHuba ---------- */
 const API = 'https://api.github.com';
