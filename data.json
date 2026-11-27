@@ -174,11 +174,11 @@
       "source": "https://iponcomp.hr/shop/proizvod/dreame-z30-slim-bezicni-usisavac-vzv14b/2513065?utm_source=nabava&utm_medium=referral&utm_campaign=nabava&utm_content=2513065",
       "qty": 1,
       "price": 269,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 289,
       "createdAt": 1791666367641,
-      "updatedAt": 1793870989895
+      "updatedAt": 1795739178900
     },
     {
       "id": "940942f6-eea3-4a16-8994-dc36bb221832",
