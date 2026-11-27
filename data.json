@@ -393,6 +393,18 @@
       "note": "",
       "createdAt": 1795782813523,
       "updatedAt": 1795782813523
+    },
+    {
+      "id": "7225b81e-bac3-4f26-8e9a-101b677204bf",
+      "itemId": "64a10140-768b-461d-b02c-705e6d4d0ebd",
+      "itemName": "HLADNJAK BOSCH KIN96VFD0",
+      "seller": "https://www.bosch-home.hr/hr/mkt-product/hladjenje-i-zamrzavanje/hladnjaci-sa-zamrzivacem/ugradbeni-hladnjaci-sa-zamrzivacem/KIN96VFD0",
+      "mode": "home",
+      "date": "",
+      "status": "delivered",
+      "note": "",
+      "createdAt": 1795782823154,
+      "updatedAt": 1795782823154
     }
   ]
 }
