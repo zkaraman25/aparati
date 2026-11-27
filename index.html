@@ -443,9 +443,11 @@ tr.open .sum::after{transform:rotate(225deg) translate(-2px,-1px)}
 .dl-status{grid-column:1 / -1; margin-top:8px}
 .dl-status.seg-ctl{display:flex; width:100%}
 .dl-status button{flex:1}
+.dl-status button{padding:4px 6px}
+.dl-status button[aria-pressed="true"][data-st="processing"]{background:color-mix(in srgb, var(--st-processing) 22%, transparent); color:var(--ink); box-shadow:none}
 .dl-status button[aria-pressed="true"][data-st="delivered"]{background:var(--ok-bg); color:var(--ok-text); box-shadow:none}
 .dl-status button[aria-pressed="true"][data-st="transit"]{background:var(--accent-soft); color:var(--accent-text); box-shadow:none}
-:root{--st-confirmed:#9C9CAD; --st-transit:var(--accent); --st-delivered:#1FA35C}
+:root{--st-processing:#E0A63A; --st-confirmed:#9C9CAD; --st-transit:var(--accent); --st-delivered:#1FA35C}
 .dl-sum{display:grid; gap:12px; padding:12px 16px 0; grid-template-columns:minmax(0,1fr)}
 .dl-box{border:1px solid var(--line); border-radius:12px; padding:12px 14px; min-width:0}
 .dl-box h3{font-size:.8125rem; font-weight:600; color:var(--ink-2); margin:0 0 10px}
@@ -1113,7 +1115,7 @@ function normItem(it) {
 }
 /* Dostava: veže se na kupljeni proizvod; ime se pamti i zasebno, za slučaj da se proizvod obriše */
 const DL_MODES = ['home', 'pickup'];
-const DL_STATUS = ['confirmed', 'transit', 'delivered'];
+const DL_STATUS = ['processing', 'confirmed', 'transit', 'delivered'];
 function normDelivery(d) {
   if (!d || typeof d !== 'object' || d.id == null) return null;
   return {
@@ -2065,7 +2067,7 @@ for (const d of document.querySelectorAll('dialog')) d.addEventListener('click',
 /* ---------- Dostave ---------- */
 const DL_MODE_LABEL = { home: 'Dostava doma', pickup: 'Preuzimanje' };
 const DL_MODE_ICO = { home: 'home', pickup: 'store' };
-const dlStatusLabel = (st, mode) => (st === 'confirmed' ? 'Potvrđeno' : st === 'transit' ? 'U dostavi' : mode === 'pickup' ? 'Preuzeto' : 'Dostavljeno');
+const dlStatusLabel = (st, mode) => (st === 'processing' ? 'U obradi' : st === 'confirmed' ? 'Potvrđeno' : st === 'transit' ? 'U dostavi' : mode === 'pickup' ? 'Preuzeto' : 'Dostavljeno');
 let dlFilter = 'open';
 let dlEditId = null;
 const getDelivery = (id) => state.deliveries.find((d) => d.id === id);
@@ -2136,7 +2138,7 @@ function dlRow(d) {
 }
 function renderDeliveries() {
   const all = state.deliveries;
-  const cnt = { confirmed: 0, transit: 0, delivered: 0, today: 0, late: 0 };
+  const cnt = { processing: 0, confirmed: 0, transit: 0, delivered: 0, today: 0, late: 0 };
   for (const d of all) {
     cnt[d.status]++;
     if (d.status !== 'delivered' && d.date) { const n = dayDiff(d.date); if (n === 0) cnt.today++; else if (n < 0) cnt.late++; }
@@ -2148,9 +2150,9 @@ function renderDeliveries() {
   $('#dlList').hidden = !list.length;
   const empty = $('#dlEmpty');
   empty.hidden = !!list.length;
-  empty.textContent = !all.length ? 'Još nema dostava. Dodaj prvu kad nešto naručiš.' : dlFilter === 'delivered' ? 'Ništa još nije stiglo.' : dlFilter === 'open' ? 'Nema aktivnih dostava, sve je stiglo.' : dlFilter === 'confirmed' ? 'Nema dostava koje čekaju.' : dlFilter === 'transit' ? 'Ništa trenutno nije u dostavi.' : '';
+  empty.textContent = !all.length ? 'Još nema dostava. Dodaj prvu kad nešto naručiš.' : dlFilter === 'delivered' ? 'Ništa još nije stiglo.' : dlFilter === 'open' ? 'Nema aktivnih dostava, sve je stiglo.' : dlFilter === 'processing' ? 'Nema zahtjeva u obradi.' : dlFilter === 'confirmed' ? 'Nema potvrđenih dostava koje čekaju.' : dlFilter === 'transit' ? 'Ništa trenutno nije u dostavi.' : '';
   for (const b of document.querySelectorAll('#dlFilters button')) b.setAttribute('aria-pressed', String(b.dataset.dlf === dlFilter));
-  const open = cnt.confirmed + cnt.transit;
+  const open = cnt.processing + cnt.confirmed + cnt.transit;
   $('#dlBadge').textContent = String(open);
   $('#dlBadge').hidden = !open;
 }
@@ -2158,15 +2160,15 @@ for (const b of document.querySelectorAll('#dlFilters button')) b.addEventListen
 
 
 /* Mali dashboard dostava: brojke, krug po statusu i sljedećih 14 dana */
-const DL_COLOR = { confirmed: 'var(--st-confirmed)', transit: 'var(--st-transit)', delivered: 'var(--st-delivered)' };
-const DL_LEG = { confirmed: 'Potvrđeno', transit: 'U dostavi', delivered: 'Stiglo' };
+const DL_COLOR = { processing: 'var(--st-processing)', confirmed: 'var(--st-confirmed)', transit: 'var(--st-transit)', delivered: 'var(--st-delivered)' };
+const DL_LEG = { processing: 'U obradi', confirmed: 'Potvrđeno', transit: 'U dostavi', delivered: 'Stiglo' };
 const fmtWd = new Intl.DateTimeFormat('hr-HR', { weekday: 'short' });
 const dlWord = (n) => (n % 10 === 1 && n % 100 !== 11 ? 'dostava' : [2, 3, 4].includes(n % 10) && ![12, 13, 14].includes(n % 100) ? 'dostave' : 'dostava');
 function renderDlDash(all, cnt) {
   const sum = $('#dlSum');
   sum.replaceChildren();
   if (!all.length) return;
-  const open = cnt.confirmed + cnt.transit;
+  const open = cnt.processing + cnt.confirmed + cnt.transit;
   let soon = 0, noDate = 0;
   for (const d of all) if (d.status !== 'delivered') { if (!d.date) noDate++; else { const n = dayDiff(d.date); if (n === 0 || n === 1) soon++; } }
   const kpi = (label, val, sub, cls) => h('div', { class: 'dl-kpi ' + (cls || '') }, h('div', { class: 'k-label' }, label), h('div', { class: 'k-val' }, String(val)), h('div', { class: 'k-sub' }, sub));
@@ -2203,12 +2205,12 @@ function renderDlDash(all, cnt) {
 
   /* Sljedećih 14 dana, složeno po statusu */
   const days = [];
-  if (cnt.late) days.push({ key: 'late', top: 'Kasni', bottom: '', cls: 'late', c: { confirmed: 0, transit: 0, delivered: 0 } });
+  if (cnt.late) days.push({ key: 'late', top: 'Kasni', bottom: '', cls: 'late', c: { processing: 0, confirmed: 0, transit: 0, delivered: 0 } });
   const base = new Date(); base.setHours(0, 0, 0, 0);
   const span = matchMedia('(max-width:599px)').matches ? 7 : 14;
   for (let i = 0; i < span; i++) {
     const dt = new Date(base); dt.setDate(base.getDate() + i);
-    days.push({ key: isoDay(dt), top: i === 0 ? 'Danas' : fmtWd.format(dt).replace('.', ''), bottom: dt.getDate() + '.', cls: i === 0 ? 'today' : '', c: { confirmed: 0, transit: 0, delivered: 0 } });
+    days.push({ key: isoDay(dt), top: i === 0 ? 'Danas' : fmtWd.format(dt).replace('.', ''), bottom: dt.getDate() + '.', cls: i === 0 ? 'today' : '', c: { processing: 0, confirmed: 0, transit: 0, delivered: 0 } });
   }
   const byKey = Object.fromEntries(days.map((d) => [d.key, d]));
   let later = 0;
@@ -2219,10 +2221,10 @@ function renderDlDash(all, cnt) {
     if (byKey[d.date]) byKey[d.date].c[d.status]++;
     else if (n >= span && d.status !== 'delivered') later++;
   }
-  const max = Math.max(1, ...days.map((d) => d.c.confirmed + d.c.transit + d.c.delivered));
+  const max = Math.max(1, ...days.map((d) => d.c.processing + d.c.confirmed + d.c.transit + d.c.delivered));
   const bars = h('div', { class: 'dl-bars', role: 'img', 'aria-label': 'Dostave po danima' });
   for (const d of days) {
-    const tot = d.c.confirmed + d.c.transit + d.c.delivered;
+    const tot = d.c.processing + d.c.confirmed + d.c.transit + d.c.delivered;
     const stack = h('div', { class: 'dl-stack' });
     for (const st of DL_STATUS) if (d.c[st]) stack.append(h('span', { style: 'height:' + (d.c[st] / max) * 100 + '%; background:' + DL_COLOR[st] }));
     const tip = tot ? (d.top + (d.bottom ? ' ' + d.bottom : '') + ': ' + DL_STATUS.filter((st) => d.c[st]).map((st) => DL_LEG[st].toLowerCase() + ' ' + d.c[st]).join(', ')) : '';
@@ -2236,14 +2238,14 @@ $('#dMode').replaceChildren(...DL_MODES.map((m) => h('label', null,
   h('input', { type: 'radio', name: 'dMode', value: m }), h('span', null, icon(DL_MODE_ICO[m]), DL_MODE_LABEL[m]))));
 function paintStatusPick(mode, sel) {
   $('#dStatus').replaceChildren(...DL_STATUS.map((st) => h('label', null,
-    h('input', { type: 'radio', name: 'dStatus', value: st }), h('span', null, icon(st === 'confirmed' ? 'check' : st === 'transit' ? 'truck' : 'home'), dlStatusLabel(st, mode)))));
+    h('input', { type: 'radio', name: 'dStatus', value: st }), h('span', null, icon(st === 'processing' ? 'clock' : st === 'confirmed' ? 'check' : st === 'transit' ? 'truck' : 'home'), dlStatusLabel(st, mode)))));
   const r = document.querySelector('input[name="dStatus"][value="' + sel + '"]');
   if (r) r.checked = true;
 }
 const picked = (name) => { const r = document.querySelector('input[name="' + name + '"]:checked'); return r ? r.value : ''; };
 $('#dMode').addEventListener('change', () => {
   const mode = picked('dMode') || 'home';
-  paintStatusPick(mode, picked('dStatus') || 'confirmed');
+  paintStatusPick(mode, picked('dStatus') || 'processing');
   $('#dDateLabel').textContent = mode === 'pickup' ? 'Datum preuzimanja' : 'Datum dostave';
 });
 let autoSeller = '';
@@ -2283,7 +2285,7 @@ function openDelivery(id) {
   $('#dNote').value = d ? d.note : '';
   const mode = d ? d.mode : 'home';
   for (const r of document.querySelectorAll('input[name="dMode"]')) r.checked = r.value === mode;
-  paintStatusPick(mode, d ? d.status : 'confirmed');
+  paintStatusPick(mode, d ? d.status : 'processing');
   $('#dDateLabel').textContent = mode === 'pickup' ? 'Datum preuzimanja' : 'Datum dostave';
   const sellers = [...new Set([...state.deliveries.map((x) => x.seller), ...state.items.map((x) => sourceInfo(x.source).url ? '' : x.source)].map((v) => (v || '').trim()).filter(Boolean))];
   $('#sellerList').replaceChildren(...sellers.slice(0, 50).map((v) => h('option', { value: v })));
@@ -2305,7 +2307,7 @@ function saveDelivery() {
     seller: normSource($('#dSeller').value),
     mode: picked('dMode') || 'home',
     date,
-    status: picked('dStatus') || 'confirmed',
+    status: picked('dStatus') || 'processing',
     note: $('#dNote').value.trim(),
   };
   $('#dlDlg').close();
