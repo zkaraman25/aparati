@@ -249,11 +249,11 @@
       "source": "https://kavehome.com/hr/en/p/godia-stool-in-oak-veneer-with-natural-finish-and-beige-chenille",
       "qty": 4,
       "price": 149,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 119,
       "createdAt": 1792741456080,
-      "updatedAt": 1795696559259
+      "updatedAt": 1795775104274
     },
     {
       "id": "2b5d124e-8e04-4aee-8f43-928480578f47",
