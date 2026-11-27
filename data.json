@@ -264,11 +264,11 @@
       "source": "https://kavehome.com/hr/en/p/nahiri-beige-chenille-lift-up-storage-bed-for-a-180-x-200-cm-mattress-fsc-100",
       "qty": 1,
       "price": 679,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 543,
       "createdAt": 1792754038446,
-      "updatedAt": 1794835727723
+      "updatedAt": 1795775082789
     },
     {
       "id": "c9627100-8806-47e0-aee3-873ab4d1a0ff",
