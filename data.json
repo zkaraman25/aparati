@@ -227,7 +227,7 @@
     },
     {
       "id": "4308616c-83bf-4805-8a21-f9b04f598276",
-      "name": "Kutna garnitura Rocklin 193 (Cremona 2)",
+      "name": "Blok FR",
       "type": "Kutna Garnitura",
       "desc": "",
       "cat": "dnevni",
@@ -238,7 +238,7 @@
       "plan": false,
       "paid": 1000,
       "createdAt": 1791752530102,
-      "updatedAt": 1791982129186
+      "updatedAt": 1795740732463
     },
     {
       "id": "a371199f-1611-4d3d-b5c4-f8b132659ba6",
