@@ -8,12 +8,12 @@
       "cat": "stan",
       "source": "https://www.sonos.com/en/shop/sonos-play",
       "qty": 1,
-      "price": 550,
+      "price": 700,
       "bought": false,
       "plan": false,
       "paid": null,
       "createdAt": 1791647690170,
-      "updatedAt": 1795641654155
+      "updatedAt": 1795739994519
     },
     {
       "id": "9fec1c11-7485-45b5-a131-45fbf4c998fd",
