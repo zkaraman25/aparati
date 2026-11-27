@@ -25,10 +25,10 @@
       "qty": 1,
       "price": 850,
       "bought": false,
-      "plan": false,
+      "plan": true,
       "paid": null,
       "createdAt": 1791651234014,
-      "updatedAt": 1794255186100
+      "updatedAt": 1795739611389
     },
     {
       "id": "04a4e0c0-bd74-40af-92b3-feb6fa64b70e",
