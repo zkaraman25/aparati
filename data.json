@@ -332,5 +332,19 @@
     "8d73d7ec-5b57-4517-a008-17374843f186": 1795764860524,
     "4dbf95bf-8c14-4b21-ab37-482d54a2d163": 1795775141473
   },
-  "cats": []
+  "cats": [],
+  "deliveries": [
+    {
+      "id": "99f6eec1-06d0-40e9-ba1b-8c4341f2a32d",
+      "itemId": "d5b5563a-0df2-4f56-92a4-47f7da3c2cc1",
+      "itemName": "Aparat za espresso kavu De Longhi ECAM220.22.GB",
+      "seller": "https://e-point.hr/product/delonghi-aparat-za-kavu-ec890-m-dedica-duo/?utm_source=nabava.net&utm_campaign=nabava.net&utm_medium=click",
+      "mode": "home",
+      "date": "",
+      "status": "delivered",
+      "note": "",
+      "createdAt": 1795782405910,
+      "updatedAt": 1795782405910
+    }
+  ]
 }
