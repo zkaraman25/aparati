@@ -465,6 +465,18 @@
       "note": "",
       "createdAt": 1795782884997,
       "updatedAt": 1795782884997
+    },
+    {
+      "id": "1eb1b1e3-52c7-4e43-b804-1a4ddc269786",
+      "itemId": "04a4e0c0-bd74-40af-92b3-feb6fa64b70e",
+      "itemName": "Perilica rublja BOSCH WGG244Z5BY",
+      "seller": "https://www.bosch-home.hr/hr/mkt-product/pranje-i-susenje-rublja/perilice-rublja/perilice-rublja-s-punjenjem-sprijeda/WGG244Z5BY",
+      "mode": "home",
+      "date": "",
+      "status": "delivered",
+      "note": "",
+      "createdAt": 1795782895831,
+      "updatedAt": 1795782895831
     }
   ]
 }
