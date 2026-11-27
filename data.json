@@ -405,6 +405,18 @@
       "note": "",
       "createdAt": 1795782823154,
       "updatedAt": 1795782823154
+    },
+    {
+      "id": "25d3cc2d-0574-4afa-a537-82e0e796501d",
+      "itemId": "ab02a099-74cb-4ca1-860b-91383c616d57",
+      "itemName": "INDUKCIJSKA PLOCA BOSCH PXE801DC1E",
+      "seller": "https://www.bosch-home.hr/hr/mkt-product/kuhanje-i-pecenje/indukcijske-i-elektricne-ploce/indukcijske-ploce/PXE801DC1E",
+      "mode": "home",
+      "date": "",
+      "status": "confirmed",
+      "note": "",
+      "createdAt": 1795782831117,
+      "updatedAt": 1795782831117
     }
   ]
 }
