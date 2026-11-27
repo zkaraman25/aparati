@@ -416,16 +416,58 @@ tr.open .sum::after{transform:rotate(225deg) translate(-2px,-1px)}
   .tot-box.paid .tot-val{font-size:1.5rem}
 }
 
-/* Mobitel: dvije kartice dolje, Dashboard i Lista */
+/* Dostave */
+#delCard{overflow:hidden}
+.tab-badge{min-width:20px; height:20px; padding:0 6px; border-radius:999px; background:var(--accent); color:var(--accent-ink); font-size:.75rem; font-weight:650; display:inline-grid; place-items:center; margin-left:-2px}
+.tabs button{white-space:nowrap; padding:0 4px}
+.dl-list{display:grid; gap:10px; padding:12px 16px 16px}
+.dl-row{display:grid; grid-template-columns:auto minmax(0,1fr); align-content:start; gap:4px 12px; padding:12px 14px; border:1px solid var(--line); border-radius:12px; background:var(--surface); transition:border-color .15s}
+.dl-row.done{background:var(--surface-2)}
+.dl-row.done .dl-name{color:var(--muted)}
+.dl-row.fresh{animation:flash 1.6s var(--ease)}
+.dl-ico{grid-row:span 2; width:38px; height:38px; border-radius:10px; display:grid; place-items:center; background:var(--accent-soft); color:var(--accent-text); align-self:start}
+.dl-row.done .dl-ico{background:var(--ok-bg); color:var(--ok-text)}
+.dl-top{display:flex; align-items:flex-start; gap:8px; min-width:0}
+.dl-name{font-weight:600; min-width:0; flex:1; overflow-wrap:anywhere}
+.dl-acts{display:flex; gap:2px; flex:none; margin:-6px -8px 0 0}
+.dl-acts button{width:34px; height:34px; display:grid; place-items:center; border:0; border-radius:8px; background:transparent; color:var(--muted)}
+.dl-acts button:hover{background:var(--surface-2); color:var(--ink)}
+.dl-meta{display:flex; flex-wrap:wrap; align-items:center; gap:6px 14px; font-size:.8125rem; color:var(--ink-2); min-width:0}
+.dl-meta > span,.dl-meta > a{display:inline-flex; align-items:center; gap:5px; min-width:0}
+.dl-meta svg.ico{width:14px; height:14px; color:var(--muted)}
+.dl-meta a{color:var(--accent-text); font-weight:550; text-decoration:none; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:100%}
+.dl-meta a:hover{text-decoration:underline; text-underline-offset:3px}
+.dl-when.late{color:var(--danger); font-weight:600}
+.dl-when.soon{color:var(--accent-text); font-weight:600}
+.dl-note{grid-column:2; font-size:.8125rem; color:var(--muted); overflow-wrap:anywhere}
+.dl-status{grid-column:1 / -1; margin-top:8px}
+.dl-status.seg-ctl{display:flex; width:100%}
+.dl-status button{flex:1}
+.dl-status button[aria-pressed="true"][data-st="delivered"]{background:var(--ok-bg); color:var(--ok-text); box-shadow:none}
+.dl-status button[aria-pressed="true"][data-st="transit"]{background:var(--accent-soft); color:var(--accent-text); box-shadow:none}
+.dl-sum{display:flex; flex-wrap:wrap; gap:8px; padding:12px 16px 0}
+.dl-sum span{display:inline-flex; align-items:center; gap:6px; padding:5px 10px; border-radius:999px; background:var(--surface-2); border:1px solid var(--line); font-size:.8125rem; color:var(--ink-2)}
+.dl-sum b{font-weight:650; color:var(--ink)}
+.field select,.field input[type="date"]{
+  width:100%; min-height:42px; padding:9px 12px; border:1px solid var(--line-2); border-radius:10px; background:var(--surface); font-size:16px;
+  transition:border-color .15s, box-shadow .15s;
+}
+.field select:focus,.field input[type="date"]:focus{outline:none; border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft)}
+@media (min-width:700px){
+  .dl-list{grid-template-columns:repeat(auto-fill, minmax(340px, 1fr))}
+}
+
+/* Mobitel: tri kartice dolje, Dashboard, Lista i Dostave */
 .tabs{
-  position:fixed; left:0; right:0; bottom:0; z-index:20; display:grid; grid-template-columns:1fr 1fr; gap:6px;
+  position:fixed; left:0; right:0; bottom:0; z-index:20; display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px;
   background:var(--surface); border-top:1px solid var(--line); padding:6px 10px calc(6px + env(safe-area-inset-bottom));
 }
 .tabs button{display:flex; align-items:center; justify-content:center; gap:8px; min-height:46px; border:0; background:transparent; border-radius:12px; font-weight:600; color:var(--muted); transition:background .2s, color .2s}
 .tabs button[aria-pressed="true"]{color:var(--accent-text); background:var(--accent-soft)}
 @media (max-width:999px){
-  [data-view="dash"] #listCard{display:none}
-  [data-view="list"] #stats,[data-view="list"] #charts{display:none}
+  [data-view="dash"] #listCard,[data-view="dash"] #delCard{display:none}
+  [data-view="list"] #stats,[data-view="list"] #charts,[data-view="list"] #delCard{display:none}
+  [data-view="del"] #stats,[data-view="del"] #charts,[data-view="del"] #listCard{display:none}
 }
 .add-short{display:inline} .add-long{display:none}
 @media (min-width:420px){ .add-short{display:none} .add-long{display:inline} }
@@ -587,6 +629,26 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
       <div class="totals" id="foot" aria-label="Ukupno"></div>
     </section>
 
+    <section class="card" id="delCard" aria-label="Praćenje dostave">
+      <div class="card-head">
+        <div>
+          <h2>Dostave</h2>
+          <p class="card-sub">Što stiže, od koga i kada. Status mijenjaš klikom.</p>
+        </div>
+        <div style="display:flex; flex-wrap:wrap; align-items:center; gap:10px">
+          <div class="seg-ctl" role="group" aria-label="Filtar dostava" id="dlFilters">
+            <button type="button" data-dlf="open" aria-pressed="true">Aktivne</button>
+            <button type="button" data-dlf="all" aria-pressed="false">Sve</button>
+            <button type="button" data-dlf="delivered" aria-pressed="false">Stiglo</button>
+          </div>
+          <button class="btn btn-primary" type="button" id="dlAddBtn"><span data-ico="plus"></span>Nova dostava</button>
+        </div>
+      </div>
+      <div class="dl-sum" id="dlSum"></div>
+      <div class="dl-list" id="dlList"></div>
+      <p class="empty" id="dlEmpty" hidden></p>
+    </section>
+
   </main>
 
 </div>
@@ -594,6 +656,7 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
 <nav class="tabs" aria-label="Prikaz">
   <button type="button" data-tab="dash" aria-pressed="true"><span data-ico="all"></span>Dashboard</button>
   <button type="button" data-tab="list" aria-pressed="false"><span data-ico="list"></span>Lista</button>
+  <button type="button" data-tab="del" aria-pressed="false"><span data-ico="truck"></span>Dostave<span class="tab-badge" id="dlBadge" hidden></span></button>
 </nav>
 <div id="tip" role="tooltip"></div>
 <div id="toast" role="status"></div>
@@ -642,6 +705,39 @@ dialog::backdrop{background:rgba(15,15,22,.5); animation:fadeIn .2s}
 </dialog>
 
 <datalist id="typeList"></datalist>
+<datalist id="sellerList"></datalist>
+
+<!-- Dostava -->
+<dialog id="dlDlg" aria-labelledby="dlTitle">
+  <div class="dlg" id="dlForm">
+    <h2 id="dlTitle">Nova dostava</h2>
+    <label class="field"><span>Kupljeni proizvod</span>
+      <select id="dItem"></select>
+    </label>
+    <p class="hint" id="dItemHint"></p>
+    <label class="field"><span>Kupljeno kod (trgovina ili poveznica)</span>
+      <input type="text" id="dSeller" list="sellerList" autocapitalize="off" autocorrect="off" spellcheck="false" autocomplete="off" maxlength="500" placeholder="npr. Links ili https://…">
+    </label>
+    <div class="field"><span id="dModeLabel">Vrsta dostave</span>
+      <div class="catpick" id="dMode" role="radiogroup" aria-labelledby="dModeLabel"></div>
+    </div>
+    <label class="field"><span id="dDateLabel">Datum dostave</span>
+      <input type="date" id="dDate">
+    </label>
+    <div class="field"><span id="dStatusLabel">Status</span>
+      <div class="catpick" id="dStatus" role="radiogroup" aria-labelledby="dStatusLabel"></div>
+    </div>
+    <label class="field"><span>Napomena</span>
+      <textarea id="dNote" maxlength="400" placeholder="npr. broj pošiljke, kontakt dostavljača, termin"></textarea>
+    </label>
+    <p class="err" id="dlErr" role="alert"></p>
+    <div class="dlg-actions">
+      <span class="spacer"></span>
+      <button class="btn" type="button" data-close>Odustani</button>
+      <button class="btn btn-primary" type="button" id="dlSaveBtn">Spremi dostavu</button>
+    </div>
+  </div>
+</dialog>
 
 <!-- Potvrda brisanja -->
 
@@ -836,6 +932,12 @@ const ICONS = {
   cloud: 'M7 18a4 4 0 0 1-.5-7.97A6 6 0 0 1 18 9.5a4.25 4.25 0 0 1 .25 8.5z',
   sheet: 'M5 3h14a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM4 9h16M4 15h16M10 3v18',
   search: 'M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM20 20l-4.2-4.2',
+  truck: 'M2 6h11v10H2zM13 9h4l4 4v3h-8M6 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 19a2 2 0 1 0 0-4 2 2 0 0 0 0 4z',
+  home: 'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',
+  store: 'M4 9l1.5-5h13L20 9M4 9h16v2a3 3 0 0 1-5.3 1.9A3 3 0 0 1 12 14a3 3 0 0 1-2.7-1.1A3 3 0 0 1 4 11zM5 13v8h14v-8M10 21v-5h4v5',
+  calendar: 'M4 5h16v16H4zM4 10h16M8 3v4M16 3v4',
+  check: 'M5 12.5l4.5 4.5L19 7.5',
+  clock: 'M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18zM12 7v5l3 2',
 };
 const TYPE_ICONS = [
   [/tv|televiz|monitor|projektor/i, 'tv'], [/zvu[cč]n|soundbar|sonos|subwoofer|gramofon/i, 'speaker'], [/hladnjak|fri[zž]ider|zamrziva|frizer/i, 'fridge'],
@@ -975,10 +1077,29 @@ function normItem(it) {
     updatedAt: Number(it.updatedAt) || 0,
   };
 }
+/* Dostava: veže se na kupljeni proizvod; ime se pamti i zasebno, za slučaj da se proizvod obriše */
+const DL_MODES = ['home', 'pickup'];
+const DL_STATUS = ['confirmed', 'transit', 'delivered'];
+function normDelivery(d) {
+  if (!d || typeof d !== 'object' || d.id == null) return null;
+  return {
+    id: String(d.id),
+    itemId: String(d.itemId == null ? '' : d.itemId).slice(0, 80),
+    itemName: String(d.itemName == null ? '' : d.itemName).slice(0, 200),
+    seller: String(d.seller == null ? '' : d.seller).slice(0, 500),
+    mode: DL_MODES.includes(d.mode) ? d.mode : 'home',
+    date: /^\d{4}-\d{2}-\d{2}$/.test(d.date || '') ? d.date : '',
+    status: DL_STATUS.includes(d.status) ? d.status : 'confirmed',
+    note: String(d.note == null ? '' : d.note).slice(0, 400),
+    createdAt: Number(d.createdAt) || 0,
+    updatedAt: Number(d.updatedAt) || 0,
+  };
+}
 function normState(d) {
-  const out = { items: [], deleted: {}, cats: [] };
+  const out = { items: [], deleted: {}, cats: [], deliveries: [] };
   if (!d || typeof d !== 'object') return out;
   if (Array.isArray(d.items)) out.items = d.items.map(normItem).filter(Boolean);
+  if (Array.isArray(d.deliveries)) out.deliveries = d.deliveries.map(normDelivery).filter(Boolean);
   if (Array.isArray(d.cats)) out.cats = d.cats.filter((c) => c && typeof c.key === 'string' && c.key && c.label)
     .map((c) => ({ key: String(c.key).slice(0, 30), label: String(c.label).slice(0, 40), short: String(c.short || c.label).slice(0, 16), ico: String(c.ico || 'tag') }));
   if (d.deleted && typeof d.deleted === 'object') {
@@ -987,7 +1108,10 @@ function normState(d) {
   return sortState(out);
 }
 function sortState(st) {
-  st.items.sort((a, b) => (a.createdAt - b.createdAt) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0));
+  const byAge = (a, b) => (a.createdAt - b.createdAt) || (a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+  st.items.sort(byAge);
+  if (!Array.isArray(st.deliveries)) st.deliveries = [];
+  st.deliveries.sort(byAge);
   return st;
 }
 /* Spajanje dviju verzija: za svaki proizvod pobjeđuje novija izmjena, obrisano ostaje obrisano. */
@@ -1001,19 +1125,27 @@ function merge(a, b) {
     if (!cur || it.updatedAt > cur.updatedAt) map.set(it.id, it);
   }
   const items = [...map.values()].filter((it) => !(deleted[it.id] && deleted[it.id] >= it.updatedAt));
+  const dm = new Map();
+  for (const d of a.deliveries || []) dm.set(d.id, d);
+  for (const d of b.deliveries || []) {
+    const cur = dm.get(d.id);
+    if (!cur || d.updatedAt > cur.updatedAt) dm.set(d.id, d);
+  }
+  const deliveries = [...dm.values()].filter((d) => !(deleted[d.id] && deleted[d.id] >= d.updatedAt));
   const cm = new Map();
   for (const c of [...(a.cats || []), ...(b.cats || [])]) if (!cm.has(c.key)) cm.set(c.key, c);
-  return sortState({ items, deleted, cats: [...cm.values()] });
+  return sortState({ items, deleted, cats: [...cm.values()], deliveries });
 }
 function canon(st) {
   const del = {};
   for (const k of Object.keys(st.deleted).sort()) del[k] = st.deleted[k];
-  return JSON.stringify({ items: st.items, deleted: del, cats: st.cats || [] });
+  return JSON.stringify({ items: st.items, deleted: del, cats: st.cats || [], deliveries: st.deliveries || [] });
 }
 function seed() {
   return {
-    items: SEED.map(([name, desc, cat, type], i) => ({ id: 'pocetni-' + (i + 1), name, type, desc, cat, source: '', price: null, bought: false, paid: null, createdAt: i + 1, updatedAt: 0 })),
+    items: SEED.map(([name, desc, cat, type], i) => ({ id: 'pocetni-' + (i + 1), name, type, desc, cat, source: '', qty: 1, price: null, bought: false, paid: null, createdAt: i + 1, updatedAt: 0 })),
     deleted: {},
+    deliveries: [],
   };
 }
 function loadLocal() {
@@ -1029,6 +1161,7 @@ function saveLocal() {
 
 let state = loadLocal() || seed();
 if (!Array.isArray(state.cats)) state.cats = [];
+if (!Array.isArray(state.deliveries)) state.deliveries = [];
 applyCats(state);
 let view = 'dash';
 let filter = 'all';
@@ -1107,6 +1240,7 @@ function removeItem(id) {
   renderList();
   renderStats(true);
   renderCharts(false);
+  renderDeliveries();
 }
 
 /* ---------- Izračuni ---------- */
@@ -1128,7 +1262,7 @@ function totals(items) {
 }
 /* ---------- Prikaz ---------- */
 function setView(v) {
-  view = v === 'list' ? 'list' : 'dash';
+  view = v === 'list' || v === 'del' ? v : 'dash';
   document.body.dataset.view = view;
   for (const b of document.querySelectorAll('.tabs button')) b.setAttribute('aria-pressed', String(b.dataset.tab === view));
   try { localStorage.setItem(LS_VIEW, view); } catch (e) { /* nije bitno */ }
@@ -1150,19 +1284,21 @@ function render(animate) {
   renderStats(animate);
   renderCharts(animate);
   renderList();
+  renderDeliveries();
 }
 /* Nakon izmjene u popisu: red ostaje na mjestu, brojke i grafovi se osvježe. */
 function renderDerived() {
   renderStats(true);
   renderCharts(false);
   renderListMeta();
+  renderDeliveries();
 }
 /* Osvježavanje nakon sinkronizacije: ne diramo popis dok korisnik tipka u njemu. */
 let pendingRender = false;
 function renderExternal() {
   applyCats(state);
   const a = document.activeElement;
-  if (a && a.closest && a.closest('#rows')) { pendingRender = true; renderStats(true); renderCharts(false); return; }
+  if (a && a.closest && a.closest('#rows')) { pendingRender = true; renderStats(true); renderCharts(false); renderDeliveries(); return; }
   render(false);
 }
 $('#rows').addEventListener('focusout', () => {
@@ -1700,20 +1836,22 @@ function goToItem(id) {
 }
 
 /* Brisanje uz potvrdu u prozoru */
-let delId = null;
+let delId = null, delAction = null;
 function askDelete(id) {
   const it = getItem(id);
   if (!it) return;
   delId = id;
+  delAction = () => { if (!getItem(delId)) return; removeItem(delId); toast('Proizvod je obrisan'); };
+  $('#delTitle').textContent = 'Obrisati proizvod?';
   $('#delName').textContent = '„' + (it.name || 'Bez imena') + '” će nestati s popisa. To se ne može poništiti.';
   $('#delDlg').showModal();
 }
 $('#delYes').addEventListener('click', () => {
   $('#delDlg').close();
-  if (!delId || !getItem(delId)) return;
-  removeItem(delId);
+  const fn = delAction;
+  delAction = null;
+  if (fn) fn();
   delId = null;
-  toast('Proizvod je obrisan');
 });
 
 /* Širine stupaca: povuci rub zaglavlja, dvoklik vraća zadanu širinu */
@@ -1885,10 +2023,227 @@ function onEnter(root, fn) {
   });
 }
 onEnter('#itemForm', saveNew);
-$('#addBtn').addEventListener('click', openNew);
+$('#addBtn').addEventListener('click', () => (view === 'del' && matchMedia('(max-width:999px)').matches ? openDelivery(null) : openNew()));
 $('#addBtn2').addEventListener('click', openNew);
 for (const b of document.querySelectorAll('[data-close]')) b.addEventListener('click', () => b.closest('dialog').close());
 for (const d of document.querySelectorAll('dialog')) d.addEventListener('click', (e) => { if (e.target === d) d.close(); });
+
+/* ---------- Dostave ---------- */
+const DL_MODE_LABEL = { home: 'Dostava doma', pickup: 'Preuzimanje' };
+const DL_MODE_ICO = { home: 'home', pickup: 'store' };
+const dlStatusLabel = (st, mode) => (st === 'confirmed' ? 'Potvrđeno' : st === 'transit' ? 'U dostavi' : mode === 'pickup' ? 'Preuzeto' : 'Dostavljeno');
+let dlFilter = 'open';
+let dlEditId = null;
+const getDelivery = (id) => state.deliveries.find((d) => d.id === id);
+const pad2 = (n) => String(n).padStart(2, '0');
+const isoDay = (dt) => dt.getFullYear() + '-' + pad2(dt.getMonth() + 1) + '-' + pad2(dt.getDate());
+const todayIso = () => isoDay(new Date());
+const fmtDay = new Intl.DateTimeFormat('hr-HR', { weekday: 'short', day: 'numeric', month: 'numeric' });
+function dayDiff(iso) {
+  const [y, m, d] = iso.split('-').map(Number);
+  const t = new Date(); t.setHours(0, 0, 0, 0);
+  return Math.round((new Date(y, m - 1, d) - t) / 86400000);
+}
+function dayText(iso) { const [y, m, d] = iso.split('-').map(Number); return fmtDay.format(new Date(y, m - 1, d)); }
+function dlWhen(d) {
+  if (!d.date) return { text: 'Datum još nije poznat', cls: '' };
+  const n = dayDiff(d.date), day = dayText(d.date);
+  if (d.status === 'delivered') return { text: day, cls: '' };
+  if (n < 0) return { text: 'Kasni ' + (-n) + (-n === 1 ? ' dan' : ' dana') + ' (' + day + ')', cls: 'late' };
+  if (n === 0) return { text: 'Danas', cls: 'soon' };
+  if (n === 1) return { text: 'Sutra, ' + day, cls: 'soon' };
+  if (n < 7) return { text: 'Za ' + n + ' dana, ' + day, cls: '' };
+  return { text: day, cls: '' };
+}
+const dlName = (d) => { const it = getItem(d.itemId); return (it && it.name) || d.itemName || 'Obrisan proizvod'; };
+function dlSorted(list) {
+  const key = (d) => d.date || '9999-99-99';
+  const open = list.filter((d) => d.status !== 'delivered').sort((a, b) => key(a).localeCompare(key(b)) || a.createdAt - b.createdAt);
+  const done = list.filter((d) => d.status === 'delivered').sort((a, b) => (b.date || '').localeCompare(a.date || '') || b.updatedAt - a.updatedAt);
+  return [...open, ...done];
+}
+function patchDelivery(id, data) {
+  const d = getDelivery(id);
+  if (!d) return;
+  Object.assign(d, data, { updatedAt: Date.now() });
+  touched();
+  renderDeliveries();
+}
+function dlRow(d) {
+  const it = getItem(d.itemId);
+  const ico = h('span', { class: 'dl-ico' }, icon(it ? typeIcon(it.type) : 'truck'));
+  const edit = h('button', { type: 'button', title: 'Uredi dostavu', 'aria-label': 'Uredi dostavu' }, icon('pencil'));
+  edit.addEventListener('click', () => openDelivery(d.id));
+  const del = h('button', { type: 'button', title: 'Obriši dostavu', 'aria-label': 'Obriši dostavu' }, icon('trash'));
+  del.addEventListener('click', () => askDeleteDelivery(d.id));
+  const top = h('div', { class: 'dl-top' }, h('span', { class: 'dl-name' }, dlName(d)), h('span', { class: 'dl-acts' }, edit, del));
+  const meta = h('div', { class: 'dl-meta' });
+  const src = sourceInfo(d.seller);
+  if (src.url) meta.append(h('a', { href: src.url, target: '_blank', rel: 'noopener noreferrer', title: src.url }, icon('ext'), src.label));
+  else if (src.label) meta.append(h('span', null, icon('cart'), src.label));
+  meta.append(h('span', null, icon(DL_MODE_ICO[d.mode]), DL_MODE_LABEL[d.mode]));
+  const w = dlWhen(d);
+  meta.append(h('span', { class: 'dl-when ' + w.cls }, icon('calendar'), w.text));
+  const kids = [ico, top, meta];
+  if (d.note) kids.push(h('p', { class: 'dl-note' }, d.note));
+  const seg = h('div', { class: 'seg-ctl dl-status', role: 'group', 'aria-label': 'Status dostave' });
+  for (const st of DL_STATUS) {
+    const b = h('button', { type: 'button', 'data-st': st, 'aria-pressed': String(d.status === st) }, dlStatusLabel(st, d.mode));
+    b.addEventListener('click', () => {
+      if (d.status === st) return;
+      patchDelivery(d.id, { status: st });
+      if (st === 'delivered') toast(d.mode === 'pickup' ? 'Označeno kao preuzeto' : 'Označeno kao dostavljeno');
+    });
+    seg.append(b);
+  }
+  kids.push(seg);
+  const row = h('article', { class: 'dl-row' + (d.status === 'delivered' ? ' done' : ''), 'data-id': d.id }, ...kids);
+  return row;
+}
+function renderDeliveries() {
+  const all = state.deliveries;
+  const cnt = { confirmed: 0, transit: 0, delivered: 0, today: 0, late: 0 };
+  for (const d of all) {
+    cnt[d.status]++;
+    if (d.status !== 'delivered' && d.date) { const n = dayDiff(d.date); if (n === 0) cnt.today++; else if (n < 0) cnt.late++; }
+  }
+  const sum = $('#dlSum');
+  sum.replaceChildren();
+  if (all.length) {
+    const chip = (label, n) => h('span', null, label, h('b', null, String(n)));
+    sum.append(chip('Potvrđeno', cnt.confirmed), chip('U dostavi', cnt.transit), chip('Stiglo', cnt.delivered));
+    if (cnt.today) sum.append(chip('Danas stiže', cnt.today));
+    if (cnt.late) sum.append(chip('Kasni', cnt.late));
+  }
+  sum.hidden = !all.length;
+  const list = dlSorted(all.filter((d) => dlFilter === 'all' || (dlFilter === 'delivered' ? d.status === 'delivered' : d.status !== 'delivered')));
+  $('#dlList').replaceChildren(...list.map(dlRow));
+  $('#dlList').hidden = !list.length;
+  const empty = $('#dlEmpty');
+  empty.hidden = !!list.length;
+  empty.textContent = !all.length ? 'Još nema dostava. Dodaj prvu kad nešto naručiš.' : dlFilter === 'delivered' ? 'Ništa još nije stiglo.' : dlFilter === 'open' ? 'Nema aktivnih dostava, sve je stiglo.' : '';
+  for (const b of document.querySelectorAll('#dlFilters button')) b.setAttribute('aria-pressed', String(b.dataset.dlf === dlFilter));
+  const open = cnt.confirmed + cnt.transit;
+  $('#dlBadge').textContent = String(open);
+  $('#dlBadge').hidden = !open;
+}
+for (const b of document.querySelectorAll('#dlFilters button')) b.addEventListener('click', () => { dlFilter = b.dataset.dlf; renderDeliveries(); });
+
+/* Prozor za novu ili postojeću dostavu */
+$('#dMode').replaceChildren(...DL_MODES.map((m) => h('label', null,
+  h('input', { type: 'radio', name: 'dMode', value: m }), h('span', null, icon(DL_MODE_ICO[m]), DL_MODE_LABEL[m]))));
+function paintStatusPick(mode, sel) {
+  $('#dStatus').replaceChildren(...DL_STATUS.map((st) => h('label', null,
+    h('input', { type: 'radio', name: 'dStatus', value: st }), h('span', null, icon(st === 'confirmed' ? 'check' : st === 'transit' ? 'truck' : 'home'), dlStatusLabel(st, mode)))));
+  const r = document.querySelector('input[name="dStatus"][value="' + sel + '"]');
+  if (r) r.checked = true;
+}
+const picked = (name) => { const r = document.querySelector('input[name="' + name + '"]:checked'); return r ? r.value : ''; };
+$('#dMode').addEventListener('change', () => {
+  const mode = picked('dMode') || 'home';
+  paintStatusPick(mode, picked('dStatus') || 'confirmed');
+  $('#dDateLabel').textContent = mode === 'pickup' ? 'Datum preuzimanja' : 'Datum dostave';
+});
+let autoSeller = '';
+function fillItemSelect(selId) {
+  const sel = $('#dItem');
+  const has = new Set(state.deliveries.filter((d) => d.id !== dlEditId).map((d) => d.itemId));
+  const byName = (a, b) => a.name.localeCompare(b.name, 'hr', { sensitivity: 'base' });
+  const opt = (it) => h('option', { value: it.id }, (it.name || 'Bez imena') + (has.has(it.id) ? ' · već ima dostavu' : ''));
+  const bought = state.items.filter((it) => it.bought).sort(byName);
+  const other = state.items.filter((it) => !it.bought && (it.id === selId || !it.plan)).sort(byName);
+  const kids = [h('option', { value: '' }, 'Odaberi proizvod')];
+  if (bought.length) kids.push(h('optgroup', { label: 'Kupljeno' }, ...bought.map(opt)));
+  if (other.length) kids.push(h('optgroup', { label: 'Još nije označeno kao kupljeno' }, ...other.map(opt)));
+  sel.replaceChildren(...kids);
+  sel.value = selId && getItem(selId) ? selId : '';
+  $('#dItemHint').textContent = bought.length ? '' : 'Još nemaš proizvoda označenih kao kupljeno. Možeš ih označiti na Listi.';
+  $('#dItemHint').hidden = !!bought.length;
+}
+$('#dItem').addEventListener('change', () => {
+  const it = getItem($('#dItem').value);
+  const cur = $('#dSeller').value.trim();
+  if (it && it.source && (!cur || cur === autoSeller)) { $('#dSeller').value = it.source; autoSeller = it.source; }
+});
+function openDelivery(id) {
+  const d = id ? getDelivery(id) : null;
+  dlEditId = d ? d.id : null;
+  $('#dlTitle').textContent = d ? 'Uredi dostavu' : 'Nova dostava';
+  $('#dlSaveBtn').textContent = d ? 'Spremi izmjene' : 'Dodaj dostavu';
+  fillItemSelect(d ? d.itemId : '');
+  if (d && !getItem(d.itemId)) {
+    $('#dItem').prepend(h('option', { value: '__gone' }, d.itemName || 'Obrisan proizvod'));
+    $('#dItem').value = '__gone';
+  }
+  $('#dSeller').value = d ? d.seller : '';
+  autoSeller = '';
+  $('#dDate').value = d ? d.date : '';
+  $('#dNote').value = d ? d.note : '';
+  const mode = d ? d.mode : 'home';
+  for (const r of document.querySelectorAll('input[name="dMode"]')) r.checked = r.value === mode;
+  paintStatusPick(mode, d ? d.status : 'confirmed');
+  $('#dDateLabel').textContent = mode === 'pickup' ? 'Datum preuzimanja' : 'Datum dostave';
+  const sellers = [...new Set([...state.deliveries.map((x) => x.seller), ...state.items.map((x) => sourceInfo(x.source).url ? '' : x.source)].map((v) => (v || '').trim()).filter(Boolean))];
+  $('#sellerList').replaceChildren(...sellers.slice(0, 50).map((v) => h('option', { value: v })));
+  $('#dlErr').textContent = '';
+  $('#dlDlg').showModal();
+  if (!d) $('#dItem').focus();
+}
+function saveDelivery() {
+  const err = $('#dlErr');
+  const itemVal = $('#dItem').value;
+  const old = dlEditId ? getDelivery(dlEditId) : null;
+  if (!itemVal) { err.textContent = 'Odaberi proizvod koji se dostavlja.'; $('#dItem').focus(); return; }
+  const date = $('#dDate').value;
+  if (date && !/^\d{4}-\d{2}-\d{2}$/.test(date)) { err.textContent = 'Datum nije ispravan.'; $('#dDate').focus(); return; }
+  const it = itemVal === '__gone' ? null : getItem(itemVal);
+  const data = {
+    itemId: it ? it.id : old ? old.itemId : '',
+    itemName: it ? it.name : old ? old.itemName : '',
+    seller: normSource($('#dSeller').value),
+    mode: picked('dMode') || 'home',
+    date,
+    status: picked('dStatus') || 'confirmed',
+    note: $('#dNote').value.trim(),
+  };
+  $('#dlDlg').close();
+  let id;
+  if (old) { patchDelivery(old.id, data); id = old.id; toast('Dostava je spremljena'); }
+  else {
+    const now = Date.now();
+    const d = normDelivery({ id: uid(), createdAt: now, updatedAt: now, ...data });
+    state.deliveries.push(d);
+    sortState(state);
+    touched();
+    if (dlFilter === 'delivered' && d.status !== 'delivered') dlFilter = 'open';
+    if (dlFilter === 'open' && d.status === 'delivered') dlFilter = 'all';
+    renderDeliveries();
+    id = d.id;
+    toast('Dostava je dodana');
+  }
+  const row = document.querySelector('#dlList [data-id="' + CSS.escape(id) + '"]');
+  if (row) { row.classList.add('fresh'); row.scrollIntoView({ block: 'nearest', behavior: 'smooth' }); setTimeout(() => row.classList.remove('fresh'), 1700); }
+}
+$('#dlSaveBtn').addEventListener('click', saveDelivery);
+onEnter('#dlForm', saveDelivery);
+$('#dlAddBtn').addEventListener('click', () => openDelivery(null));
+function askDeleteDelivery(id) {
+  const d = getDelivery(id);
+  if (!d) return;
+  delAction = () => {
+    if (!getDelivery(id)) return;
+    state.deliveries = state.deliveries.filter((x) => x.id !== id);
+    state.deleted[id] = Date.now();
+    touched();
+    renderDeliveries();
+    toast('Dostava je obrisana');
+  };
+  $('#delTitle').textContent = 'Obrisati dostavu?';
+  $('#delName').textContent = 'Dostava za „' + dlName(d) + '” će nestati. Proizvod ostaje na popisu.';
+  $('#delDlg').showModal();
+}
+/* Ponoć: oznake "danas" i "kasni" se osvježe same */
+setInterval(() => { if (!$('#dlDlg').open) renderDeliveries(); }, 10 * 60 * 1000);
 
 /* ---------- Sinkronizacija preko GitHuba ---------- */
 const API = 'https://api.github.com';
@@ -2348,7 +2703,7 @@ if (matchMedia('(max-width:999px)').matches) $('#listHint').textContent = 'Dodir
 buildStats();
 layoutCols();
 paintSort();
-try { if (localStorage.getItem(LS_VIEW) === 'list') { view = 'list'; document.body.dataset.view = 'list'; for (const b of document.querySelectorAll('.tabs button')) b.setAttribute('aria-pressed', String(b.dataset.tab === 'list')); } } catch (e) { /* nije bitno */ }
+try { const lv = localStorage.getItem(LS_VIEW); if (lv === 'list' || lv === 'del') { view = lv; document.body.dataset.view = lv; for (const b of document.querySelectorAll('.tabs button')) b.setAttribute('aria-pressed', String(b.dataset.tab === lv)); } } catch (e) { /* nije bitno */ }
 render(true);
 enter();
 if (connected()) {
