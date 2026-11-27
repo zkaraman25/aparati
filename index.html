@@ -2258,15 +2258,18 @@ function fillItemSelect(selId) {
   const sel = $('#dItem');
   const has = new Set(state.deliveries.filter((d) => d.id !== dlEditId).map((d) => d.itemId));
   const byName = (a, b) => a.name.localeCompare(b.name, 'hr', { sensitivity: 'base' });
-  const opt = (it) => h('option', { value: it.id }, (it.name || 'Bez imena') + (has.has(it.id) ? ' · već ima dostavu' : ''));
-  const bought = state.items.filter((it) => it.bought).sort(byName);
-  const other = state.items.filter((it) => !it.bought && (it.id === selId || !it.plan)).sort(byName);
+  const opt = (it) => h('option', { value: it.id }, it.name || 'Bez imena');
+  /* Proizvod koji već ima dostavu ne nudimo ponovno, osim onog koji se upravo uređuje */
+  const free = (it) => it.id === selId || !has.has(it.id);
+  const bought = state.items.filter((it) => it.bought && free(it)).sort(byName);
+  const other = state.items.filter((it) => !it.bought && free(it) && (it.id === selId || !it.plan)).sort(byName);
   const kids = [h('option', { value: '' }, 'Odaberi proizvod')];
   if (bought.length) kids.push(h('optgroup', { label: 'Kupljeno' }, ...bought.map(opt)));
   if (other.length) kids.push(h('optgroup', { label: 'Još nije označeno kao kupljeno' }, ...other.map(opt)));
   sel.replaceChildren(...kids);
   sel.value = selId && getItem(selId) ? selId : '';
-  $('#dItemHint').textContent = bought.length ? '' : 'Još nemaš proizvoda označenih kao kupljeno. Možeš ih označiti na Listi.';
+  const boughtAll = state.items.filter((it) => it.bought).length;
+  $('#dItemHint').textContent = bought.length ? '' : !boughtAll ? 'Još nemaš proizvoda označenih kao kupljeno. Možeš ih označiti na Listi.' : 'Svi kupljeni proizvodi već imaju dostavu.';
   $('#dItemHint').hidden = !!bought.length;
 }
 $('#dItem').addEventListener('change', () => {
