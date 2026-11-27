@@ -493,6 +493,17 @@ tr.open .sum::after{transform:rotate(225deg) translate(-2px,-1px)}
   .dl-list{grid-template-columns:repeat(auto-fill, minmax(340px, 1fr))}
 }
 
+/* Mobitel: zaglavlje ostaje u jednom redu, gumb za dodavanje je samo plus */
+@media (max-width:599px){
+  .head #addBtn .add-short,.head #addBtn .add-long{display:none}
+  .head #addBtn{width:40px; min-width:40px; padding:0; flex:none}
+  .head .acct{flex:0 1 auto; min-width:0}
+  .head .brand{flex:1 1 auto}
+  #delCard .card-head > div:last-child{width:100%}
+  #dlFilters{display:grid; grid-template-columns:repeat(3,1fr); width:100%; overflow:visible}
+  #dlFilters button{padding:4px 6px}
+  #dlAddBtn{width:100%}
+}
 /* Mobitel: tri kartice dolje, Dashboard, Lista i Dostave */
 .tabs{
   position:fixed; left:0; right:0; bottom:0; z-index:20; display:grid; grid-template-columns:1fr 1fr 1fr; gap:6px;
