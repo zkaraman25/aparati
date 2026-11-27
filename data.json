@@ -151,21 +151,6 @@
       "updatedAt": 1794057877047
     },
     {
-      "id": "4dbf95bf-8c14-4b21-ab37-482d54a2d163",
-      "name": "ROŠTILJ WEBER Q2100N PLINSKI",
-      "type": "Rošitlj",
-      "desc": "",
-      "cat": "vrt",
-      "source": "https://www.kraljzara.hr/plinski-rostilj-q-2100n.html",
-      "qty": 1,
-      "price": 449,
-      "bought": false,
-      "plan": true,
-      "paid": null,
-      "createdAt": 1791660145556,
-      "updatedAt": 1795445184044
-    },
-    {
       "id": "780e9720-aedf-49b3-b4ec-2bbed81d2a1b",
       "name": "Štapni usisavač Dreame Z30 Slim, bežični, bez vrećice, 600ml, 310AW, siva",
       "type": "Usisavač",
@@ -344,7 +329,8 @@
     "d0c9a86e-8940-4dfc-a3e2-47dbfa5d5f99": 1794579811585,
     "827c9b9c-e89b-4bd4-b488-d84494551284": 1795739528732,
     "fde92eed-55a3-44b9-badb-7648765a47ab": 1795764848644,
-    "8d73d7ec-5b57-4517-a008-17374843f186": 1795764860524
+    "8d73d7ec-5b57-4517-a008-17374843f186": 1795764860524,
+    "4dbf95bf-8c14-4b21-ab37-482d54a2d163": 1795775141473
   },
   "cats": []
 }
