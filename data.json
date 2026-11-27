@@ -477,6 +477,18 @@
       "note": "",
       "createdAt": 1795782895831,
       "updatedAt": 1795782895831
+    },
+    {
+      "id": "6d1f64aa-2379-4398-ba6a-b11719d6a66d",
+      "itemId": "ea953ad9-154b-4a3e-98f1-ecaa563f3a29",
+      "itemName": "PHILIPS PSG6066 20",
+      "seller": "https://www.elipso.hr/mali-kucanski/parne-postaje/PHILIPS-PSG6066-20/",
+      "mode": "pickup",
+      "date": "",
+      "status": "delivered",
+      "note": "",
+      "createdAt": 1795782910023,
+      "updatedAt": 1795782910023
     }
   ]
 }
