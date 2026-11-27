@@ -99,11 +99,11 @@
       "source": "https://www.bigbang.hr/tv-lg-oled65c61la-165-1cm-65-oled-4k-uhd-120h-p-5000250592/",
       "qty": 1,
       "price": 1900,
-      "bought": false,
+      "bought": true,
       "plan": false,
-      "paid": null,
+      "paid": 1400,
       "createdAt": 1791654824640,
-      "updatedAt": 1795739151433
+      "updatedAt": 1795739154371
     },
     {
       "id": "9b3bd765-6d6c-410f-9736-e828e21c0a06",
