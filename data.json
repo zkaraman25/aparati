@@ -316,21 +316,6 @@
       "updatedAt": 1793802148539
     },
     {
-      "id": "827c9b9c-e89b-4bd4-b488-d84494551284",
-      "name": "Nosač Vogel's MA3000 fiksni zidni nosač za TV 32\"-65\", 60 kg",
-      "type": "TV",
-      "desc": "",
-      "cat": "dnevni",
-      "source": "https://www.wiz.hr/zidni-nosac-za-tv-od-32-do-55-vogels-ma3000",
-      "qty": 1,
-      "price": 21,
-      "bought": false,
-      "plan": true,
-      "paid": null,
-      "createdAt": 1793867432081,
-      "updatedAt": 1795713164905
-    },
-    {
       "id": "9228f4c0-9bee-41a3-8549-e77b81d66101",
       "name": "Uredska stolica OMEGA Crni",
       "type": "Stolica",
@@ -386,7 +371,8 @@
     "01696e6b-c2b3-4d44-aa1e-dadaa203e42a": 1792741254646,
     "d89e1afa-1878-4081-adf9-7862e7f44fed": 1792753978206,
     "0e8bada7-abdc-4324-bcfa-9aba70f3b5ed": 1794579809001,
-    "d0c9a86e-8940-4dfc-a3e2-47dbfa5d5f99": 1794579811585
+    "d0c9a86e-8940-4dfc-a3e2-47dbfa5d5f99": 1794579811585,
+    "827c9b9c-e89b-4bd4-b488-d84494551284": 1795739528732
   },
   "cats": []
 }
