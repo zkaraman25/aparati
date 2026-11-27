@@ -513,6 +513,18 @@
       "note": "",
       "createdAt": 1795783046705,
       "updatedAt": 1795783046705
+    },
+    {
+      "id": "a273580b-c5b0-4736-bb4b-f3f1192bb785",
+      "itemId": "b0ed72ff-4c7d-4cdb-86b0-26f995cdcd0a",
+      "itemName": "Televizor LG OLED65C61LA 2026, 165,1 cm (65\"), OLED, 4K UHD 120 Hz, Smart TV, webOS",
+      "seller": "https://www.bigbang.hr/tv-lg-oled65c61la-165-1cm-65-oled-4k-uhd-120h-p-5000250592/",
+      "mode": "pickup",
+      "date": "",
+      "status": "processing",
+      "note": "",
+      "createdAt": 1795783061280,
+      "updatedAt": 1795783061280
     }
   ]
 }
