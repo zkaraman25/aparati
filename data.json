@@ -271,21 +271,6 @@
       "updatedAt": 1794835727723
     },
     {
-      "id": "8d73d7ec-5b57-4517-a008-17374843f186",
-      "name": "Lampa za kuhinju",
-      "type": "Lampa",
-      "desc": "",
-      "cat": "kuhinja",
-      "source": "https://a.aliexpress.com/_EGqyBEa",
-      "qty": 1,
-      "price": 223,
-      "bought": false,
-      "plan": true,
-      "paid": null,
-      "createdAt": 1793279466882,
-      "updatedAt": 1795445196898
-    },
-    {
       "id": "c9627100-8806-47e0-aee3-873ab4d1a0ff",
       "name": "Cozze rotirajuća plinska pizza pećnica 17\" (90437) Classic Black",
       "type": "Pec",
@@ -358,7 +343,8 @@
     "0e8bada7-abdc-4324-bcfa-9aba70f3b5ed": 1794579809001,
     "d0c9a86e-8940-4dfc-a3e2-47dbfa5d5f99": 1794579811585,
     "827c9b9c-e89b-4bd4-b488-d84494551284": 1795739528732,
-    "fde92eed-55a3-44b9-badb-7648765a47ab": 1795764848644
+    "fde92eed-55a3-44b9-badb-7648765a47ab": 1795764848644,
+    "8d73d7ec-5b57-4517-a008-17374843f186": 1795764860524
   },
   "cats": []
 }
